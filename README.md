@@ -59,6 +59,7 @@ This project is licensed under the [MIT License](LICENSE).
 * Designed & built by [Parag](https://github.com/JyotiInHex)
 * Fonts from [Google Fonts](https://fonts.google.com)
 * Inspired by real love stories and Assamese culture
+git push origin main --no-verify
 ---
 
 > ❤️ “When tradition dances with destiny, Parinay happens.”
