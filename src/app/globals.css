@@ -1,0 +1,146 @@
+@import "tailwindcss";
+
+* {
+  list-style: none !important;
+  outline: none !important;
+}
+
+:root {
+  --background: #f8f3e9;
+  --foreground: #222222;
+}
+
+::selection {
+  background: #ffd6e0; /* soft rose */
+}
+
+::-webkit-scrollbar {
+  width: 0px;
+}
+
+@font-face {
+  font-family: "Trap";
+  src: url("/fonts/trap/Trap-Regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Trap";
+  src: url("/fonts/trap/Trap-Light.woff") format("woff");
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Trap";
+  src: url("/fonts/trap/Trap-Medium.woff") format("woff");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Trap";
+  src: url("/fonts/trap/Trap-SemiBold.woff") format("woff");
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Trap";
+  src: url("/fonts/trap/Trap-Bold.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Trap";
+  src: url("/fonts/trap/Trap-ExtraBold.woff") format("woff");
+  font-weight: 800;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Trap";
+  src: url("/fonts/trap/Trap-Black.woff") format("woff");
+  font-weight: 900;
+  font-style: normal;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-trap: var(--font-trap);
+}
+.text-border {
+  -webkit-text-stroke: 0.5px var(--background);
+}
+
+/* @media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+  ::selection {
+    background: #7a003c; 
+    color: #ffe6ec;
+  }
+} */
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.backgroundGraphic-One {
+  background: linear-gradient(#ffffff11, #ffffffd2),
+    url("/assets/2150794490.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #cbd5e1;
+  border-radius: 4px;
+}
+
+.checkbox-custom {
+  @apply relative appearance-none w-5 h-5 rounded border border-gray-300 bg-white shadow-sm cursor-pointer transition-all duration-200 ease-in-out checked:bg-orange-600 checked:border-orange-600 focus:ring-2 focus:ring-orange-300 focus:outline-none;
+}
+
+.checkbox-custom::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 10px;
+  height: 5px;
+  border-left: 2px solid white;
+  border-bottom: 2px solid white;
+  transform: translate(-50%, -60%) rotate(-45deg);
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+}
+
+input[type="checkbox"].checkbox-custom:checked::before {
+  opacity: 1;
+}
