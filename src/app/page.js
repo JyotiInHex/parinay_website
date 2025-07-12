@@ -36,9 +36,7 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3, ease: [0.25, 1, 0.5, 1] }}
             className="lg:whitespace-nowrap text-transparent text-2xl lg:text-3xl font-semibold font-trap drop-shadow-lg bg-clip-text bg-gradient-to-r from-orange-600 to-pink-600"
-          >
-            When tradition dances with destiny, love takes form
-          </motion.h2>
+          >When tradition dances with destiny, love takes form</motion.h2>
 
           <HeroText
             text="Parinay Unites Hearts."
