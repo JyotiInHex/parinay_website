@@ -1,66 +1,76 @@
-"use client";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import React from "react";
+import { motion } from "framer-motion";
+import Arrow from "../../../public/assets/svg/arrow";
 
-import { useMotionValue, useSpring, motion } from "framer-motion";
-import Link from "next/link";
-import { useLayoutEffect, useRef } from "react";
+const CustomBtn = ({
+  children,
+  path = "#",
+  icon = Boolean,
+}) => {
+  const router = useRouter();
 
-const CustomBtn = ({ path, name, style }) => {
-  const elementScale = useMotionValue(0);
-  const elementX = useMotionValue(0);
-  const elementY = useMotionValue(0);
-
-  const finalScale = useSpring(elementScale, { damping: 20, stiffness: 300 });
-  const finalX = useSpring(elementX, { damping: 20, stiffness: 300 });
-  const finalY = useSpring(elementY, { damping: 20, stiffness: 300 });
-
-  const btnRef = useRef(null);
-
-  useLayoutEffect(() => {
-    const button = btnRef.current;
-
-    const move = (e) => {
-      const rect = button.getBoundingClientRect();
-      elementX.set(e.clientX - rect.left - 50);
-      elementY.set(e.clientY - rect.top - 50);
-    };
-
-    const scale = () => {
-      elementScale.set(0.6);
-    };
-
-    const leave = () => {
-      elementScale.set(0);
-    };
-
-    button.addEventListener("mousemove", move);
-    button.addEventListener("mouseenter", scale);
-    button.addEventListener("mouseleave", leave);
-
-    return () => {
-      button.removeEventListener("mousemove", move);
-      button.removeEventListener("mouseenter", scale);
-      button.removeEventListener("mouseleave", leave);
-    };
-  }, [elementX, elementY]);
+  const handleClick = () => {
+    if (path && path !== "#") {
+      router.push(path);
+    }
+  };
 
   return (
-    <Link href={path}>
-      <div
-        ref={btnRef}
-        className="relative overflow-hidden inline-block px-6 py-3 text-lg md:text-base text-white font-trap font-normal  rounded-full border border-[#f9efdd] "
-        style={style}
+    <motion.button
+      type="button"
+      initial="initial"
+      whileHover="hover"
+      onClick={handleClick}
+      className={`relative cursor-pointer  drop-shadow-lg flex flex-row items-center gap-0.5 md:gap-1`}
+      aria-label={typeof children === "string" ? children : "Button"}
+    >
+      <span
+        className={`inline-flex items-center gap-2 font-trap font-semibold text-base md:text-lg text-white bg-gradient-to-tr from-orange-600 bg-pink-600 hover:from-pink-600 hover:to-orange-600 transition-colors duration-500 ease-in-out rounded-full`}
+        style={{ padding: "0.6rem 2rem" }}
       >
-        {name}
-        <motion.span
-          className="absolute inline-block bg-[#f9efdd] rounded-full w-[300px] h-[300px] -translate-x-[100%] -translate-y-[40%] mix-blend-difference"
-          style={{
-            scale: finalScale,
-            translateX: finalX,
-            translateY: finalY,
-          }}
-        />
-      </div>
-    </Link>
+        {children}
+      </span>
+      {icon && (
+        <span
+          aria-hidden="true"
+          className="w-8 h-8 px-[21px] py-[21px] relative flex items-center justify-center overflow-hidden rounded-full bg-gradient-to-tr from-orange-600 bg-pink-600 hover:from-pink-600 hover:to-orange-600 transition-colors duration-500 ease-in-out"
+        >
+          <motion.span
+            variants={{
+              initial: { opacity: 0, x: -12, y: 12, scale: 0.5 },
+              hover: { opacity: 1, x: 0, y: 0, scale: 1 },
+            }}
+            transition={{
+              type: "spring",
+              stiffness: 300,
+              damping: 35,
+              duration: 0.5,
+            }}
+            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+          >
+            <Arrow width={20} height={20} className="text-white" />
+          </motion.span>
+
+          <motion.span
+            variants={{
+              initial: { opacity: 1, x: 0, y: 0, scale: 1 },
+              hover: { opacity: 0, x: 12, y: -12, scale: 0.5 },
+            }}
+            transition={{
+              type: "spring",
+              stiffness: 300,
+              damping: 35,
+              duration: 0.5,
+            }}
+            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+          >
+            <Arrow width={20} height={20} className="text-white" />
+          </motion.span>
+        </span>
+      )}
+    </motion.button>
   );
 };
 

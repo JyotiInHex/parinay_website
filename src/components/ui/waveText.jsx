@@ -29,7 +29,7 @@ const lineVariant = {
   }),
 };
 
-export const HeroText = ({ text, className = "" }) => {
+export const WaveText = ({ text, className = "" }) => {
   const mid = Math.floor(text.length / 2);
 
   return (

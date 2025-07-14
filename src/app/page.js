@@ -1,19 +1,24 @@
 "use client";
+import { landingPage } from "@/data/siteStaticData";
 import { motion } from "framer-motion";
 import { TiltImage } from "@/components/ui/tiltImage";
-import { HeroText } from "@/components/ui/waveText";
+import { WaveText } from "@/components/ui/waveText";
 import { TooltipText } from "@/components/ui/tooltipText";
+import CustomBtn from "@/components/ui/customBtn";
+import ScrollRibbon from "../components/ui/ribbonScroll";
+import ShortAboutSection from "@/layouts/shortAbout";
+import StandOutSection, { Card } from "@/layouts/standOut";
 
 export default function Home() {
+  const hero = landingPage.hero;
   return (
-    <div className="w-full h-auto select-none">
-      <section className="relative flex flex-col-reverse md:flex-row items-start justify-between px-8 md:px-20 py-12 md:py-28">
+    <>
+      <div className="w-full h-auto select-none relative flex flex-col-reverse md:flex-row items-start justify-between px-8 md:px-20 py-12 md:pt-28 md:pb-20">
         <motion.div
           whileHover={{ rotate: 1, y: -6 }}
           transition={{ type: "spring", stiffness: 120 }}
           className="w-full md:w-[30%]"
         >
-
           <TiltImage
             src="/assets/img/boy_model.png"
             alt="boy_Smile"
@@ -36,10 +41,12 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3, ease: [0.25, 1, 0.5, 1] }}
             className="lg:whitespace-nowrap text-transparent text-2xl lg:text-3xl font-semibold font-trap drop-shadow-lg bg-clip-text bg-gradient-to-r from-orange-600 to-pink-600"
-          >When tradition dances with destiny, love takes form</motion.h2>
+          >
+            {hero.title}
+          </motion.h2>
 
-          <HeroText
-            text="Parinay Unites Hearts."
+          <WaveText
+            text={hero.subtitle}
             className="text-4xl lg:text-6xl font-bold font-trap text-pink-600 drop-shadow-lg"
           />
 
@@ -49,7 +56,7 @@ export default function Home() {
             transition={{ duration: 0.6, delay: 0.7, ease: [0.25, 1, 0.5, 1] }}
             className="mt-2 text-zinc-600 text-center text-lg md:text-2xl font-medium font-mono"
           >
-            Begin a bond built on {" "}
+            {hero.description}{" "}
             <TooltipText
               tooltip="Trust is the quiet promise that love will last."
               className="text-pink-600 font-semibold"
@@ -73,20 +80,18 @@ export default function Home() {
             >
               Assamese Heritage
             </TooltipText>
-
           </motion.div>
 
-          <motion.button
-            type="button"
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 1.0, ease: [0.25, 1, 0.5, 1] }}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="mt-4 px-10 py-2 bg-gradient-to-r from-orange-400 to-pink-600 text-white rounded-full drop-shadow-md text-base font-trap font-medium cursor-pointer"
+            transition={{ duration: 0.6, delay: 0.8, ease: "easeInOut" }}
+            className="mt-7"
           >
-            Join Now
-          </motion.button>
+            <CustomBtn path="register" icon={true}>
+              {hero.buttonValue}
+            </CustomBtn>
+          </motion.div>
         </motion.div>
 
         <motion.div
@@ -104,7 +109,30 @@ export default function Home() {
             finalY={0}
           />
         </motion.div>
-      </section>
-    </div>
+      </div>
+
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.7, ease: [0.25, 1, 0.5, 1] }}
+        className="w-full h-auto"
+      >
+        <ScrollRibbon
+          className={"text-xl font-trap font-semibold"}
+          iconSize={26}
+          speed={150}
+        />
+      </motion.div>
+
+      <div className="p-16 w-full bg-neutral-100">
+        <ShortAboutSection />
+      </div>
+
+      <div className="p-16 px-24 w-full h-screen">
+        <StandOutSection />
+      </div>
+
+
+    </>
   );
 }
