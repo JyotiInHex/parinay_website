@@ -59,7 +59,7 @@ export default function ClientWrapper({ children }) {
               className="w-14 h-14 object-cover"
             />
             <figcaption className="text-white text-3xl lg:text-5xl font-trap font-bold tracking-wide">
-              Parinay
+              Porinoi
             </figcaption>
           </figure>
         </motion.div>
@@ -81,7 +81,7 @@ export default function ClientWrapper({ children }) {
               className="w-14 h-14 object-cover"
             />
             <figcaption className="text-white text-3xl lg:text-5xl font-trap font-bold tracking-wide">
-              Parinay
+              Porinoi
             </figcaption>
           </figure>
         </motion.div>

@@ -15,3 +15,4 @@ const SectionTitle = ({ children, className }) => {
 };
 
 export default SectionTitle;
+

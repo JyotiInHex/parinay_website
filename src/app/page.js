@@ -7,7 +7,8 @@ import { TooltipText } from "@/components/ui/tooltipText";
 import CustomBtn from "@/components/ui/customBtn";
 import ScrollRibbon from "../components/ui/ribbonScroll";
 import ShortAboutSection from "@/layouts/shortAbout";
-import StandOutSection, { Card } from "@/layouts/standOut";
+import StandOutSection from "@/layouts/standOut";
+import MatchStepsSection from "@/layouts/matchSteps";
 
 export default function Home() {
   const hero = landingPage.hero;
@@ -124,15 +125,21 @@ export default function Home() {
         />
       </motion.div>
 
-      <div className="p-16 w-full bg-neutral-100">
+      <div className="p-16 w-full h-[90vh] bg-white grid place-content-center">
         <ShortAboutSection />
       </div>
 
-      <div className="p-16 px-24 w-full h-screen">
+      <div className="p-16 px-24 w-full h-fit place-content-center">
         <StandOutSection />
       </div>
 
+      <div className="p-16 px-24 w-full h-auto bg-white">
+        <MatchStepsSection />
+      </div>
 
+      <div>
+        get in touch
+      </div>
     </>
   );
 }

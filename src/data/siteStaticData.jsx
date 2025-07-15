@@ -1,3 +1,4 @@
+const year = new Date().getFullYear();
 export const landingPage = {
   hero: {
     title: "When tradition dances with destiny, love takes form",
@@ -15,7 +16,7 @@ export const landingPage = {
   },
 
   whyStandOut: {
-    title: "Why Parinay Stands Out?",
+    title: "Why Porinoi Stands Out?",
     cards: [
       {
         title: "Cultural Alignment",
@@ -38,20 +39,78 @@ export const landingPage = {
           "Optimized for mobile and desktop with intuitive, user-friendly design.",
       },
     ],
-    image: "/assets/img/couple.jpeg"
+    image: "/assets/img/couple_2.jpeg",
   },
-  testimonials: {
-    title: "What Our Clients Say",
+
+  stepsSection: {
+    title: "Find Your Perfect Match in 3 Simple Steps",
     description:
-      "Hear from couples who have found their perfect match with Parinay.",
+      "At Porinoi, we believe in making the matchmaking process as simple and effective as possible. Our three-step approach ensures that you find your ideal partner with ease and confidence.",
+    steps: [
+      {
+        title: "Create Profile",
+        description: "Share your basic information and preferences.",
+        image: "/assets/img/Create Profile.jpeg",
+        button: {
+          text: "Start Creating",
+          path: "/register",
+        },
+        color: "oklch(70.7% 0.165 254.624)",
+      },
+      {
+        title: "Explore Matches",
+        description:
+          "Browse through personalized matches based on your criteria and interests.",
+        image: "/assets/img/Explore Matches.jpeg",
+        color: "oklch(59.2% 0.249 0.584)",
+      },
+      {
+        title: "Communicate",
+        description:
+          "Initiate conversations with potential matches and get to know them better.",
+        image: "/assets/img/Connect.jpeg",
+        color: "oklch(75% 0.183 55.934)",
+      },
+    ],
   },
-  contact: {
+
+  contactSection: {
     title: "Get in Touch",
+
     description:
-      "Have questions? We're here to help you every step of the way.",
+      "Have a question, feedback, or just want to say hello? We'd love to hear from you. Whether you're searching for your soulmate or exploring partnership opportunities - we're just a message away.",
+
+    contactDetails: {
+      label: "Our Address",
+      location: "Guwahati, Assam, India - 781001",
+      email: "support@Porinoi.com",
+      icons: { location: "location", email: "email" },
+    },
+
+    socialLinks: [
+      {
+        platform: "Facebook",
+        url: "https://www.facebook.com/porinoi",
+      },
+      {
+        platform: "Instagram",
+        url: "https://www.instagram.com/porinoi",
+      },
+    ],
   },
+
   footer: {
-    title: "Stay Connected",
-    description: "Follow us on social media for the latest updates and offers.",
+    logo: "assets/svg/logo_main.svg",
+    description:
+      "Porinoi is dedicated to connecting Assamese individuals with shared values and backgrounds. Join us in celebrating love, tradition, and community.",
+    links: [
+      { name: "Privacy Policy", path: "/privacy-policy" },
+      { name: "Terms of Service", path: "/terms-of-service" },
+      { name: "Contact Us", path: "/contact" },
+      { name: "About Us", path: "/about" },
+      { name: "FAQ", path: "/faq" },
+    ],
+    copyright: `© ${year} Porinoi. All rights reserved.`,
+    endParagraph: "Made with love in Assam, India.",
   },
 };
