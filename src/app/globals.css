@@ -124,29 +124,6 @@
   color: var(--charcoal);
 }
 
-.bg-gradient-top {
-  background-image: var(--gradient-top);
-}
-.bg-gradient-right {
-  background-image: var(--gradient-right);
-}
-.bg-gradient-bottom {
-  background-image: var(--gradient-bottom);
-}
-.bg-gradient-left {
-  background-image: var(--gradient-left);
-}
-.bg-gradient-radial {
-  background-image: var(--gradient-radial);
-}
-
-.text-gradient {
-  background-image: var(--gradient-right);
-  background-clip: text;
-  -webkit-background-clip: text;
-  color: transparent;
-}
-
 .transition-colors {
   transition: background-color 0.3s ease, color 0.3s ease;
 }

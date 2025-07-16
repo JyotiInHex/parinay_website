@@ -29,7 +29,7 @@ export default function StandOutSection() {
             >
               <Card className="rounded-xl drop-shadow-2xl drop-shadow-[#27272a0e] activeContainer">
                 <p className="flex flex-row gap-2.5 items-center text-lg text-zinc-800 group-hover:text-white font-trap font-semibold transition-all duration-300 ease-in-out activeText">
-                  <Arrow width={20} height={10} />
+                  <Arrow width={20} height={20} />
                   {card.title}
                 </p>
                 <h3 className="text-xl text-zinc-800 group-hover:text-white font-trap font-semibold transition-all duration-300 ease-in-out activeText">

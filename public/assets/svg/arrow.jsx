@@ -6,7 +6,7 @@ export default function Arrow({ className = "", width = 24, height = 24 }) {
       fill="currentColor"
       width={width}
       height={height}
-      className={`size-6 ${className}`}
+      className={`${className}`}
     >
       <path
         fillRule="evenodd"

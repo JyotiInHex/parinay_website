@@ -1,4 +1,8 @@
+import Mail from "../../public/assets/svg/mail";
+import MapPin from "../../public/assets/svg/map-pin";
+
 const year = new Date().getFullYear();
+
 export const landingPage = {
   hero: {
     title: "When tradition dances with destiny, love takes form",
@@ -55,7 +59,7 @@ export const landingPage = {
           text: "Start Creating",
           path: "/register",
         },
-        color: "oklch(70.7% 0.165 254.624)",
+        color: "oklch(75% 0.183 55.934)",
       },
       {
         title: "Explore Matches",
@@ -69,7 +73,7 @@ export const landingPage = {
         description:
           "Initiate conversations with potential matches and get to know them better.",
         image: "/assets/img/Connect.jpeg",
-        color: "oklch(75% 0.183 55.934)",
+        color: "oklch(70.7% 0.165 254.624)",
       },
     ],
   },
@@ -80,12 +84,20 @@ export const landingPage = {
     description:
       "Have a question, feedback, or just want to say hello? We'd love to hear from you. Whether you're searching for your soulmate or exploring partnership opportunities - we're just a message away.",
 
-    contactDetails: {
-      label: "Our Address",
-      location: "Guwahati, Assam, India - 781001",
-      email: "support@Porinoi.com",
-      icons: { location: "location", email: "email" },
-    },
+    contactDetails: [
+      {
+        icon: <Mail />,
+        label: "Chat to us",
+        subLabel: "Our friendly team is here to help.",
+        address: "support@Porinoi.com",
+      },
+      {
+        icon: <MapPin />,
+        label: "Visit us",
+        subLabel: "Come say hello at our Office HQ.",
+        address: "Guwahati, Assam, India - 781001",
+      },
+    ],
 
     socialLinks: [
       {

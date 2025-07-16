@@ -3,12 +3,13 @@ import { motion } from "framer-motion";
 import { useRouter, usePathname } from "next/navigation";
 
 export const CustomLink = ({
+  type = "link", // "link" or "button"
   index = 0,
   label,
   path = "",
-  customStyle,
   onClick,
-  type = "link", // "link" or "button"
+  customStyle,
+  className,
 }) => {
   const router = useRouter();
   const pathname = usePathname();
@@ -58,10 +59,10 @@ export const CustomLink = ({
           ease: "easeInOut",
           delay: 0.025 * i,
         }}
-        className="inline-block text-base font-medium font-trap text-zinc-800 cursor-pointer"
+        className={`inline-block text-base font-medium font-trap cursor-pointer ${className}`}
         style={{
           ...customStyle,
-          color: isActive ? "#e60076" : "#27272a",
+          color: isActive ? "#e60076" : "",
           fontWeight: isActive ? 600 : "normal",
         }}
       >

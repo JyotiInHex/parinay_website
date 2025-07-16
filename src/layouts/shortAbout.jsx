@@ -16,7 +16,7 @@ const ShortAboutSection = () => {
 
         <Paragraph
           value={about.description}
-          className={"text-zinc-600 text-2xl font-trap font-medium"}
+          className={"text-zinc-600 text-2xl font-trap font-medium justify-between"}
         />
 
         <ul className="flex flex-wrap flex-row items-center gap-3 text-zinc-600 text-lg font-trap font-medium">

@@ -25,7 +25,7 @@ function ParagraphBlock({ value, className }) {
   return (
     <p
       ref={ref}
-      className={`flex flex-wrap leading-5 justify-between ${className}`}
+      className={`flex flex-wrap leading-5 ${className}`}
     >
       {words.map((word, i) => (
         <AnimatedWord

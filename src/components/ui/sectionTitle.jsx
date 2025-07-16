@@ -6,7 +6,7 @@ const SectionTitle = ({ children, className }) => {
       className={`${className}`}
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.6 }}
+      viewport={{ once: true, amount: 0.85 }}
       transition={{ duration: 0.35, ease: "easeOut" }}
     >
       {children}
