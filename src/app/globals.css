@@ -225,6 +225,10 @@ input[type="number"] {
   background-size: cover;
 }
 
+.custom-scrollbar {
+  scroll-behavior: smooth;
+  transition: all 0.5s linear;
+}
 .custom-scrollbar::-webkit-scrollbar {
   width: 6px;
 }
@@ -253,6 +257,27 @@ input[type="number"] {
 
 input[type="checkbox"].checkbox-custom:checked::before {
   opacity: 1;
+}
+
+.radio-custom {
+  @apply relative appearance-none w-5 h-5 rounded-full border border-gray-300 bg-white shadow-sm cursor-pointer transition-all duration-200 ease-in-out checked:bg-orange-600 checked:border-orange-600 focus:ring-2 focus:ring-orange-300 focus:outline-none;
+}
+
+.radio-custom::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  background-color: white;
+  border-radius: 9999px;
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform 0.2s ease-in-out;
+}
+
+input[type="radio"].radio-custom:checked::before {
+  transform: translate(-50%, -50%) scale(1);
 }
 
 .active:first-child {

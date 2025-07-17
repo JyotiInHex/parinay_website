@@ -79,17 +79,17 @@ export const landingPage = {
   },
 
   contactSection: {
-    title: "Get in Touch",
-
+    title: "Curious about Porinoi? Let’s start a conversation.",
+    subtitle: "We're building something meaningful — and your thoughts matter.",
     description:
-      "Have a question, feedback, or just want to say hello? We'd love to hear from you. Whether you're searching for your soulmate or exploring partnership opportunities - we're just a message away.",
+      "Have a question, feedback, or just want to say hello? We'd love to hear from you. Whether you're searching for your soulmate or exploring partnership opportunities — we're just a message away.",
 
     contactDetails: [
       {
         icon: <Mail />,
         label: "Chat to us",
         subLabel: "Our friendly team is here to help.",
-        address: "support@Porinoi.com",
+        address: "support@porinoi.com",
       },
       {
         icon: <MapPin />,
@@ -109,6 +109,67 @@ export const landingPage = {
         url: "https://www.instagram.com/porinoi",
       },
     ],
+
+    formDetails: {
+      // formTitle: "Let’s begin something beautiful.",
+      // formDescription: "Tell us a bit about yourself and what brings you here.",
+      formFields: [
+        {
+          label: "Your name",
+          type: "text",
+          placeholder: "Eg: Rupam Das",
+          name: "name",
+          required: true,
+        },
+        {
+          label: "Your email",
+          type: "email",
+          placeholder: "Eg: rupam@email.com",
+          name: "email",
+          required: true,
+        },
+        {
+          label: "How can we help you?",
+          type: "checkbox-group",
+          name: "helpOptions",
+          options: [
+            "I want to know more about Porinoi",
+            "I'm curious — just exploring love online",
+            "I'm hoping to find my future match here",
+            "I’d love to invite someone I care about",
+            "I believe in meaningful, slow connections",
+            "I’m not ready yet, but Porinoi feels right",
+            "I’m cheering you on — love this idea!",
+            "I’d like early access before the app launches",
+            "I’m dreaming of something real and rooted",
+          ],
+        },
+        {
+          label: "Share your thoughts with Porinoi",
+          type: "textarea",
+          placeholder:
+            "Share your thoughts, questions, or anything you'd like us to know…",
+          name: "message",
+          required: true,
+        },
+        {
+          label: "I’d love to join the early bird waitlist for Porinoi",
+          type: "checkbox",
+          name: "earlyAccess",
+        },
+        {
+          label: "Phone number",
+          type: "number",
+          placeholder: "Required for early invite access",
+          name: "phone",
+          required: true,
+          requiredIf: "earlyAccess",
+        },
+      ],
+      submitButton: {
+        text: "Count Me In",
+      },
+    },
   },
 
   footer: {

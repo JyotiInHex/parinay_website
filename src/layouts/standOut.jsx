@@ -63,11 +63,11 @@ export default function StandOutSection() {
               }}
             >
               <Card className="rounded-xl drop-shadow-2xl drop-shadow-[#27272a0e]">
-                <p className="flex flex-row gap-2.5 items-center text-lg text-zinc-800 group-hover:text-white font-trap font-semibold transition-all duration-300 ease-in-out">
+                <p className="flex flex-row gap-2.5 items-center text-lg text-zinc-800 font-trap font-semibold transition-all duration-300 ease-in-out">
                   <Arrow width={20} height={20} />
                   {card.title}
                 </p>
-                <h3 className="text-xl text-zinc-800 group-hover:text-white font-trap font-semibold transition-all duration-300 ease-in-out">
+                <h3 className="text-xl text-zinc-800 font-trap font-semibold transition-all duration-300 ease-in-out">
                   {card.description}
                 </h3>
               </Card>
@@ -82,7 +82,7 @@ export default function StandOutSection() {
 export const Card = ({ children, className }) => {
   return (
     <motion.div
-      className={`group p-5 bg-gradient-to-r from-white to-white hover:from-orange-600 hover:to-pink-600 w-fit h-max max-w-[31vw] space-y-6 transition-color duration-700 ease-linear required:text-white ${className}`}
+      className={`p-5 bg-white w-fit h-max max-w-[31vw] space-y-6 transition-color duration-700 ease-linear ${className}`}
     >
       {children}
     </motion.div>

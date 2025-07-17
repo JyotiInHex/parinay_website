@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import { landingPage } from "@/data/siteStaticData";
 import SectionTitle from "@/components/ui/sectionTitle";
 import Arrow from "../../public/assets/svg/arrow";
-import Paragraph from "@/components/ui/paragraph";
 
 export default function MatchStepsSection() {
   const { title, description, steps } = landingPage.stepsSection;
@@ -18,12 +17,7 @@ export default function MatchStepsSection() {
           <StepCard key={index} step={step} i={index} />
         ))}
       </div>
-      <div className="w-full flex justify-end">
-        <Paragraph
-          value={description}
-          className="w-1/2  justify-end mt-10 text-xl text-zinc-900 font-semibold font-trap "
-        />
-      </div>
+      <div></div>
     </div>
   );
 }
@@ -48,7 +42,7 @@ const StepCard = ({ step, i }) => {
         scale: 1,
         opacity: 1,
       }}
-      viewport={{ once: true, amount: 0.8 }}
+      viewport={{ once: true, amount: 0.995 }}
       transition={{
         x: { duration: 0.8, ease: "easeOut", delay: i * 0.15 },
         y: { duration: 0.8, ease: "easeOut", delay: i * 0.15 },
@@ -60,7 +54,7 @@ const StepCard = ({ step, i }) => {
       whileHover={{
         width: "100%",
       }}
-      className="h-full rounded-xl overflow-hidden text-white transition-colors duration-100 ease-in-out"
+      className="h-full rounded-xl overflow-hidden "
       style={{ backgroundColor: step.color }}
     >
       <motion.div
@@ -69,9 +63,11 @@ const StepCard = ({ step, i }) => {
         className="w-fit h-fit p-6 grid grid-cols-[14rem_1fr] justify-between gap-5"
       >
         <div className="pt-12 w-full h-[40vh] flex flex-col items-start justify-start space-y-5">
-          <h3 className="text-[20px] font-semibold font-trap">{step.title}</h3>
+          <h3 className="text-[20px] text-white font-semibold font-trap">
+            {step.title}
+          </h3>
 
-          <p className="text-[22px] font-semibold font-trap">
+          <p className="text-[22px] text-white font-semibold font-trap">
             {step.description}
           </p>
 
@@ -81,7 +77,7 @@ const StepCard = ({ step, i }) => {
               initial="initial"
               whileHover="hover"
               onClick={() => router.push(step.button.path)}
-              className="group mt-5 text-base font-trap font-semibold flex items-end justify-end gap-1.5 cursor-pointer"
+              className="group mt-5 text-base text-white font-trap font-semibold flex items-end justify-end gap-1.5 cursor-pointer"
             >
               <span>{step.button.text}</span>
               <Arrow

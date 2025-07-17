@@ -6,12 +6,13 @@ import ShortAboutSection from "@/layouts/shortAbout";
 import StandOutSection from "@/layouts/standOut";
 import MatchStepsSection from "@/layouts/matchSteps";
 import GetInTouch from "@/layouts/getInTouch";
+import { InputField } from "@/components/ui/customForm";
 
 export default function Home() {
   return (
     <>
       <div className="w-full h-auto select-none relative flex flex-col-reverse md:flex-row items-start justify-between px-8 md:px-20 py-12 md:pt-28 md:pb-20">
-        <HeaderSection/>
+        <HeaderSection />
       </div>
 
       <motion.div
