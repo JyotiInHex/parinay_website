@@ -1,13 +1,13 @@
-# 💞 Parinay — Where Traditions Spark Connections
+# 💞 Porinoi — Where Traditions Spark Connections
 
-**Parinay** is a culturally-rooted matrimonial web experience, helping people discover lifelong partners through **trust**, **dignity**, and **Assamese values**.  
-Built with a passion for design, performance, and emotional resonance — Parinay unites tradition with modern love.
+**Porinoi** is a culturally-rooted matrimonial web experience, helping people discover lifelong partners through **trust**, **dignity**, and **Assamese values**.  
+Built with a passion for design, performance, and emotional resonance — Porinoi unites tradition with modern love.
 
 ---
 
 ## 🌐 Live Site
 
-<!-- 👉 [Visit Parinay](https://parinay.in) *(or your deployment URL)* -->
+<!-- 👉 [Visit Porinoi](https://porinoi.in) *(or your deployment URL)* -->
 👉 [Coming Soon]
 
 ---
@@ -62,5 +62,5 @@ This project is licensed under the [MIT License](LICENSE).
 git push origin main --no-verify
 ---
 
-> ❤️ “When tradition dances with destiny, Parinay happens.”
+> ❤️ “When tradition dances with destiny, Porinoi happens.”
 

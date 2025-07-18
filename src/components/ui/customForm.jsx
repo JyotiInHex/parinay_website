@@ -1,12 +1,15 @@
 import { useLayoutEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Check from "../../../public/assets/svg/check";
+import Arrow from "../../../public/assets/svg/arrow";
+import { CustomBtn2 } from "./customBtn";
 
 export default function CustomForm({
   formTitle,
   formDescription,
   formFields,
   submitButton,
+  backGround,
 }) {
   const [formData, setFormData] = useState({});
   const [showPhone, setShowPhone] = useState(false);
@@ -16,6 +19,17 @@ export default function CustomForm({
 
     if (name === "earlyAccess") {
       setShowPhone(checked);
+    }
+
+    if (type === "tel") {
+      const cleaned = value.replace(/\D/g, "");
+      if (cleaned.length <= 10) {
+        setFormData((prev) => ({
+          ...prev,
+          [name]: cleaned,
+        }));
+      }
+      return;
     }
 
     setFormData((prev) => ({
@@ -40,6 +54,9 @@ export default function CustomForm({
     e.preventDefault();
     console.log("Form Submitted: ", formData);
     // Add validation or API submission here
+
+    setFormData({});
+    setShowPhone(false);
   };
 
   return (
@@ -47,8 +64,9 @@ export default function CustomForm({
       initial={{ opacity: 0, x: 100 }}
       whileInView={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.65, ease: "easeOut" }}
-      viewport={{ once: false, amount: 0.65 }}
-      className="max-w-xl mx-auto bg-[#f8f3e9] p-6 rounded-2xl"
+      viewport={{ once: true, amount: 0.5 }}
+      className="max-w-xl mx-auto p-6 rounded-2xl shadow-lg"
+      style={{ background: backGround || "#f8f3e9" }}
     >
       <h2 className="text-zinc-800 text-2xl font-semibold font-trap">
         {formTitle}
@@ -58,12 +76,13 @@ export default function CustomForm({
         {formDescription}
       </p>
 
-      <form onSubmit={handleSubmit} className="space-y-4 mt-3">
+      <form onSubmit={handleSubmit} className="space-y-4 mt-3 w-full">
         {formFields.map((field, idx) => {
           if (
             field.type === "text" ||
             field.type === "email" ||
-            field.type === "number"
+            field.type === "password" ||
+            field.type === "tel"
           ) {
             if (field.requiredIf && !showPhone) return null;
 
@@ -113,13 +132,7 @@ export default function CustomForm({
           return null;
         })}
 
-
-        <button
-          type="submit"
-          className="w-full h-fit text-white py-2 px-4 rounded hover:bg-gray-800 before:block before:bg-black before:w-full before:h-38"
-        >
-          {submitButton.text}
-        </button>
+        <CustomBtn2 type="submit">{submitButton.text}</CustomBtn2>
       </form>
     </motion.div>
   );
@@ -141,7 +154,7 @@ const CheckboxField = ({ label, name, checked, onChange }) => {
       />
       <label
         htmlFor={inputId}
-        className="text-base text-zinc-800 font-trap font-medium"
+        className="text-base text-zinc-800 font-trap font-medium cursor-pointer"
       >
         {label}
       </label>
@@ -151,7 +164,7 @@ const CheckboxField = ({ label, name, checked, onChange }) => {
 
 const CheckboxGroupField = ({ label, name, options, selected, onChange }) => (
   <fieldset className="space-y-4">
-    <label className="block text-zinc-800 text-base font-trap font-medium capitalize">
+    <label className="block text-zinc-800 text-xl font-trap font-medium capitalize">
       [{label}]
     </label>
     <div className="flex flex-row flex-wrap gap-2">
@@ -159,7 +172,7 @@ const CheckboxGroupField = ({ label, name, options, selected, onChange }) => (
         <label
           htmlFor={`for-${idx}-option`}
           key={idx}
-          className="w-full grid grid-cols-[auto_1fr] items-start space-x-2 text-base text-zinc-800 font-trap font-medium"
+          className="w-full grid grid-cols-[auto_1fr] items-start space-x-2 text-base text-zinc-800 font-trap font-medium cursor-pointer"
         >
           <input
             id={`for-${idx}-option`}
@@ -180,6 +193,7 @@ const CheckboxGroupField = ({ label, name, options, selected, onChange }) => (
 const InputField = ({
   label,
   type,
+  prefix,
   placeholder,
   name,
   required,
@@ -209,19 +223,26 @@ const InputField = ({
           />
         </figure>
       </label>
-      <input
-        id={inputId}
-        type={type}
-        name={name}
-        placeholder={placeholder}
-        required={required}
-        value={value}
-        onChange={onChange}
-        autoComplete="off"
-        autoCorrect="on"
-        spellCheck={false}
-        className="w-full border-2 border-l-0 border-r-0 border-t-0 border-zinc-600 px-0 py-2 text-base text-zinc-800 font-medium font-trap"
-      />
+      <div className="flex items-center w-full border-2 border-l-0 border-r-0 border-t-0 border-zinc-600 px-0 py-2">
+        {prefix && (
+          <span className="text-base text-zinc-500 font-medium font-trap pr-2 select-none">
+            {prefix}
+          </span>
+        )}
+        <input
+          id={inputId}
+          type={type}
+          name={name}
+          placeholder={placeholder}
+          required={required}
+          value={value}
+          onChange={onChange}
+          autoComplete="off"
+          autoCorrect="on"
+          spellCheck={false}
+          className="w-full bg-transparent outline-none text-base text-zinc-800 font-medium font-trap"
+        />
+      </div>
     </fieldset>
   );
 };

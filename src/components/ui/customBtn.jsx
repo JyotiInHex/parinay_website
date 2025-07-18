@@ -73,3 +73,48 @@ export const ArrowAnimation = ({ className }) => {
     </span>
   );
 };
+
+export const CustomBtn2 = ({
+  children,
+  type = "button",
+  path = "",
+  icon = Boolean,
+}) => {
+  const router = useRouter();
+  const handleClick = () => {
+    if (path) router.push(path);
+  };
+  return (
+    <button
+      type={type}
+      className="relative w-full text-black py-2 px-4 overflow-hidden translate-z-0 before:bg-white before:w-full before:h-full before:absolute before:left-0 before:top-0 after:absolute after:inset-0 after:scale-y-0 after:origin-top after:bg-gradient-to-tr after:from-orange-600 after:to-pink-600 after:transition-transform after:duration-300 hover:after:scale-y-100 hover:after:origin-bottom cursor-pointer group"
+      onClick={handleClick}
+    >
+      <span className="relative z-10 inline-block text-base text-zinc-800 font-semibold font-trap transition-colors duration-500 group-hover:text-white ">
+        <span className="flex items-center gap-4 transition-all duration-300 transform scale-y-100 origin-bottom group-hover:scale-y-0 group-hover:origin-top group-hover:opacity-0">
+          {children}
+          {icon && (
+            <Arrow
+              width={20}
+              height={20}
+              className="-translate-x-1/2 translate-y-0 transform transition-transform duration-500 group-hover:translate-x-0 group-hover:-translate-y-0.5"
+            />
+          )}
+        </span>
+        <span
+          aria-hidden={true}
+          className="absolute inset-0 flex items-center gap-4 text-inherit transition-all duration-300 transform scale-y-0 opacity-0 origin-top group-hover:scale-y-100 group-hover:origin-bottom group-hover:opacity-100"
+        >
+          {children}
+          {icon && (
+            <Arrow
+              width={20}
+              height={20}
+              className="-translate-x-1/2 translate-y-0 transform transition-transform duration-500 group-hover:translate-x-0 group-hover:-translate-y-0.5"
+            />
+          )}
+        </span>
+      </span>
+    </button>
+  );
+};

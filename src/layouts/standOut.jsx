@@ -45,7 +45,7 @@ export default function StandOutSection() {
             imagePath={image}
             width={1000}
             height={1000}
-            className="rounded-xl w-full h-full"
+            className="rounded-xl w-fit h-auto"
           />
         </figure>
 

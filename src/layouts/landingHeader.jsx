@@ -51,7 +51,7 @@ const HeaderSection = () => {
           transition={{ duration: 0.6, delay: 0.7, ease: [0.25, 1, 0.5, 1] }}
           className="mt-2 text-zinc-600 text-center text-lg md:text-2xl font-medium font-mono"
         >
-          {hero.description}{" "}
+          <p>{hero.description}</p>
           <TooltipText
             tooltip="Trust is the quiet promise that love will last."
             className="text-pink-600 font-semibold"

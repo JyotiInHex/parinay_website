@@ -1,10 +1,12 @@
+import Link from "next/link";
 import { landingPage } from "@/data/siteStaticData";
 import Paragraph from "@/components/ui/paragraph";
 import SectionTitle from "@/components/ui/sectionTitle";
 import CustomForm from "@/components/ui/customForm";
+import { TooltipText } from "@/components/ui/tooltipText";
 
 export default function GetInTouch() {
-  const { title, subtitle, contactDetails, formDetails } =
+  const { title, subtitle, socialLinks, contactDetails, formDetails } =
     landingPage.contactSection;
   return (
     <div className="w-full h-full select-none grid grid-cols-[40%_1fr] items-start justify-between gap-20">
@@ -28,14 +30,30 @@ export default function GetInTouch() {
           })}
         </ul>
         <div className="px-5 space-y-3">
-          <SectionTitle className="w-auto h-auto text-left text-3xl text-zinc-800 font-trap font-bold">
+          <SectionTitle className="w-auto h-auto text-left text-4xl text-zinc-800 font-trap font-bold">
             {title}
           </SectionTitle>
           <Paragraph
             value={subtitle}
-            className="justify-start text-lg text-zinc-900 font-medium font-trap "
+            className="justify-start text-lg text-zinc-900 font-medium font-trap"
           />
         </div>
+        <ul className="flex items-center justify-start gap-3 px-5">
+          {socialLinks.map((link, idx) => {
+            return (
+              <li key={idx}>
+                <TooltipText
+                  tooltip={link.handleName}
+                  customStyle={{ backgroundImage: link.backgroundColor, fontSize: "18px"}}
+                >
+                  <Link href={link.url} target="_blank">
+                    {link.icon}
+                  </Link>
+                </TooltipText>
+              </li>
+            );
+          })}
+        </ul>
       </div>
       <div>
         <CustomForm {...formDetails} />

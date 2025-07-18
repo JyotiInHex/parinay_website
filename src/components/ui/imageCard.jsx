@@ -23,7 +23,7 @@ const ImageCard = ({
         whileInView={{ opacity: 1, y: 0, rotate: 3 }}
         viewport={{ once: true, amount: 0.6 }}
         transition={{ duration: 0.55, ease: "anticipate" }}
-        className="p-[2px] w-full h-auto max-h-[55vh] overflow-hidden bg-gradient-to-tr from-orange-600 to-pink-600 rounded-xl"
+        className="p-[2px] w-full h-auto max-h-[60vh] overflow-hidden bg-gradient-to-tr from-orange-600 to-pink-600 rounded-xl"
       >
         <Image
           src={imagePath}

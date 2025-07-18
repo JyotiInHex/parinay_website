@@ -8,8 +8,8 @@ const links = [
   { name: "Home", path: "/" },
   { name: "About_Us", path: "/about" },
   { name: "Contact_Us", path: "/contact" },
-  { name: "Sign In", path: "/login" },
-  { name: "Start_Your_Journey", path: "/signup" },
+  { name: "Sign In", path: "/signIn" },
+  { name: "Start_Your_Journey", path: "/signUp" },
 ];
 
 const navVariants = {
@@ -50,7 +50,7 @@ export default function Navigation() {
   }, []);
 
   const headerClass = [
-    device === "mobile" ? "fixed inset-0 z-50 bg-[#f8f3e9] h-fit" : "static",
+    device === "mobile" ? "fixed inset-0 z-50 bg-[#f8f3e9] h-fit" : "relative z-10 bg-[#f8f3e9]",
     device === "tablet" ? "px-6 py-8" : "px-0 md:px-20 py-6 md:py-11",
     "w-full flex flex-col md:flex-row md:items-center justify-between gap-5 select-none",
   ].join(" ");
@@ -106,26 +106,28 @@ export default function Navigation() {
             >
               <ul className="px-6 flex flex-col items-start justify-start gap-3">
                 {links.slice(0, 3).map((link, i) => (
-                  <CustomLink
-                    key={i}
-                    index={i}
-                    label={link.name}
-                    path={link.path}
-                    onClick={closeMenu}
-                    customStyle={{ fontSize: linkFontSize }}
-                  />
+                  <li key={i}>
+                    <CustomLink
+                      index={i}
+                      label={link.name}
+                      path={link.path}
+                      onClick={closeMenu}
+                      customStyle={{ fontSize: linkFontSize }}
+                    />
+                  </li>
                 ))}
               </ul>
               <ul className="px-6 flex flex-col items-start justify-start gap-3">
                 {links.slice(3, 5).map((link, i) => (
-                  <CustomLink
-                    key={i}
-                    index={i}
-                    label={link.name}
-                    path={link.path}
-                    onClick={closeMenu}
-                    customStyle={{ fontSize: linkFontSize }}
-                  />
+                  <li key={i}>
+                    <CustomLink
+                      index={i}
+                      label={link.name}
+                      path={link.path}
+                      onClick={closeMenu}
+                      customStyle={{ fontSize: linkFontSize }}
+                    />
+                  </li>
                 ))}
               </ul>
             </motion.nav>
@@ -135,24 +137,26 @@ export default function Navigation() {
         <nav className="w-[60%] h-fit bg-red-0 hidden md:flex flex-row justify-between items-center">
           <ul className="flex flex-row items-center gap-8">
             {links.slice(0, 3).map((link, i) => (
-              <CustomLink
-                key={i}
-                index={i}
-                label={link.name}
-                path={link.path}
-                customStyle={{ fontSize: linkFontSize }}
-              />
+              <li key={i}>
+                <CustomLink
+                  index={i}
+                  label={link.name}
+                  path={link.path}
+                  customStyle={{ fontSize: linkFontSize }}
+                />
+              </li>
             ))}
           </ul>
           <ul className="flex flex-row items-center gap-8">
             {links.slice(3, 5).map((link, i) => (
-              <CustomLink
-                key={i}
-                index={i}
-                label={link.name}
-                path={link.path}
-                customStyle={{ fontSize: linkFontSize }}
-              />
+              <li key={i}>
+                <CustomLink
+                  index={i}
+                  label={link.name}
+                  path={link.path}
+                  customStyle={{ fontSize: linkFontSize }}
+                />
+              </li>
             ))}
           </ul>
         </nav>

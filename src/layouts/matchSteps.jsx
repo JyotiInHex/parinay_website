@@ -17,7 +17,24 @@ export default function MatchStepsSection() {
           <StepCard key={index} step={step} i={index} />
         ))}
       </div>
-      <div></div>
+      <motion.p
+        initial={{
+          y: 20,
+          opacity: 0,
+        }}
+        whileInView={{
+          y: 0,
+          opacity: 1,
+        }}
+        viewport={{ once: true, amount: 0.995 }}
+        transition={{
+          y: { duration: 0.8, ease: "easeOut" },
+          opacity: { duration: 0.5, ease: "easeOut" },
+        }}
+        className="w-2/3 mt-11 text-left text-base text-zinc-800 font-trap font-medium"
+      >
+        {description}
+      </motion.p>
     </div>
   );
 }

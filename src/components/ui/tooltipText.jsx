@@ -48,13 +48,13 @@ export const TooltipText = ({
         {show && (
           <motion.span
             key="tooltip"
-            initial={{ opacity: 0, y: -20 }}
+            initial={{ opacity: 0, y: -10 }}
             animate={{
               opacity: 1,
               x: -coords.x,
               y: coords.y,
             }}
-            exit={{ opacity: 0, y: 20 }}
+            exit={{ opacity: 0, y: 10}}
             transition={{ duration: 0.2, ease: "linear" }}
             className="hidden md:block absolute -bottom-full left-0 md:w-max px-3 py-1 text-base text-white font-trap font-normal rounded shadow-md z-50 pointer-events-none select-none whitespace-nowrap"
             style={{

@@ -1,5 +1,6 @@
 import Mail from "../../public/assets/svg/mail";
 import MapPin from "../../public/assets/svg/map-pin";
+import { Instagram, WhatsApp } from "../../public/assets/svg/socialMedia";
 
 const year = new Date().getFullYear();
 
@@ -101,18 +102,24 @@ export const landingPage = {
 
     socialLinks: [
       {
-        platform: "Facebook",
-        url: "https://www.facebook.com/porinoi",
+        handleName: "@parinayassam",
+        icon: <Instagram width={25} height={25} />,
+        url: "https://www.instagram.com/parinayassam",
+        backgroundColor:
+          "linear-gradient(136deg,rgba(249, 206, 52, 1) 0%, rgba(238, 42, 123, 1) 40%, rgba(98, 40, 215, 1) 89%)",
       },
       {
-        platform: "Instagram",
-        url: "https://www.instagram.com/porinoi",
+        handleName: "@parinayCommunity",
+        icon: <WhatsApp width={25} height={25} />,
+        url: "https://www.whatsApp.com/porinoi",
+        backgroundColor:
+          "linear-gradient(44deg,rgba(7, 94, 84, 1) 0%, rgba(37, 211, 102, 1) 28%)",
       },
     ],
 
     formDetails: {
-      // formTitle: "Let’s begin something beautiful.",
-      // formDescription: "Tell us a bit about yourself and what brings you here.",
+      // formTitle: "",
+      // formDescription: "",
       formFields: [
         {
           label: "Your name",
@@ -133,15 +140,15 @@ export const landingPage = {
           type: "checkbox-group",
           name: "helpOptions",
           options: [
-            "I want to know more about Porinoi",
-            "I'm curious — just exploring love online",
-            "I'm hoping to find my future match here",
-            "I’d love to invite someone I care about",
-            "I believe in meaningful, slow connections",
-            "I’m not ready yet, but Porinoi feels right",
-            "I’m cheering you on — love this idea!",
-            "I’d like early access before the app launches",
-            "I’m dreaming of something real and rooted",
+            "I want to know more about Porinoi.",
+            "I'm curious — just exploring love online.",
+            "I'm hoping to find my future match here.",
+            "I’d love to invite someone I care about.",
+            "I believe in meaningful, slow connections.",
+            "I’m not ready yet, but Porinoi feels right.",
+            "I’m cheering you on — love this idea!.",
+            "I’d like early access before the app launches.",
+            "I’m dreaming of something real and rooted.",
           ],
         },
         {
@@ -159,7 +166,7 @@ export const landingPage = {
         },
         {
           label: "Phone number",
-          type: "number",
+          type: "tel",
           placeholder: "Required for early invite access",
           name: "phone",
           required: true,
@@ -185,5 +192,128 @@ export const landingPage = {
     ],
     copyright: `© ${year} Porinoi. All rights reserved.`,
     endParagraph: "Made with love in Assam, India.",
+  },
+};
+
+export const authenticationPages = {
+  signUpPage: {
+    title: "Start your journey",
+    subTitle: "of companionship, commitment, and community values.",
+    button: {
+      label: "Already a member?",
+      path: "/signIn",
+      name: "Login Instead",
+    },
+    formDetails: {
+      formTitle: "Join Parinay Today",
+      formFields: [
+        {
+          label: "Your Full Name",
+          type: "text",
+          placeholder: "Your Full Name",
+          name: "fullName",
+          required: true,
+        },
+        {
+          label: "Mobile Number",
+          type: "tel",
+          placeholder: "Mobile Number",
+          prefix: "+91",
+          name: "phone",
+          required: true,
+        },
+        {
+          label: "Set a password",
+          type: "password",
+          placeholder: "Set a password",
+          name: "password",
+          required: true,
+        },
+      ],
+      submitButton: {
+        text: "Create an Account",
+      },
+      formLowerPart: {
+        text: "By signing up you agree to our",
+        links: [
+          {
+            label: "Terms Of Use",
+            path: "/terms",
+          },
+          {
+            label: "Privacy Policy",
+            path: "/privacy-policy",
+          },
+        ],
+      },
+    },
+  },
+
+  signInPage: {
+    title: "Sign in and continue your journey",
+    subTitle:
+      "toward meaningful connections rooted in trust, culture, and compatibility.",
+    button: {
+      label: "New here?",
+      path: "/signUp",
+      name: "signupRedirectButton",
+    },
+    formDetails: {
+      formTitle: "Welcome to Parinay",
+      description:
+        "Enter your Register mobile number and we will send you a OTP for login",
+      formFields: [
+        {
+          label: "Mobile Number",
+          type: "tel",
+          placeholder: "Mobile Number",
+          prefix: "+91",
+          name: "mobileNumber",
+          required: true,
+        },
+      ],
+      submitButton: {
+        label: "Generate OTP",
+        action: "/send-otp",
+      },
+      formLowerPart: {
+        text: "Need Help in Login?",
+        links: [
+          {
+            label: "Help Center",
+            path: "/help-center",
+          },
+        ],
+      },
+    },
+  },
+
+  additionalInfo:
+    "All profiles go through strict Verification. We never share your data. Your safety is our first priority.",
+
+  highlights: [
+    "Trusted Connection",
+    "Verified with Love",
+    "Rooted in Culture",
+    "New Age Platform",
+  ],
+
+  footer: {
+    copyright: "© 2025 Parinay. All rights reserved. Made with ❤️ in Assam.",
+    notes: "A platform by dreamers, for soulmates.",
+    links: [
+      {
+        label: "Terms Of Use",
+        path: "/terms",
+      },
+      {
+        label: "Privacy Policy",
+        path: "/privacy-policy",
+      },
+      {
+        label: "FAQ",
+        path: "/faq",
+      },
+    ],
   },
 };
