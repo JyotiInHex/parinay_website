@@ -1,15 +1,13 @@
 import Image from "next/image";
-import { motion } from "framer-motion";
 import { landingPage } from "@/data/siteStaticData";
-import Link from "next/link";
 import { CustomBtn2 } from "@/components/ui/customBtn";
 
 const LandingFooter = () => {
   const { logo, description, links, copyright, endParagraph } =
     landingPage.footer;
   return (
-    <>
-      <figure className="w-full h-full lg:h-fit mt-10 py-5 grid lg:block place-content-center">
+    <div className="select-none">
+      <figure className="w-full h-full lg:h-fit mt-10 py-5 grid lg:block place-content-center pointer-events-none">
         <Image
           src={logo}
           width={500}
@@ -20,7 +18,7 @@ const LandingFooter = () => {
       </figure>
       <h5 className="text-lg text-zinc-500 font-trap font-semibold">{description}</h5>
       <hr className="my-6 w-full border border-x-zinc-900 rounded-full" />
-      <footer className="w-full h-fit lg:h-full flex flex-col items-center justify-center">
+      <footer className="mt-24 w-full h-fit flex flex-col items-center justify-center">
         <ul className="flex flex-col lg:flex-row items-center gap-3 mb-5">
           {links.map((link, idx) => {
             return (
@@ -39,7 +37,7 @@ const LandingFooter = () => {
           {endParagraph}
         </p>
       </footer>
-    </>
+    </div>
   );
 };
 

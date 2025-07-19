@@ -1,8 +1,8 @@
 import { motion } from "framer-motion";
+import Star from "../../../public/assets/svg/star";
 import { landingPage } from "@/data/siteStaticData";
-import Paragraph from "../components/ui/paragraph";
-import CustomBtn from "../components/ui/customBtn";
-import Star from "../../public/assets/svg/star";
+import Paragraph from "@/components/ui/paragraph";
+import CustomBtn from "@/components/ui/customBtn";
 import SectionTitle from "@/components/ui/sectionTitle";
 
 const ShortAboutSection = () => {
@@ -16,7 +16,9 @@ const ShortAboutSection = () => {
 
         <Paragraph
           value={about.description}
-          className={"text-zinc-600 text-2xl font-trap font-medium justify-between"}
+          className={
+            "text-zinc-600 text-2xl font-trap font-medium justify-between"
+          }
         />
 
         <ul className="flex flex-wrap flex-row items-center gap-3 text-zinc-600 text-lg font-trap font-medium">

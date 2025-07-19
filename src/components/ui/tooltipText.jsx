@@ -44,28 +44,26 @@ export const TooltipText = ({
     >
       <p className="cursor-pointer">{children}</p>
 
-      <AnimatePresence>
-        {show && (
-          <motion.span
-            key="tooltip"
-            initial={{ opacity: 0, y: -10 }}
-            animate={{
-              opacity: 1,
-              x: -coords.x,
-              y: coords.y,
-            }}
-            exit={{ opacity: 0, y: 10}}
-            transition={{ duration: 0.2, ease: "linear" }}
-            className="hidden md:block absolute -bottom-full left-0 md:w-max px-3 py-1 text-base text-white font-trap font-normal rounded shadow-md z-50 pointer-events-none select-none whitespace-nowrap"
-            style={{
-              ...customStyle,
-              transform: "translate(50%, -50%)",
-            }}
-          >
-            {tooltip}
-          </motion.span>
-        )}
-      </AnimatePresence>
+      {show && (
+        <motion.span
+          key="tooltip"
+          initial={{ opacity: 0, y: -10 }}
+          animate={{
+            opacity: 1,
+            x: -coords.x,
+            y: coords.y,
+          }}
+          exit={{ opacity: 0, y: 10 }}
+          transition={{ duration: 0.2, ease: "linear" }}
+          className="hidden md:block absolute -bottom-full left-0 md:w-max px-3 py-1 text-base text-white font-trap font-normal rounded shadow-md z-50 pointer-events-none select-none whitespace-nowrap"
+          style={{
+            ...customStyle,
+            transform: "translate(50%, -50%)",
+          }}
+        >
+          {tooltip}
+        </motion.span>
+      )}
     </div>
   );
 };

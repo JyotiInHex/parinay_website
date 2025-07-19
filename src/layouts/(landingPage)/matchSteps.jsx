@@ -1,9 +1,9 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
+import Arrow from "../../../public/assets/svg/arrow";
 import { landingPage } from "@/data/siteStaticData";
 import SectionTitle from "@/components/ui/sectionTitle";
-import Arrow from "../../public/assets/svg/arrow";
 
 export default function MatchStepsSection() {
   const { title, description, steps } = landingPage.stepsSection;
@@ -108,14 +108,14 @@ const StepCard = ({ step, i }) => {
 
         <motion.figure
           variants={{
-            rest: { x: 50, y: 150, scale: 0.9, rotate: 10, opacity: 0 },
+            rest: { x: 30, y: 150, scale: 0.9, rotate: 10, opacity: 0 },
             hover: { x: 0, y: 0, scale: 1, rotate: 0, opacity: 1 },
           }}
           transition={{
             duration: 0.4,
             ease: "linear",
           }}
-          className="w-full min-w-[20vw] h-[40vh] overflow-hidsden rounded-2xl"
+          className="w-full min-w-[20vw] h-[40vh] overflow-hidden rounded-2xl pointer-events-none"
         >
           <Image
             src={step.image}

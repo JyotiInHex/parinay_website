@@ -1,12 +1,12 @@
 "use client";
 import { motion } from "framer-motion";
-import HeaderSection from "@/layouts/landingHeader";
+import HeaderSection from "@/layouts/(landingPage)/landingHeader";
 import ScrollRibbon from "../components/ui/ribbonScroll";
-import ShortAboutSection from "@/layouts/shortAbout";
-import StandOutSection from "@/layouts/standOut";
-import MatchStepsSection from "@/layouts/matchSteps";
-import GetInTouch from "@/layouts/getInTouch";
-import LandingFooter from "@/layouts/landingFooter";
+import ShortAboutSection from "@/layouts/(landingPage)/shortAbout";
+import StandOutSection from "@/layouts/(landingPage)/standOut";
+import MatchStepsSection from "@/layouts/(landingPage)/matchSteps";
+import GetInTouch from "@/layouts/(landingPage)/getInTouch";
+import LandingFooter from "@/layouts/(landingPage)/landingFooter";
 
 export default function Home() {
   return (

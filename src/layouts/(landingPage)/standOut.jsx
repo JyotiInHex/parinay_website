@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
+import Arrow from "../../../public/assets/svg/arrow";
 import { landingPage } from "@/data/siteStaticData";
 import SectionTitle from "@/components/ui/sectionTitle";
-import Arrow from "../../public/assets/svg/arrow";
 import ImageCard from "@/components/ui/imageCard";
 
 export default function StandOutSection() {

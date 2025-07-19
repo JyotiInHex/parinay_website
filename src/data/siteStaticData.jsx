@@ -1,6 +1,12 @@
 import Mail from "../../public/assets/svg/mail";
 import MapPin from "../../public/assets/svg/map-pin";
 import { Instagram, WhatsApp } from "../../public/assets/svg/socialMedia";
+import {
+  StartFour,
+  StartOne,
+  StartThree,
+  StartTwo,
+} from "../../public/assets/svg/stars";
 
 const year = new Date().getFullYear();
 
@@ -169,6 +175,8 @@ export const landingPage = {
           type: "tel",
           placeholder: "Required for early invite access",
           name: "phone",
+          prefix: "+91",
+          pattern: "^[6-9]\\d{9}$",
           required: true,
           requiredIf: "earlyAccess",
         },
@@ -210,23 +218,27 @@ export const authenticationPages = {
         {
           label: "Your Full Name",
           type: "text",
-          placeholder: "Your Full Name",
+          placeholder: "Eg: Rupam Das",
           name: "fullName",
           required: true,
         },
         {
           label: "Mobile Number",
           type: "tel",
-          placeholder: "Mobile Number",
+          placeholder: "Enter 10-digit mobile number",
           prefix: "+91",
           name: "phone",
+          pattern: "^[6-9]\\d{9}$",
           required: true,
         },
         {
           label: "Set a password",
           type: "password",
-          placeholder: "Set a password",
+          placeholder: "Try something like MyPass@123",
           name: "password",
+          minLength: 8,
+          pattern:
+            "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*])[A-Za-z\\d!@#$%^&*]{8,}$",
           required: true,
         },
       ],
@@ -256,25 +268,25 @@ export const authenticationPages = {
     button: {
       label: "New here?",
       path: "/signUp",
-      name: "signupRedirectButton",
+      name: "Register Now!",
     },
     formDetails: {
       formTitle: "Welcome to Parinay",
-      description:
+      formDescription:
         "Enter your Register mobile number and we will send you a OTP for login",
       formFields: [
         {
           label: "Mobile Number",
           type: "tel",
-          placeholder: "Mobile Number",
+          placeholder: "Enter Porinoi verified mobile number",
           prefix: "+91",
-          name: "mobileNumber",
+          name: "phone",
+          pattern: "^[6-9]\\d{9}$",
           required: true,
         },
       ],
       submitButton: {
-        label: "Generate OTP",
-        action: "/send-otp",
+        text: "Generate OTP",
       },
       formLowerPart: {
         text: "Need Help in Login?",
@@ -292,15 +304,27 @@ export const authenticationPages = {
     "All profiles go through strict Verification. We never share your data. Your safety is our first priority.",
 
   highlights: [
-    "Trusted Connection",
-    "Verified with Love",
-    "Rooted in Culture",
-    "New Age Platform",
+    {
+      name: "Trusted Connection",
+      icon: <StartOne className={"text-white"} width={25} />,
+    },
+    {
+      name: "Verified with Love",
+      icon: <StartTwo className={"text-white"} width={25} />,
+    },
+    {
+      name: "Rooted in Culture",
+      icon: <StartThree className={"text-white"} width={25} />,
+    },
+    {
+      name: "New Age Platform",
+      icon: <StartFour className={"text-white"} width={25} />,
+    },
   ],
 
   footer: {
-    copyright: "© 2025 Parinay. All rights reserved. Made with ❤️ in Assam.",
-    notes: "A platform by dreamers, for soulmates.",
+    copyright: "© 2025 Parinay. All rights reserved.",
+    note: "A platform by dreamers, for soulmates.",
     links: [
       {
         label: "Terms Of Use",

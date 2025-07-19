@@ -1,3 +1,5 @@
+"use client";
+
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import Arrow from "../../../public/assets/svg/arrow";
@@ -78,7 +80,7 @@ export const CustomBtn2 = ({
   children,
   type = "button",
   path = "",
-  icon = Boolean,
+  icon = true,
 }) => {
   const router = useRouter();
   const handleClick = () => {
@@ -87,7 +89,7 @@ export const CustomBtn2 = ({
   return (
     <button
       type={type}
-      className="relative w-full text-black py-2 px-4 overflow-hidden translate-z-0 before:bg-white before:w-full before:h-full before:absolute before:left-0 before:top-0 after:absolute after:inset-0 after:scale-y-0 after:origin-top after:bg-gradient-to-tr after:from-orange-600 after:to-pink-600 after:transition-transform after:duration-300 hover:after:scale-y-100 hover:after:origin-bottom cursor-pointer group"
+      className="relative w-full text-black py-2 px-4 overflow-hidden translate-z-0 before:bg-white before:w-full before:h-full before:absolute before:left-0 before:top-0 after:absolute after:inset-0 after:scale-y-0 after:origin-top after:bg-gradient-to-tr after:from-orange-600 after:to-pink-600 after:transition-transform after:duration-300 hover:after:scale-y-100 hover:after:origin-bottom cursor-pointer group shadow-md select-none"
       onClick={handleClick}
     >
       <span className="relative z-10 inline-block text-base text-zinc-800 font-semibold font-trap transition-colors duration-500 group-hover:text-white ">

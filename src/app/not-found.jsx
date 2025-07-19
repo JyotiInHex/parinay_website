@@ -35,7 +35,12 @@ export default function NotFound() {
           variants={fadeUp}
           className="flex flex-col items-center justify-center"
         >
-          <Image src={"/assets/svg/logo_main.svg"} width={150} height={50} alt="Logo" />
+          <Image
+            src={"/assets/svg/logo_main.svg"}
+            width={150}
+            height={50}
+            alt="Logo"
+          />
         </motion.figure>
 
         <motion.div
@@ -84,23 +89,15 @@ export default function NotFound() {
           >
             <CustomLink
               label={"Beam_Me_Back"}
-              customStyle={{
-                textDecorationLine: "underline",
-                color: "#F7901E",
-                fontSize: "16px",
-              }}
               type="button"
+              className="underline text-pink-600 font-semibold"
               onClick={() => router.back()}
             />
             <span className="w-0.5 h-5 bg-zinc-400 rounded-full"></span>
             <CustomLink
               label={"Help_Signal"}
-              path="/contact"
-              customStyle={{
-                textDecorationLine: "underline",
-                color: "#EC008C",
-                fontSize: "16px",
-              }}
+              path="/help"
+              className="underline text-orange-600 font-semibold"
             />
           </motion.div>
         </motion.div>

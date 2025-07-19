@@ -1,5 +1,4 @@
 "use client";
-import Image from "next/image";
 import { motion } from "framer-motion";
 import { useLayoutEffect, useState } from "react";
 import Heart from "../../../public/assets/svg/heart";

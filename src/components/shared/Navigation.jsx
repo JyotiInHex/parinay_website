@@ -95,7 +95,7 @@ export default function Navigation() {
       </div>
 
       {device === "mobile" || device === "tablet" ? (
-        <AnimatePresence>
+        <AnimatePresence mode="wait">
           {isOpen && (
             <motion.nav
               initial="hidden"

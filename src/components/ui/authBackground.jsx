@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const AuthBackground = () => {
   return (
-    <AnimatePresence>
+    <>
       <motion.div
         key={"One"}
         animate={{ x: ["0%", "-100%"] }}
@@ -58,7 +58,7 @@ const AuthBackground = () => {
           );
         })}
       </motion.div>
-    </AnimatePresence>
+    </>
   );
 };
 

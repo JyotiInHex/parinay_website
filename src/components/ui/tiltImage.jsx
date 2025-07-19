@@ -66,7 +66,7 @@ export const TiltImage = ({
           alt={altText}
           width={width}
           height={height}
-          className="w-1/2 md:w-full"
+          className="w-1/2 md:w-full pointer-events-none"
         />
       </figure>
     </motion.div>

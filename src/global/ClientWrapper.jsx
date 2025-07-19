@@ -43,9 +43,9 @@ export default function ClientWrapper({ children }) {
         <motion.div
           key={pathname + "-in"}
           className="slide-In absolute inset-0 w-full h-screen bg-gradient-to-bl from-orange-500 to-pink-600 origin-bottom z-50 grid place-content-center select-none pointer-events-auto overflow-hidden"
-          initial={{ scaleY: 1 }}
+          initial={{ scaleY: 0 }}
           animate={{ scaleY: 0 }}
-          exit={{ scaleY: 0 }}
+          exit={{ scaleY: 1 }}
           transition={{ duration: 0.5, ease: "circInOut" }}
         >
           <figure className="flex flex-col items-center justify-center gap-1.5 md:gap-3.5">
@@ -65,9 +65,9 @@ export default function ClientWrapper({ children }) {
         <motion.div
           key={pathname + "-out"}
           className="slide-out absolute inset-0 w-full h-screen bg-gradient-to-bl from-orange-500 to-pink-600 origin-top z-40 grid place-content-center select-none pointer-events-auto overflow-hidden"
-          initial={{ scaleY: 0 }}
+          initial={{ scaleY: 1 }}
           animate={{ scaleY: 0 }}
-          exit={{ scaleY: 1 }}
+          exit={{ scaleY: 0 }}
           transition={{ duration: 0.5, ease: "circInOut" }}
         >
           <figure className="flex flex-col items-center justify-center gap-1.5 md:gap-3.5">

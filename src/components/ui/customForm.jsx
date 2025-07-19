@@ -1,13 +1,16 @@
-import { useLayoutEffect, useState } from "react";
+"use client";
+
+import React, { useLayoutEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Check from "../../../public/assets/svg/check";
-import Arrow from "../../../public/assets/svg/arrow";
 import { CustomBtn2 } from "./customBtn";
+import { CustomLink } from "./customLink";
 
 export default function CustomForm({
   formTitle,
   formDescription,
   formFields,
+  formLowerPart,
   submitButton,
   backGround,
 }) {
@@ -63,20 +66,24 @@ export default function CustomForm({
     <motion.div
       initial={{ opacity: 0, x: 100 }}
       whileInView={{ opacity: 1, x: 0 }}
-      transition={{ duration: 0.65, ease: "easeOut" }}
+      transition={{ duration: 0.65, delay: 0.5, ease: "easeOut" }}
       viewport={{ once: true, amount: 0.5 }}
-      className="max-w-xl mx-auto p-6 rounded-2xl shadow-lg"
+      className="max-w-xl min-w-xl mx-auto rounded-2xl shadow-lg overflow-hidden"
       style={{ background: backGround || "#f8f3e9" }}
     >
-      <h2 className="text-zinc-800 text-2xl font-semibold font-trap">
-        {formTitle}
-      </h2>
+      {formTitle && (
+        <h2 className="bg-pink-600 text-center text-white text-xl font-bold font-trap py-3 px-6">
+          {formTitle}
+        </h2>
+      )}
 
-      <p className="text-gray-600 text-base font-trap font-medium">
-        {formDescription}
-      </p>
+      {formDescription && (
+        <p className="text-gray-600 text-lg font-trap font-medium px-6 py-3">
+          {formDescription}
+        </p>
+      )}
 
-      <form onSubmit={handleSubmit} className="space-y-4 mt-3 w-full">
+      <form onSubmit={handleSubmit} className="space-y-4 w-full py-8 px-6">
         {formFields.map((field, idx) => {
           if (
             field.type === "text" ||
@@ -134,6 +141,30 @@ export default function CustomForm({
 
         <CustomBtn2 type="submit">{submitButton.text}</CustomBtn2>
       </form>
+
+      {formLowerPart && (
+        <>
+          <hr className="mx-auto w-11/12 border-zinc-400 py-0.5" />
+          <div className="w-full h-auto py-4 px-6 flex flex-row flex-wrap items-center justify-center gap-1.5 text-sm font-semibold font-trap">
+            <h5 className="text-center">{formLowerPart.text}</h5>
+            {formLowerPart.links &&
+              formLowerPart.links.map((link, idx) => {
+                return (
+                  <React.Fragment key={idx}>
+                    <CustomLink
+                      type="link"
+                      path={link.path}
+                      label={link.label}
+                      className="underline text-orange-600"
+                      customStyle={{ fontSize: "14px" }}
+                    />
+                    {idx < formLowerPart.links.length - 1 && <span>&</span>}
+                  </React.Fragment>
+                );
+              })}
+          </div>
+        </>
+      )}
     </motion.div>
   );
 }
@@ -198,6 +229,8 @@ const InputField = ({
   name,
   required,
   value,
+  minLength,
+  pattern,
   onChange,
 }) => {
   const inputId = `${label.replace(/\s+/g, "-").toLowerCase()}-${type}`;
@@ -236,6 +269,8 @@ const InputField = ({
           placeholder={placeholder}
           required={required}
           value={value}
+          pattern={pattern}
+          minLength={minLength}
           onChange={onChange}
           autoComplete="off"
           autoCorrect="on"
