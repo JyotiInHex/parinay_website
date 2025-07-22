@@ -1,90 +1,129 @@
-import { motion } from "framer-motion";
-import Arrow from "../../../public/assets/svg/arrow";
+import { useState } from "react";
 import { landingPage } from "@/data/siteStaticData";
-import SectionTitle from "@/components/ui/sectionTitle";
-import ImageCard from "@/components/ui/imageCard";
+import { AnimatePresence, motion } from "framer-motion";
+import Arrow from "../../../public/assets/svg/arrow";
+import { FadeInSlideTitle } from "@/components/ui/sectionTitle";
+import Image from "next/image";
 
 export default function StandOutSection() {
-  const { title, cards, image } = landingPage.whyStandOut;
+  const { title, cards } = landingPage.whyStandOut;
+  const [cardIndex, setCardIndex] = useState(0);
 
   return (
     <div className="select-none w-auto h-max">
-      <SectionTitle className="text-center text-3xl font-trap font-bold">
+      <FadeInSlideTitle className="text-left text-xl font-porinoi-sans font-semibold">
         {title}
-      </SectionTitle>
-      <div className="py-14 grid grid-cols-[auto_1fr_auto] items-center gap-x-10 gap-6 w-full h-full">
-        <div className="space-y-6">
-          {cards.slice(0, 2).map((card, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, x: 350, rotate: 20 }}
-              whileInView={{ opacity: 1, x: 0, rotate: 0 }}
-              viewport={{ once: true, amount: 0.6 }}
-              transition={{
-                duration: 1,
-                ease: "anticipate",
-                delay: index * 0.15,
-              }}
-              className="active"
-            >
-              <Card className="rounded-xl drop-shadow-2xl drop-shadow-[#27272a0e] activeContainer">
-                <p className="flex flex-row gap-2.5 items-center text-lg text-zinc-800 group-hover:text-white font-trap font-semibold transition-all duration-300 ease-in-out activeText">
-                  <Arrow width={20} height={20} />
-                  {card.title}
-                </p>
-                <h3 className="text-xl text-zinc-800 group-hover:text-white font-trap font-semibold transition-all duration-300 ease-in-out activeText">
-                  {card.description}
-                </h3>
-              </Card>
-            </motion.div>
-          ))}
-        </div>
+      </FadeInSlideTitle>
 
-        <figure className="relative">
-          <ImageCard
-            imagePath={image}
-            width={1000}
-            height={1000}
-            className="rounded-xl w-fit h-auto"
-          />
-        </figure>
+      <motion.h3
+        className="mt-6 text-2xl text-zinc-800 font-semibold font-mono"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.2, duration: 0.5 }}
+        viewport={{ once: true, amount: 0.35 }}
+      >
+        {(cardIndex + 1).toLocaleString().padStart(2, "0")}
+        <span className="text-zinc-400">
+          {" "}
+          — {cards.length.toLocaleString().padStart(2, "0")}
+        </span>
+      </motion.h3>
 
-        <div className="space-y-6">
-          {cards.slice(2, 4).map((card, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, x: -360, rotate: -20 }}
-              whileInView={{ opacity: 1, x: 0, rotate: 0 }}
-              viewport={{ once: true, amount: 0.6 }}
-              transition={{
-                duration: 1,
-                ease: "anticipate",
-                delay: index * 0.15,
-              }}
-            >
-              <Card className="rounded-xl drop-shadow-2xl drop-shadow-[#27272a0e]">
-                <p className="flex flex-row gap-2.5 items-center text-lg text-zinc-800 font-trap font-semibold transition-all duration-300 ease-in-out">
-                  <Arrow width={20} height={20} />
+      <div className="relative mt-24 grid grid-cols-2 items-end gap-10">
+        <ul className="w-full h-full flex flex-col items-center">
+          {cards.map((card, idx) => {
+            return (
+              <motion.li
+                key={idx}
+                className="relative overflow-hidden translate-z-0 w-full h-auto flex flex-row items-center justify-between border-b border-zinc-700 p-5 before:w-full before:h-full before:absolute before:inset-0 after:absolute after:inset-0 after:-z-[1] after:scale-y-0 after:origin-top after:bg-gradient-to-tr after:from-orange-600 after:to-pink-600 after:transition-transform after:duration-300 hover:after:scale-y-100 hover:after:origin-bottom group"
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, amount: 0.45 }}
+                transition={{
+                  duration: 0.6,
+                  delay: idx * 0.15,
+                  ease: [0.25, 1, 0.5, 1],
+                }}
+                onMouseEnter={() => setCardIndex(idx)}
+              >
+                <motion.h3
+                  className={`text-4xl font-porinoi-sans font-semibold ${
+                    cardIndex !== idx
+                      ? "text-zinc-500"
+                      : "text-zinc-800 group-hover:text-white group-hover:translate-x-2"
+                  } transition-all duration-300 ease-linear`}
+                >
                   {card.title}
-                </p>
-                <h3 className="text-xl text-zinc-800 font-trap font-semibold transition-all duration-300 ease-in-out">
-                  {card.description}
-                </h3>
-              </Card>
-            </motion.div>
-          ))}
-        </div>
+                </motion.h3>
+
+                {cardIndex === idx && (
+                  <motion.div
+                    initial={{ opacity: 0, x: -15 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ type: "tween", stiffness: 300 }}
+                    className={`scale-150 ${
+                      cardIndex !== idx
+                        ? "text-zinc-500"
+                        : "text-zinc-800 group-hover:text-white"
+                    } transition-colors duration-300 ease-linear`}
+                  >
+                    <Arrow className="rotate-45" />
+                  </motion.div>
+                )}
+              </motion.li>
+            );
+          })}
+        </ul>
+
+        <AnimatePresence mode="wait">
+          <motion.figure
+            key={cardIndex}
+            className="absolute -bottom-24 right-20 z-0 w-full max-w-sm h-[70vh] overflow-hidden rounded-2xl shadow-2xl bg-white/5 backdrop-blur-sm ring-1 ring-zinc-200/20 origin-bottom"
+            initial={{ opacity: 0, y: 80, rotate: -35, scale: 0.8 }}
+            animate={{ opacity: 1, y: 0, rotate: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -60, rotate: 15, scale: 0.9 }}
+            transition={{ duration: 0.6, ease: [0.33, 1, 0.68, 1] }}
+          >
+            <Image
+              src={cards[cardIndex].image}
+              width={480}
+              height={320}
+              alt={cards[cardIndex].title}
+              className="w-full h-full object-cover rounded-2xl transition-transform duration-700 ease-in-out pointer-events-none select-none brightness-110 contrast-105 saturate-[1.1] "
+              quality={100}
+              loading="lazy"
+              sizes="(max-width: 768px) 90vw, 320px"
+            />
+
+            <motion.figcaption
+              key={`desc-${cardIndex}`}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{
+                duration: 0.5,
+                delay: 0.15,
+                ease: [0.33, 1, 0.68, 1],
+              }}
+              className="absolute bottom-0 w-full h-fit px-6 pt-10 pb-5 bg-gradient-to-t from-black from-35% to-transparent overflow-hidden"
+            >
+              <motion.p
+                initial={{ y: 100 }}
+                animate={{ y: 0 }}
+                exit={{ y: -100 }}
+                transition={{
+                  duration: 0.5,
+                  delay: 0.25,
+                  ease: [0.33, 1, 0.68, 1],
+                }}
+                className="text-2xl text-white font-porinoi-sans font-medium leading-snug"
+              >
+                {cards[cardIndex].description}
+              </motion.p>
+            </motion.figcaption>
+          </motion.figure>
+        </AnimatePresence>
       </div>
     </div>
   );
 }
-
-export const Card = ({ children, className }) => {
-  return (
-    <motion.div
-      className={`p-5 bg-white w-fit h-max max-w-[31vw] space-y-6 transition-color duration-700 ease-linear ${className}`}
-    >
-      {children}
-    </motion.div>
-  );
-};

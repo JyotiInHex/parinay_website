@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { useRouter, usePathname } from "next/navigation";
 
 export const CustomLink = ({
-  type = "link", // "link" or "button"
+  type = "link",
   index = 0,
   label,
   path = "",
@@ -43,7 +43,7 @@ export const CustomLink = ({
       ease: "anticipate",
     },
     className:
-      "relative block md:h-5 overflow-hidden list-none whitespace-nowrap select-none",
+      "relative z-10 block md:h-5 overflow-hidden list-none whitespace-nowrap select-none",
     style: { height: "auto" },
   };
 
@@ -59,11 +59,10 @@ export const CustomLink = ({
           ease: "easeInOut",
           delay: 0.025 * i,
         }}
-        className={`inline-block text-base font-medium font-trap cursor-pointer ${className}`}
+        className={`inline-block ${className}`}
         style={{
           ...customStyle,
           color: isActive ? "#e60076" : "",
-          fontWeight: isActive ? 600 : "normal",
         }}
       >
         {l === " " ? "\u00A0" : l}

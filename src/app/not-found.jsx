@@ -49,21 +49,21 @@ export default function NotFound() {
         >
           <motion.h2
             variants={fadeUp}
-            className="text-base lg:text-lg font-trap font-semibold text-zinc-300"
+            className="text-base lg:text-lg font-porinoi-sans font-semibold text-zinc-300"
           >
             Error Code 404
           </motion.h2>
 
           <motion.h3
             variants={fadeUp}
-            className="text-4xl lg:text-6xl font-black font-trap text-zinc-900"
+            className="text-4xl lg:text-6xl font-black font-porinoi-sans text-zinc-900"
           >
             OOOOPS!!
           </motion.h3>
 
           <motion.h5
             variants={fadeUp}
-            className="w-fit lg:w-1/3 text-xl lg:text-3xl font-semibold font-trap text-zinc-700"
+            className="w-fit lg:w-1/3 text-xl lg:text-3xl font-semibold font-porinoi-sans text-zinc-700"
           >
             You’ve entered a black hole in the Parinay universe!
           </motion.h5>
@@ -90,14 +90,14 @@ export default function NotFound() {
             <CustomLink
               label={"Beam_Me_Back"}
               type="button"
-              className="underline text-pink-600 font-semibold"
+              className="underline text-pink-600 font-semibold font-porinoi-sans"
               onClick={() => router.back()}
             />
             <span className="w-0.5 h-5 bg-zinc-400 rounded-full"></span>
             <CustomLink
               label={"Help_Signal"}
               path="/help"
-              className="underline text-orange-600 font-semibold"
+              className="underline text-orange-600 font-semibold font-porinoi-sans"
             />
           </motion.div>
         </motion.div>
@@ -106,7 +106,7 @@ export default function NotFound() {
           initial={{ opacity: 0, x: 100 }}
           animate={{ opacity: 0.2, x: 0 }}
           transition={{ delay: 0.8, duration: 1.2, ease: "easeOut" }}
-          className="absolute -z-0 -right-1 lg:-right-5 -bottom-20 lg:-bottom-1/3 text-[30vh] lg:text-[70vh] md:text-[50vh] font-trap font-bold text-neutral-600 pointer-events-none"
+          className="absolute -z-0 -right-1 lg:-right-5 -bottom-20 lg:-bottom-1/3 text-[30vh] lg:text-[70vh] md:text-[50vh] font-porinoi-sans font-bold text-neutral-600 pointer-events-none"
         >
           404
         </motion.h2>

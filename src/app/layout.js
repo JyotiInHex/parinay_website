@@ -1,24 +1,32 @@
 import "./globals.css";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist_Mono } from "next/font/google";
 import localFont from "next/font/local";
-import ClientWrapper from "@/global/ClientWrapper"; // Create this
+import ClientWrapper from "@/global/ClientWrapper";
 
-const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  display: "swap",
 });
 
-const trap = localFont({
+const porinoi_sans = localFont({
   src: [
-    { path: "/fonts/trap/Trap-Light.woff", weight: "300", style: "normal" },
-    { path: "/fonts/trap/Trap-Regular.woff", weight: "400", style: "normal" },
-    { path: "/fonts/trap/Trap-Medium.woff", weight: "500", style: "normal" },
-    { path: "/fonts/trap/Trap-SemiBold.woff", weight: "600", style: "normal" },
-    { path: "/fonts/trap/Trap-ExtraBold.woff", weight: "800", style: "normal" },
-    { path: "/fonts/trap/Trap-Black.woff", weight: "900", style: "normal" },
+    { path: "./fonts/porinoi_sans/Porinoi-Sans-Light.woff", weight: "300", style: "normal" },
+    { path: "./fonts/porinoi_sans/Porinoi-Sans-Regular.woff", weight: "400", style: "normal" },
+    { path: "./fonts/porinoi_sans/Porinoi-Sans-Medium.woff", weight: "500", style: "normal" },
+    { path: "./fonts/porinoi_sans/Porinoi-Sans-SemiBold.woff", weight: "600", style: "normal" },
+    { path: "./fonts/porinoi_sans/Porinoi-Sans-ExtraBold.woff", weight: "800", style: "normal" },
+    { path: "./fonts/porinoi_sans/Porinoi-Sans-Black.woff", weight: "900", style: "normal" },
   ],
-  variable: "--font-trap",
+  variable: "--font-porinoi-sans",
+  display: "swap",
+});
+
+const porinoi_display = localFont({
+  src: [
+    { path: "./fonts/porinoi_display/Porinoi-Display-Regular.woff", weight: "400", style: "normal" },
+  ],
+  variable: "--font-porinoi-display",
   display: "swap",
 });
 
@@ -28,11 +36,9 @@ export const metadata = {
     template: "%s • Porinoi",
   },
   description:
-    "A beautifully crafted dating and matrimonial website built with ❤️ for Assam.",
+    "A beautifully crafted dating and matrimonial website built with for Assam.",
   keywords: ["Porinoi", "Matrimony", "Wedding", "Love", "Connection"],
-  authors: [
-    { name: "CEO & Founder - Gayatri Duwarah, Co-Founder - ParagJyoti Das" },
-  ],
+  authors: [{ name: "CEO & Founder - Gayatri Duwarah, Co-Founder - ParagJyoti Das" }],
   creator: "CEO & Founder - Gayatri Duwarah, Co-Founder - ParagJyoti Das",
   openGraph: {
     title: "Porinoi - Built For Love, Designed For Tradition.",
@@ -52,12 +58,9 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
-
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} ${trap.variable} antialiased`}
-      >
+    <html lang="en" className={`${geistMono.variable} ${porinoi_sans.variable} ${porinoi_display.variable} `}>
+      <body className="antialiased">
         <ClientWrapper>{children}</ClientWrapper>
       </body>
     </html>

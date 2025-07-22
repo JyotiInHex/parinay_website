@@ -1,17 +1,17 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import Arrow from "../../../public/assets/svg/arrow";
 import { landingPage } from "@/data/siteStaticData";
-import SectionTitle from "@/components/ui/sectionTitle";
+import { FadeInSlideTitle } from "@/components/ui/sectionTitle";
+import { CustomBtn2 } from "@/components/ui/customBtn";
 
 export default function MatchStepsSection() {
   const { title, description, steps } = landingPage.stepsSection;
   return (
     <div className="w-full h-auto select-none">
-      <SectionTitle className="max-w-2/6 h-auto text-left text-3xl text-zinc-800 font-trap font-bold">
+      <FadeInSlideTitle className="max-w-2/6 h-auto text-left text-3xl text-zinc-800 font-porinoi-sans font-bold">
         {title}
-      </SectionTitle>
+      </FadeInSlideTitle>
       <div className="mt-20 relative w-full h-auto  flex flex-col lg:flex-row gap-7">
         {steps.map((step, index) => (
           <StepCard key={index} step={step} i={index} />
@@ -31,7 +31,7 @@ export default function MatchStepsSection() {
           y: { duration: 0.8, ease: "easeOut" },
           opacity: { duration: 0.5, ease: "easeOut" },
         }}
-        className="w-2/3 mt-11 text-left text-base text-zinc-800 font-trap font-medium"
+        className="w-2/3 mt-11 text-left text-base text-zinc-800 font-porinoi-sans font-medium"
       >
         {description}
       </motion.p>
@@ -47,7 +47,7 @@ const StepCard = ({ step, i }) => {
       initial={{
         x: i === 0 ? -100 : i === 2 ? 100 : 0,
         y: i === 1 ? 20 : 0,
-        rotate: i === 0 ? 5 : i === 2 ? -5 : 0,
+        rotate: i === 0 ? -5 : i === 2 ? 5 : 0,
         scale: 0.8,
         width: "50%",
         opacity: 0,
@@ -59,20 +59,20 @@ const StepCard = ({ step, i }) => {
         scale: 1,
         opacity: 1,
       }}
-      viewport={{ once: true, amount: 0.995 }}
+      viewport={{ once: true, amount: 0.65 }}
       transition={{
-        x: { duration: 0.8, ease: "easeOut", delay: i * 0.15 },
-        y: { duration: 0.8, ease: "easeOut", delay: i * 0.15 },
-        scale: { duration: 0.6, ease: "easeOut", delay: i * 0.15 },
-        rotate: { duration: 0.6, ease: "easeOut", delay: i * 0.15 },
-        opacity: { duration: 0.5, ease: "easeOut", delay: i * 0.15 },
+        x: { duration: 0.8, ease: [0.33, 1, 0.68, 1] },
+        y: { duration: 0.8, ease: [0.33, 1, 0.68, 1] },
+        scale: { duration: 0.6, ease: [0.33, 1, 0.68, 1] },
+        rotate: { duration: 0.6, ease: [0.33, 1, 0.68, 1] },
+        opacity: { duration: 0.5, ease: [0.33, 1, 0.68, 1] },
         width: { duration: 0.5, ease: "easeInOut" },
       }}
       whileHover={{
         width: "100%",
       }}
       className="h-full rounded-xl overflow-hidden "
-      style={{ backgroundColor: step.color }}
+      style={{ backgroundColor: step.color, transformOrigin: "bottom" }}
     >
       <motion.div
         initial="rest"
@@ -80,29 +80,16 @@ const StepCard = ({ step, i }) => {
         className="w-fit h-fit p-6 grid grid-cols-[14rem_1fr] justify-between gap-5"
       >
         <div className="pt-12 w-full h-[40vh] flex flex-col items-start justify-start space-y-5">
-          <h3 className="text-[20px] text-white font-semibold font-trap">
+          <h3 className="text-[20px] text-white font-semibold font-porinoi-sans">
             {step.title}
           </h3>
 
-          <p className="text-[22px] text-white font-semibold font-trap">
+          <p className="text-[22px] text-white font-semibold font-porinoi-sans">
             {step.description}
           </p>
 
           {step.button && (
-            <motion.button
-              type="button"
-              initial="initial"
-              whileHover="hover"
-              onClick={() => router.push(step.button.path)}
-              className="group mt-5 text-base text-white font-trap font-semibold flex items-end justify-end gap-1.5 cursor-pointer"
-            >
-              <span>{step.button.text}</span>
-              <Arrow
-                width={30}
-                height={30}
-                className="group-hover:rotate-45 transition-all duration-200 ease-linear"
-              />
-            </motion.button>
+            <CustomBtn2 path={step.button.path}>{step.button.text}</CustomBtn2>
           )}
         </div>
 

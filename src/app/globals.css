@@ -6,7 +6,7 @@
 }
 
 :root {
-  --background: #f8f3e9;
+  --background: #ffffff;
   --foreground: #222222;
 
   --garnet: #e4a0a2; /* Lightened Garnet */
@@ -180,9 +180,9 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-  --font-trap: var(--font-trap);
+  --font-porinoi-sans: var(--font-porinoi-sans);
+  --font-porinoi-display: var(--font-porinoi-display);
 }
 .text-border {
   -webkit-text-stroke: 0.5px var(--background);

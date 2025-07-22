@@ -63,7 +63,7 @@ export default function ScrollRibbon({
           return (
             <span
               key={index}
-              className={`inline-flex tracking-wider px-2 gap-5 ${className} font-trap text-white`}
+              className={`inline-flex tracking-wider px-2 gap-5 ${className} font-porinoi-sans text-white`}
             >
               <figure>
                 <IconComponent

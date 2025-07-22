@@ -16,7 +16,9 @@ const LandingFooter = () => {
           className="object-cover w-full h-fit"
         />
       </figure>
-      <h5 className="text-lg text-zinc-500 font-trap font-semibold">{description}</h5>
+      <h5 className="text-lg text-zinc-500 font-porinoi-sans font-semibold">
+        {description}
+      </h5>
       <hr className="my-6 w-full border border-x-zinc-900 rounded-full" />
       <footer className="mt-24 w-full h-fit flex flex-col items-center justify-center">
         <ul className="flex flex-col lg:flex-row items-center gap-3 mb-5">
@@ -30,10 +32,10 @@ const LandingFooter = () => {
             );
           })}
         </ul>
-        <h6 className="text-base text-zinc-800 font-trap font-semibold">
+        <h6 className="text-base text-zinc-800 font-porinoi-sans font-semibold">
           {copyright}
         </h6>
-        <p className="text-sm text-zinc-600 font-trap font-semibold">
+        <p className="text-sm text-zinc-600 font-porinoi-sans font-semibold">
           {endParagraph}
         </p>
       </footer>

@@ -72,13 +72,13 @@ export default function CustomForm({
       style={{ background: backGround || "#f8f3e9" }}
     >
       {formTitle && (
-        <h2 className="bg-pink-600 text-center text-white text-xl font-bold font-trap py-3 px-6">
+        <h2 className="bg-pink-600 text-center text-white text-xl font-bold font-porinoi-sans py-3 px-6">
           {formTitle}
         </h2>
       )}
 
       {formDescription && (
-        <p className="text-gray-600 text-lg font-trap font-medium px-6 py-3">
+        <p className="text-gray-600 text-lg font-porinoi-sans font-medium px-6 py-3">
           {formDescription}
         </p>
       )}
@@ -145,7 +145,7 @@ export default function CustomForm({
       {formLowerPart && (
         <>
           <hr className="mx-auto w-11/12 border-zinc-400 py-0.5" />
-          <div className="w-full h-auto py-4 px-6 flex flex-row flex-wrap items-center justify-center gap-1.5 text-sm font-semibold font-trap">
+          <div className="w-full h-auto py-4 px-6 flex flex-row flex-wrap items-center justify-center gap-1.5 text-sm font-semibold font-porinoi-sans">
             <h5 className="text-center">{formLowerPart.text}</h5>
             {formLowerPart.links &&
               formLowerPart.links.map((link, idx) => {
@@ -185,7 +185,7 @@ const CheckboxField = ({ label, name, checked, onChange }) => {
       />
       <label
         htmlFor={inputId}
-        className="text-base text-zinc-800 font-trap font-medium cursor-pointer"
+        className="text-base text-zinc-800 font-porinoi-sans font-medium cursor-pointer"
       >
         {label}
       </label>
@@ -195,7 +195,7 @@ const CheckboxField = ({ label, name, checked, onChange }) => {
 
 const CheckboxGroupField = ({ label, name, options, selected, onChange }) => (
   <fieldset className="space-y-4">
-    <label className="block text-zinc-800 text-xl font-trap font-medium capitalize">
+    <label className="block text-zinc-800 text-xl font-porinoi-sans font-medium capitalize">
       [{label}]
     </label>
     <div className="flex flex-row flex-wrap gap-2">
@@ -203,7 +203,7 @@ const CheckboxGroupField = ({ label, name, options, selected, onChange }) => (
         <label
           htmlFor={`for-${idx}-option`}
           key={idx}
-          className="w-full grid grid-cols-[auto_1fr] items-start space-x-2 text-base text-zinc-800 font-trap font-medium cursor-pointer"
+          className="w-full grid grid-cols-[auto_1fr] items-start space-x-2 text-base text-zinc-800 font-porinoi-sans font-medium cursor-pointer"
         >
           <input
             id={`for-${idx}-option`}
@@ -239,7 +239,7 @@ const InputField = ({
     <fieldset>
       <label
         htmlFor={inputId}
-        className="relative block text-zinc-800 text-xl font-trap font-medium capitalize "
+        className="relative block text-zinc-800 text-xl font-porinoi-sans font-medium capitalize "
       >
         [{label}]
         <figure
@@ -258,7 +258,7 @@ const InputField = ({
       </label>
       <div className="flex items-center w-full border-2 border-l-0 border-r-0 border-t-0 border-zinc-600 px-0 py-2">
         {prefix && (
-          <span className="text-base text-zinc-500 font-medium font-trap pr-2 select-none">
+          <span className="text-base text-zinc-500 font-medium font-porinoi-sans pr-2 select-none">
             {prefix}
           </span>
         )}
@@ -275,7 +275,7 @@ const InputField = ({
           autoComplete="off"
           autoCorrect="on"
           spellCheck={false}
-          className="w-full bg-transparent outline-none text-base text-zinc-800 font-medium font-trap"
+          className="w-full bg-transparent outline-none text-base text-zinc-800 font-medium font-porinoi-sans"
         />
       </div>
     </fieldset>
@@ -303,7 +303,7 @@ const TextareaField = ({
     <fieldset className="relative">
       <label
         htmlFor={inputId}
-        className="relative block text-zinc-800 text-xl font-trap font-medium capitalize"
+        className="relative block text-zinc-800 text-xl font-porinoi-sans font-medium capitalize"
       >
         [{label}]
         <figure
@@ -332,12 +332,12 @@ const TextareaField = ({
             onChange(e);
           }
         }}
-        className="w-full border-2 border-l-0 border-r-0 border-t-0 border-zinc-600 px-0 py-2 text-base text-zinc-800 font-medium font-trap resize-none custom-scrollbar"
+        className="w-full border-2 border-l-0 border-r-0 border-t-0 border-zinc-600 px-0 py-2 text-base text-zinc-800 font-medium font-porinoi-sans resize-none custom-scrollbar"
         rows={rows}
         maxLength={estimatedMaxLength}
       />
       <span
-        className="absolute -bottom-4 right-0 text-xs text-gray-500 font-semibold font-trap tracking-wide"
+        className="absolute -bottom-4 right-0 text-xs text-gray-500 font-semibold font-porinoi-sans tracking-wide"
         style={{ color: charCount === estimatedMaxLength ? "red" : "" }}
       >
         {charCount}/{estimatedMaxLength}
