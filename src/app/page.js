@@ -1,9 +1,7 @@
 "use client";
 import { usePathname } from "next/navigation";
 import { useLayoutEffect, useState } from "react";
-import { motion } from "framer-motion";
 import HeaderSection from "@/layouts/(landingPage)/heroSection";
-import ScrollRibbon from "../components/ui/ribbonScroll";
 import ShortAboutSection from "@/layouts/(landingPage)/shortAbout";
 import StandOutSection from "@/layouts/(landingPage)/standOut";
 import MatchStepsSection from "@/layouts/(landingPage)/matchSteps";

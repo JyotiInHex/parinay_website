@@ -18,46 +18,56 @@ export function FadeInSlideTitle({ children, className }) {
 export function LetterByLetterRevealTitle({
   children,
   className = "",
-  isWhileInView = false,
   delayStep = 0.06,
   blurAmount = 10,
 }) {
   const isString = typeof children === "string";
   const letters = isString ? children.split("") : [];
 
+  const parentVariants = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: delayStep,
+      },
+    },
+  };
+
+  const childVariants = {
+    hidden: {
+      opacity: 0,
+      y: 30,
+      filter: `blur(${blurAmount}px)`,
+    },
+
+    visible: {
+      opacity: 1,
+      y: 0,
+      filter: "blur(0px)",
+    },
+  };
+
   return (
-    <motion.h2 className={`inline-block w-fit overflow-hidden ${className}`}>
+    <motion.h2
+      variants={parentVariants}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.5 }}
+      className={`w-fit ${className}`}
+    >
       {letters.map((chr, idx) => {
-        const initial = {
-          opacity: 0,
-          y: 30,
-          filter: `blur(${blurAmount}px)`,
-        };
-
-        const animateTo = {
-          opacity: 1,
-          y: 0,
-          filter: "blur(0px)",
-        };
-
         const transition = {
           duration: 0.25,
-          delay: idx * delayStep,
           ease: [0.33, 1, 0.68, 1],
+          delay: idx * delayStep,
         };
 
         return (
           <motion.span
             key={idx}
-            className="inline-block whitespace-pre"
-            initial={initial}
+            className="inline-block whitespace-pre overflow-hidden"
+            variants={childVariants}
             transition={transition}
-            {...(isWhileInView
-              ? {
-                  whileInView: animateTo,
-                  viewport: { once: true },
-                }
-              : { animate: animateTo })}
           >
             {chr === " " ? "\u00A0" : chr}
           </motion.span>

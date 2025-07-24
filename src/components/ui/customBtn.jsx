@@ -81,6 +81,7 @@ export const CustomBtn2 = ({
   type = "button",
   path = "",
   icon = true,
+  className,
 }) => {
   const router = useRouter();
   const handleClick = () => {
@@ -89,10 +90,10 @@ export const CustomBtn2 = ({
   return (
     <button
       type={type}
-      className="relative w-fit text-black py-2 px-4 overflow-hidden translate-z-0 before:bg-white before:w-full before:h-full before:absolute before:left-0 before:top-0 after:absolute after:inset-0 after:scale-y-0 after:origin-top after:bg-gradient-to-tr after:from-orange-600 after:to-pink-600 after:transition-transform after:duration-300 hover:after:scale-y-100 hover:after:origin-bottom cursor-pointer group shadow-md select-none"
+      className={`relative w-fit py-2 px-4 overflow-hidden translate-z-0 before:w-full before:h-full before:absolute before:left-0 before:top-0 after:absolute after:inset-0 after:scale-y-0 after:origin-top after:bg-gradient-to-tr after:from-orange-600 after:to-pink-600 after:transition-transform after:duration-300 hover:after:scale-y-100 hover:after:origin-bottom cursor-pointer group shadow-md select-none ${className}`}
       onClick={handleClick}
     >
-      <span className="relative z-10 inline-block text-base text-zinc-800 font-semibold font-porinoi-sans transition-colors duration-500 group-hover:text-white ">
+      <span className="relative z-10 inline-block text-base font-semibold font-porinoi-sans transition-colors duration-500 group-hover:text-white ">
         <span className="flex items-center gap-4 transition-all duration-300 transform scale-y-100 origin-bottom group-hover:scale-y-0 group-hover:origin-top group-hover:opacity-0">
           {children}
           {icon && (

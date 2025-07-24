@@ -89,7 +89,7 @@ const StepCard = ({ step, i }) => {
           </p>
 
           {step.button && (
-            <CustomBtn2 path={step.button.path}>{step.button.text}</CustomBtn2>
+            <CustomBtn2 path={step.button.path} className={"bg-white"}>{step.button.text}</CustomBtn2>
           )}
         </div>
 

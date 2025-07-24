@@ -8,6 +8,7 @@ import {
   StartThree,
   StartTwo,
 } from "../../public/assets/svg/stars";
+import Heart2 from "../../public/assets/svg/heart-2";
 
 const year = new Date().getFullYear();
 
@@ -46,6 +47,65 @@ export const navigationSection = {
         },
       ],
     },
+  },
+};
+
+export const footerSection = {
+  introText: "Built with love in Assam.",
+  note: "Find your story. Write your future. A new chapter of connection begins here.",
+  callToAction: {
+    label: "Join the Journey",
+    path: "/signUp",
+  },
+
+  contact: {
+    email: {
+      label: "hello@porinoi.com ➚",
+      path: "mailto:hello@porinoi.com",
+    },
+    location: "Based in Assam, rooted in culture.",
+  },
+
+  quickLinks: {
+    discover: [
+      { label: "Home", path: "/" },
+      { label: "About Us", path: "/about" },
+      { label: "Contact", path: "/contact" },
+    ],
+    connect: [
+      { label: "Help Center", path: "/help" },
+      { label: "Privacy Policy", path: "/legal/privacy" },
+      { label: "Terms of Service", path: "/legal/terms" },
+    ],
+  },
+
+  office: {
+    title: "Porinoi Office",
+    lines: ["Guwahati, Assam, India - 781001"],
+  },
+
+  social: [
+    {
+      label: "Instagram",
+      url: "https://www.instagram.com/porinoi_assam",
+    },
+    {
+      label: "Facebook",
+      url: "https://facebook.com/porinoi_assam/",
+    },
+    {
+      label: "Threads",
+      url: "https://www.threads.net/@porinoi_assam",
+    },
+  ],
+
+  credits: {
+    copyright: "©2025 Porinoi",
+    tagline: "A platform by dreamers, for soulmates.",
+  },
+
+  logoText: {
+    logo: "PORINOI",
   },
 };
 
@@ -201,8 +261,8 @@ export const landingPage = {
     },
     scroller: {
       messages: [
-        "Parinay - Matrimony",
-        "Destiny weaves the bond. Parinay brings it closer",
+        "Porinoi - Matrimony",
+        "Destiny weaves the bond. Porinoi brings it closer",
       ],
       icon: <Star />,
       loop: true,
@@ -410,44 +470,87 @@ export const landingPage = {
 
 export const aboutPage = {
   hero: {
-    title: "About Parinay",
-    subtitle: "Because Love is More Than Just Matching",
-    intro: `At Parinay, we believe that love isn’t just about finding the one — it’s about growing with them. Rooted in the soul of Assam, we’re more than a matrimony platform — we are a celebration of connection, culture, and companionship.`,
-    highlight: `We don’t just match profiles; we nurture partnerships that thrive on trust, tenderness, and timeless tradition.`,
-    image: "/assets/img/about_bg.jpeg",
+    title: "At Porinoi, we believe love isn’t found — it’s nurtured.",
+    subtitle:
+      "Porinoi is more than just a matrimony platform — it’s a movement. Born in Assam, we blend cultural depth with conscious matchmaking to help you build a partnership that’s emotionally rich, spiritually aligned, and beautifully real.",
   },
 
-  sections: [
-    {
-      id: "mission",
-      title: "Our Mission",
-      content: `To build a relationship that thrives on communication, emotional honesty, mutual respect, and unwavering support in every chapter of life. Whether it’s laughter under the spring sun or silent strength in the storm — Parinay is here to hold space for love in all its seasons.`,
+  principles: {
+    intro:
+      "At Porinoi, we follow values that honor emotion, tradition, and intention.",
+    image: "/assets/img/principles-bg.png",
+    points: [
+      "Prioritize emotional authenticity over appearances.",
+      "Create matches rooted in meaning, not algorithms.",
+      "Let Assamese culture inspire soulful connection.",
+    ],
+    note: "These are more than principles — they are the pulse of every union we nurture. Through honesty, cultural depth, and mindful guidance, we shape love that grows beyond introductions into a life of togetherness.",
+  },
+
+  highlights: {
+    sectionTitle: "Porinoi in Purpose, Vision, and Heart.",
+    caption: "Where modern hearts meet ancient soulfulness.",
+    image: "/assets/img/highlights-bg.png",
+    items: [
+      {
+        title: "Our Vision",
+        content:
+          "To be every couple’s trusted companion — where tradition meets modern love, and every bond is formed with purpose, patience, and reverence.",
+      },
+      {
+        title: "Our Story",
+        content:
+          "Born in Assam, Porinoi was created to bridge tradition and today’s dating world. We saw the gap between swipes and sincerity — so we built a space for real, culturally-grounded love.",
+      },
+      {
+        title: "Our Mission",
+        content:
+          "We nurture meaningful relationships built on honesty, deep communication, and mutual respect. Porinoi is a space where love flows through every season — rooted in Assamese values, yet open to the modern soul.",
+      },
+    ],
+  },
+
+  whyChooseUs: {
+    title: "Love, Rooted in Culture and Care . . .",
+    description:
+      "Love isn't found in swipes or stats — it's discovered through depth, understanding, and a spark that feels like home. At Porinoi, we don’t just match profiles; we unite souls on journeys meant to intertwine.",
+    points: [
+      {
+        title: "Tailored Matchmaking, Just for You.",
+        content:
+          "You’re not a checkbox — you're a story worth telling. We take the time to listen, to truly see you, and align you with partners who reflect your values, spirit, and the love you seek.",
+      },
+      {
+        title: "Rooted in Culture, Built for Connection.",
+        content:
+          "Shared traditions. Common values. A rhythm of life that flows in sync. We look beyond the surface to honor cultural harmony — where love feels both new and familiar.",
+      },
+      {
+        title: "Guided With Care, Every Step.",
+        content:
+          "From first connection to forever after, our team walks with you — offering insight, empathy, and unwavering support. Because finding love should feel like being seen, not sorted.",
+      },
+    ],
+  },
+
+  ctaSection: {
+    tag: "Tradition & Love",
+    heading: "Return to Love That Feels Like Home.",
+    subtext:
+      "Real connection that goes beyond the surface. Cultural depth rooted in tradition. Stories worth remembering — and cherishing for a lifetime.",
+    features: [
+      {
+        icon: <Star width={18} />,
+        text: "Authentic cultural roots preserved through technology.",
+      },
+      {
+        icon: <Heart2 width={18} />,
+        text: "Matches that feel personal, respectful, and meant to be.",
+      },
+    ],
+    btn: {
+      cta: "Begin a Meaningful Bond",
+      link: "/signUp",
     },
-    {
-      id: "vision",
-      title: "Our Vision",
-      content: `To become the eternal melody of two souls — dancing through storms, shining through sunsets, and walking hand in hand across lifetimes. A sacred bond where love is not just a feeling, but a home — built with trust, poetry, passion, and silent understanding.`,
-    },
-    {
-      id: "story",
-      title: "Our Story",
-      content: `Born in the heart of Assam, Parinay was envisioned to bridge the wisdom of tradition with the openness of today’s love. We saw the gap between digital matchmaking and meaningful connection — and we filled it with culture, compassion, and clarity. Every couple has a story. We’re here to help them write it — beautifully, authentically, together.`,
-    },
-    {
-      id: "offerings",
-      title: "What We Offer",
-      content: [
-        "Assamese-rooted Matchmaking: Matches aligned with your values, dreams, and cultural nuances.",
-        "Real Love Stories & Tips: Curated blog posts, traditions, advice, and guest writer pieces.",
-        "Safe & Honest Space: Verified profiles. Respectful intentions. True conversations.",
-        "Community & Expression: Be it couples, writers, or readers — all hearts are welcome.",
-      ],
-    },
-    {
-      id: "callToAction",
-      title: "Join the Parinay Journey",
-      content: `Come for love. Stay for meaning. Whether you're ready for marriage or just soaking in soulful stories — this is your home. Let’s return to a time when love was poetry, marriage was harmony, and connection was sacred.`,
-      quote: `“Parinay — because finding a partner should feel like coming home.”`,
-    },
-  ],
+  },
 };

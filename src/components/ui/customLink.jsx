@@ -43,7 +43,7 @@ export const CustomLink = ({
       ease: "anticipate",
     },
     className:
-      "relative z-10 block md:h-5 overflow-hidden list-none whitespace-nowrap select-none",
+      "relative z-[5] block md:h-5 overflow-hidden list-none whitespace-nowrap select-none",
     style: { height: "auto" },
   };
 

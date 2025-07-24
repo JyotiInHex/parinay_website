@@ -1,11 +1,11 @@
 "use client";
 import { useLenis } from "@/hooks/useLenis";
 import { usePathname } from "next/navigation";
+import { useLayoutEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import Navigation from "@/components/shared/Navigation";
+import Header from "@/components/shared/Header";
 import CustomCursor from "@/components/ui/customCursor";
 import Image from "next/image";
-import { useLayoutEffect, useState } from "react";
 
 export default function ClientWrapper({ children }) {
   useLenis();
@@ -35,7 +35,7 @@ export default function ClientWrapper({ children }) {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.1, duration: 0.4 }}
           >
-            <Navigation />
+            <Header />
             <section className="mt-18 md:m-0">{children}</section>
           </motion.main>
         )}
@@ -56,7 +56,7 @@ export default function ClientWrapper({ children }) {
               alt="logo_white"
               className="w-14 h-14 object-cover"
             />
-            <figcaption className="text-white text-3xl lg:text-5xl font-trap font-bold tracking-wide">
+            <figcaption className="text-white text-3xl lg:text-5xl font-porinoi-sans font-bold tracking-wide">
               Porinoi
             </figcaption>
           </figure>
@@ -78,7 +78,7 @@ export default function ClientWrapper({ children }) {
               alt="logo_white"
               className="w-14 h-14 object-cover"
             />
-            <figcaption className="text-white text-3xl lg:text-5xl font-trap font-bold tracking-wide">
+            <figcaption className="text-white text-3xl lg:text-5xl font-porinoi-sans font-bold tracking-wide">
               Porinoi
             </figcaption>
           </figure>

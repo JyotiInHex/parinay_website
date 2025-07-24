@@ -31,7 +31,7 @@ const LandingHero = () => {
               ease: [0.33, 1, 0.68, 1],
             }}
           >
-            <CustomBtn2 path="/signUp">{hero.buttonValue}</CustomBtn2>
+            <CustomBtn2 path="/signUp" className={"bg-[#f8f3e9]"}>{hero.buttonValue}</CustomBtn2>
           </motion.div>
         </div>
 
@@ -63,7 +63,7 @@ const LandingHero = () => {
           delay: 0.35,
           ease: [0.33, 1, 0.68, 1],
         }}
-        className="mt-4 w-full h-auto max-h-[400px] overflow-hidden rounded-2xl"
+        className="mt-4 w-full h-auto max-h-[500px] overflow-hidden rounded-2xl"
       >
         <Image
           src={hero.image.src}
@@ -72,7 +72,7 @@ const LandingHero = () => {
           height={1000}
           quality={100}
           loading="lazy"
-          className="w-full h-fit object-cover"
+          className="w-full h-fit object-center"
         />
       </motion.figure>
     </>

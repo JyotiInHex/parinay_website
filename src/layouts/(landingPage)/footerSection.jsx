@@ -25,7 +25,7 @@ const LandingFooter = () => {
           {links.map((link, idx) => {
             return (
               <li key={idx}>
-                <CustomBtn2 type="button" path={link.path}>
+                <CustomBtn2 type="button" path={link.path} className={"bg-white"}>
                   {link.name}
                 </CustomBtn2>
               </li>

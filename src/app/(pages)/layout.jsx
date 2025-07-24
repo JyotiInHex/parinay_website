@@ -1,6 +1,7 @@
 "use client";
 import React, { useLayoutEffect, useState } from "react";
 import { usePathname } from "next/navigation";
+import Footer from "@/components/shared/Footer";
 
 const layout = ({ children }) => {
   const [isShow, setIsShow] = useState(true);
@@ -9,14 +10,22 @@ const layout = ({ children }) => {
   useLayoutEffect(() => {
     const timeout = setTimeout(() => {
       setIsShow(true);
-    }, 800);
+    }, 500);
 
     return () => {
       setIsShow(false);
       clearTimeout(timeout);
     };
   }, [pathname]);
-  return <>{isShow && children}</>;
+  return (
+    <>
+      {isShow && (
+        <div className="select-none">
+          {children} <Footer />
+        </div>
+      )}
+    </>
+  );
 };
 
 export default layout;

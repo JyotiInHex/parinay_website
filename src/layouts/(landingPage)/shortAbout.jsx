@@ -68,7 +68,7 @@ const ShortAboutSection = () => {
               delay: 0.85,
               ease: [0.33, 1, 0.68, 1],
             }}
-            className="mt-5 w-full h-auto bg-[#F7901E]/45 rounded-full"
+            className="mt-5 w-full h-auto bg-[#F7901E]/25 rounded-full"
           >
             <Link
               href={about.button.path}
