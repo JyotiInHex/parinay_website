@@ -29,7 +29,7 @@ export default function NotFound() {
       animate="show"
       exit="exit"
       variants={container}
-      className="fixed z-100 inset-0 w-full h-vh overflow-hidden select-none"
+      className="fixed z-[1000] inset-0 w-full h-vh overflow-hidden select-none"
     >
       <div className="relative pt-8 lg:pt-10 w-full h-full bg-[#f8f3e9]">
         <motion.figure

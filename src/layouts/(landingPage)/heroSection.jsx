@@ -36,7 +36,7 @@ const LandingHero = () => {
         </div>
 
         <div className="place-items-end flex flex-col justify-end h-full">
-          <WordStaggerFlowTitle className="w-3/5 h-fit justify-end text-7xl text-right text-zinc-900 font-porinoi-sans font-black first:text-pink-600 last:text-orange-500">
+          <WordStaggerFlowTitle className="w-3/5 h-fit justify-end text-7xl text-right text-zinc-900 font-porinoi-sans font-black first:text-pink-500 last:text-orange-500 tracking-wide">
             {hero.title}
           </WordStaggerFlowTitle>
         </div>

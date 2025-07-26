@@ -64,10 +64,10 @@ export default function Header() {
   }, []);
 
   const headerClass = [
-    device === "mobile" ? "fixed inset-0 z-50 " : "sticky top-0 z-10",
+    device === "mobile" ? "fixed inset-0" : "sticky top-0",
     !showHeader && device !== "mobile" ? "-translate-y-full" : "translate-y-0",
     device === "tablet" ? "px-6 py-8" : "",
-    "w-full h-fit bg-white flex flex-col md:flex-row md:items-center justify-between gap-5 select-none transition-transform duration-300 ease-linear",
+    "z-[200] w-full h-fit bg-white flex flex-col md:flex-row md:items-center justify-between gap-5 select-none transition-transform duration-300 ease-linear",
   ].join(" ");
 
   return (
@@ -81,7 +81,7 @@ export default function Header() {
           type={"button"}
           label={!isOpen ? menu.label : menu.closeLabel}
           onClick={toggleMenu}
-          className={"text-lg text-zinc-800 font-porinoi-sans font-semibold z-10"}
+          className={"text-lg text-zinc-800 font-porinoi-sans font-semibold"}
         />
 
         <AnimatePresence mode="wait">
@@ -92,7 +92,7 @@ export default function Header() {
               animate={{ height: "410px" }}
               exit={{ height: 0 }}
               transition={{ duration: 0.4, ease: [0.33, 1, 0.68, 1] }}
-              className="w-full max-h-[410px] bg-[#f8f3e9] absolute inset-0 z-0 overflow-hidden"
+              className="w-full max-h-[410px] bg-[#f8f3e9] absolute inset-0 z-50 overflow-hidden"
             >
               <div className="px-24 py-12 w-full h-auto min-h-[400px]">
                 <h2 className="text-zinc-800 text-2xl font-porinoi-sans font-semibold uppercase overflow-hidden">

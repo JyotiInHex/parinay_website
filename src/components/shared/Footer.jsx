@@ -41,7 +41,7 @@ const Footer = () => {
 
         <div>
           <div className="space-y-32">
-            <ul className="flex flex-row justify-between">
+            <ul className="flex flex-row justify-end gap-5">
               {social.map((link, idx) => {
                 return (
                   <motion.li

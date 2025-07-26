@@ -12,6 +12,80 @@ import Heart2 from "../../public/assets/svg/heart-2";
 
 const year = new Date().getFullYear();
 
+export const FAQData = {
+  items: [
+    {
+      question: "↳ Is Porinoi only for Assamese people?",
+      answer:
+        "Porinoi is built with love for Assam, but anyone who resonates with our values and approach is welcome.",
+    },
+    {
+      question: "↳ Can I update my profile after submitting?",
+      answer:
+        "Absolutely. You can edit your profile anytime by logging into your dashboard.",
+    },
+    {
+      question: "↳ How secure is my data?",
+      answer:
+        "We use secure protocols and end-to-end encryption to keep your data protected at every step. Your privacy is our top priority — always.",
+    },
+    {
+      question: "↳ Is it free to contact you?",
+      answer: "Yes! Reaching out is free — we’re here to help.",
+    },
+    {
+      question: "↳ Do you offer personalized matchmaking?",
+      answer:
+        "Yes, we have human-assisted and algorithm-powered matchmaking features under our premium plan.",
+    },
+    {
+      question: "↳ What documents are required to get started?",
+      answer:
+        "We keep it simple — a valid ID and a few basic details to ensure authenticity and trust.",
+    },
+    {
+      question: "↳ Can I hide my profile from public view?",
+      answer:
+        "Yes, you can choose to keep your profile private or limit visibility to only selected members.",
+    },
+    {
+      question: "↳ Do you verify member profiles manually?",
+      answer:
+        "Yes, every profile goes through a light manual review to maintain quality and integrity.",
+    },
+    {
+      question: "↳ Is there an app available for Porinoi?",
+      answer:
+        "We’ve introduced our first web-based app — a sleek, mobile-optimized experience installable right from your browser. It officially rolls out after 15th August. Native iOS and Android apps are also in the works — stay tuned for the full journey ahead!",
+    },
+    {
+      question: "↳ How do I install the Porinoi web app on my phone?",
+      answer:
+        "Go to the Porinoi website, register or log in, and you’ll see an option to install the app. Just tap it — Porinoi will be added to your home screen like any native app.",
+    },
+    {
+      question: "↳ Will the PWA support notifications or offline use?",
+      answer:
+        "Yes. The PWA will support key features like push notifications, offline access for certain sections, and fast load times — giving you a seamless experience anytime, anywhere.",
+    },
+    {
+      question: "↳ What devices or browsers are supported?",
+      answer:
+        "The web app works smoothly on all modern browsers — Chrome, Safari, Edge, and Firefox — across Android, iOS, and desktop. Make sure your browser is up to date for the best experience.",
+    },
+    {
+      question: "↳ When can I expect the native app to launch?",
+      answer:
+        "Our iOS and Android apps are currently in development. We’ll share early access and launch timelines soon after the PWA release — so stay connected!",
+    },
+    {
+      question: "↳ What makes Porinoi different from other platforms?",
+      answer:
+        "Porinoi blends tradition with tech — combining cultural sensitivity, human support, and smart matchmaking.",
+    },
+  ],
+};
+
 export const navigationSection = {
   logoText: {
     default: "PORINOI",
@@ -250,7 +324,7 @@ export const authenticationPages = {
 
 export const landingPage = {
   hero: {
-    title: "LOVE. WITH. MEANING.",
+    title: "LOVE WITH MEANING",
     subtitle:
       "Find your life partner with trust, dignity, and Assamese values.",
     description: "Porinoi blends tradition with modern love — mindfully.",
@@ -551,6 +625,152 @@ export const aboutPage = {
     btn: {
       cta: "Begin a Meaningful Bond",
       link: "/signUp",
+    },
+  },
+};
+
+export const contactPage = {
+  title: "Let’s Begin With a Hello",
+  subTitle: "We’re All Ears, Always.",
+  description:
+    "Whether you're searching for a soulmate, seeking support, or simply wishing to say hello — the Porinoi team is right here, ready to listen, guide, and grow with you. Your journey matters to us.",
+
+  gif: "/assets/img/handShake.gif",
+
+  tag: "Contact Porinoi —",
+  formDetails: {
+    formFields: [
+      {
+        label: "Hi! My name is",
+        type: "text",
+        name: "name",
+        placeholder: "Enter your name*",
+        required: true,
+      },
+      {
+        label: "And I work in",
+        type: "text",
+        name: "profession",
+        placeholder: "Mention your profession*",
+        required: true,
+      },
+      {
+        label: "I found Porinoi via",
+        type: "checkbox",
+        name: "referralSource",
+        options: [
+          "Word of Mouth",
+          "Instagram Ad or Post",
+          "Facebook Page or Group",
+          "Google Search Result",
+          "Referred by a Friend",
+          "Other (Please Specify)",
+        ],
+        required: true,
+        description: "Select*",
+      },
+      {
+        label: "I’m reaching out about",
+        type: "checkbox",
+        name: "helpOptions",
+        options: [
+          "Registering my profile",
+          "Finding a perfect match",
+          "Partnership opportunity",
+          "Collaboration or media",
+          "Other support",
+        ],
+        required: true,
+        description: "Select*",
+      },
+      {
+        label: "You can reach me at",
+        type: "email",
+        placeholder: "example@email.com*",
+        name: "email",
+        required: true,
+      },
+      {
+        label: "or call me at",
+        type: "tel",
+        placeholder: "Enter your phone number",
+        name: "phone",
+        prefix: "+91",
+        pattern: "^[6-9]\\d{9}$",
+        required: false,
+      },
+      {
+        label: "Here’s a bit more about my request",
+        type: "textarea",
+        placeholder: "Describe your concern, query, or idea in brief.",
+        name: "message",
+        required: true,
+      },
+    ],
+
+    consent: {
+      text: "I agree with Porinoi's",
+      links: {
+        label: "Privacy Policy",
+        path: "/privacyPolicy",
+      },
+      required: true,
+    },
+    submitButton: {
+      text: "Send Inquiry",
+    },
+  },
+
+  faq_section: {
+    title: "Frequently Asked questions",
+    subTitle: "You Might Be Wondering",
+    description:
+      "We’ve gathered some common questions to help you get to know Porinoi better. If you’re curious, confused, or just exploring — these might be just what you’re looking for.",
+    items: [
+      {
+        question: "↳ What makes Porinoi different from other platforms?",
+        answer:
+          "Porinoi blends tradition with tech — combining cultural sensitivity, human support, and smart matchmaking.",
+      },
+      {
+        question: "↳ Is Porinoi only for Assamese people?",
+        answer:
+          "Porinoi is built with love for Assam, but anyone who resonates with our values and approach is welcome.",
+      },
+      {
+        question: "↳ Is there an app available for Porinoi?",
+        answer:
+          "We’ve introduced our first web-based app — a sleek, mobile-optimized experience installable right from your browser. It officially rolls out after 15th August. Native iOS and Android apps are also in the works — stay tuned for the full journey ahead!",
+      },
+      {
+        question: "↳ How do I install the Porinoi web app on my phone?",
+        answer:
+          "Go to the Porinoi website, register or log in, and you’ll see an option to install the app. Just tap it — Porinoi will be added to your home screen like any native app.",
+      },
+      {
+        question: "↳ Can I update my profile after submitting?",
+        answer:
+          "Absolutely. You can edit your profile anytime by logging into your dashboard.",
+      },
+      {
+        question: "↳ How secure is my data?",
+        answer:
+          "We use secure protocols and end-to-end encryption to keep your data protected at every step. Your privacy is our top priority — always.",
+      },
+      {
+        question: "↳ Do you offer personalized matchmaking?",
+        answer:
+          "Yes, we have human-assisted and algorithm-powered matchmaking features under our premium plan.",
+      },
+      {
+        question: "↳ What documents are required to get started?",
+        answer:
+          "We keep it simple — a valid ID and a few basic details to ensure authenticity and trust.",
+      },
+    ],
+    cta: {
+      label: "Still curious? See all questions",
+      href: "/faq",
     },
   },
 };

@@ -67,7 +67,7 @@ export default function CustomForm({
       initial={{ opacity: 0, x: 100 }}
       whileInView={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.65, delay: 0.5, ease: "easeOut" }}
-      viewport={{ once: true, amount: 0.5 }}
+      viewport={{ once: true, amount: 0.2 }}
       className="max-w-xl min-w-xl mx-auto rounded-2xl shadow-lg overflow-hidden"
       style={{ background: backGround || "#f8f3e9" }}
     >
