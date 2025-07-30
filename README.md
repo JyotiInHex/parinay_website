@@ -8,7 +8,7 @@ Built with a passion for design, performance, and emotional resonance — Porino
 ## 🌐 Live Site
 
 <!-- 👉 [Visit Porinoi](https://porinoi.in) *(or your deployment URL)* -->
-👉 [Coming Soon]
+👉 [Coming Soon] - https://porinoi.com/
 
 ---
 
