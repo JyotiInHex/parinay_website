@@ -100,7 +100,7 @@ export const CustomBtn2 = ({
             <Arrow
               width={20}
               height={20}
-              className="-translate-x-1/2 translate-y-0 transform transition-transform duration-500 group-hover:translate-x-0 group-hover:-translate-y-0.5"
+              className="-translate-x-1/2 translate-y-0 transform transition-transform duration-500 group-hover:translate-x-0 group-hover:-translate-y-0.5 -rotate-45"
             />
           )}
         </span>

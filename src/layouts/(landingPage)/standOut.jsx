@@ -2,7 +2,7 @@ import { useState } from "react";
 import { landingPage } from "@/data/siteStaticData";
 import { AnimatePresence, motion } from "framer-motion";
 import Arrow from "../../../public/assets/svg/arrow";
-import { FadeInSlideTitle } from "@/components/ui/sectionTitle";
+import { WordStaggerFlowTitle } from "@/components/ui/sectionTitle";
 import Image from "next/image";
 
 export default function StandOutSection() {
@@ -11,12 +11,12 @@ export default function StandOutSection() {
 
   return (
     <div className="select-none w-auto h-max">
-      <FadeInSlideTitle className="text-left text-xl font-porinoi-sans font-semibold">
+      <WordStaggerFlowTitle className="text-left text-xl lg:text-4xl font-porinoi-sans font-semibold">
         {title}
-      </FadeInSlideTitle>
+      </WordStaggerFlowTitle>
 
       <motion.h3
-        className="mt-6 text-2xl text-zinc-800 font-semibold font-mono"
+        className="lg:mt-6 text-2xl text-zinc-800 font-semibold font-mono"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2, duration: 0.5 }}
@@ -29,7 +29,7 @@ export default function StandOutSection() {
         </span>
       </motion.h3>
 
-      <div className="relative mt-24 grid grid-cols-2 items-end gap-10">
+      <div className="relative mt-10 lg:mt-24 grid grid-cols-1 lg:grid-cols-2 items-end gap-10">
         <ul className="w-full h-full flex flex-col items-center">
           {cards.map((card, idx) => {
             return (
@@ -46,15 +46,15 @@ export default function StandOutSection() {
                 }}
                 onMouseEnter={() => setCardIndex(idx)}
               >
-                <motion.h3
-                  className={`text-4xl font-porinoi-sans font-semibold ${
+                <WordStaggerFlowTitle
+                  className={`text-xl lg:text-4xl font-porinoi-sans font-semibold ${
                     cardIndex !== idx
                       ? "text-zinc-500"
                       : "text-zinc-800 group-hover:text-white group-hover:translate-x-2"
                   } transition-all duration-300 ease-linear`}
                 >
                   {card.title}
-                </motion.h3>
+                </WordStaggerFlowTitle>
 
                 {cardIndex === idx && (
                   <motion.div
@@ -67,7 +67,7 @@ export default function StandOutSection() {
                         : "text-zinc-800 group-hover:text-white"
                     } transition-colors duration-300 ease-linear`}
                   >
-                    <Arrow className="rotate-45" />
+                    <Arrow className="hidden lg:block size-10" />
                   </motion.div>
                 )}
               </motion.li>
@@ -78,7 +78,7 @@ export default function StandOutSection() {
         <AnimatePresence mode="wait">
           <motion.figure
             key={cardIndex}
-            className="absolute -bottom-24 right-20 z-0 w-full max-w-sm h-[70vh] overflow-hidden rounded-2xl shadow-2xl bg-white/5 backdrop-blur-sm ring-1 ring-zinc-200/20 origin-bottom"
+            className="lg:absolute -bottom-24 right-20 z-0 w-full max-w-sm h-auto lg:h-[70vh] overflow-hidden rounded-2xl shadow-2xl bg-white/5 backdrop-blur-sm ring-1 ring-zinc-200/20 origin-bottom"
             initial={{ opacity: 0, y: 80, rotate: -35, scale: 0.8 }}
             animate={{ opacity: 1, y: 0, rotate: 0, scale: 1 }}
             exit={{ opacity: 0, y: -60, rotate: 15, scale: 0.9 }}
@@ -116,7 +116,7 @@ export default function StandOutSection() {
                   delay: 0.25,
                   ease: [0.33, 1, 0.68, 1],
                 }}
-                className="text-2xl text-white font-porinoi-sans font-medium leading-snug"
+                className="text-lg lg:text-2xl text-white font-porinoi-sans font-medium leading-snug"
               >
                 {cards[cardIndex].description}
               </motion.p>

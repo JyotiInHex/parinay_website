@@ -1,85 +1,80 @@
 import Mail from "../../public/assets/svg/mail";
 import MapPin from "../../public/assets/svg/map-pin";
 import Star from "../../public/assets/svg/star";
-import { Instagram, WhatsApp } from "../../public/assets/svg/socialMedia";
-import {
-  StartFour,
-  StartOne,
-  StartThree,
-  StartTwo,
-} from "../../public/assets/svg/stars";
 import Heart2 from "../../public/assets/svg/heart-2";
+import Arrow from "../../public/assets/svg/arrow";
+import Arrow45deg from "../../public/assets/svg/arrow45deg";
 
 const year = new Date().getFullYear();
 
 export const FAQData = {
   items: [
     {
-      question: "↳ Is Porinoi only for Assamese people?",
+      question: "Is Porinoi only for Assamese people?",
       answer:
         "Porinoi is built with love for Assam, but anyone who resonates with our values and approach is welcome.",
     },
     {
-      question: "↳ Can I update my profile after submitting?",
+      question: "Can I update my profile after submitting?",
       answer:
         "Absolutely. You can edit your profile anytime by logging into your dashboard.",
     },
     {
-      question: "↳ How secure is my data?",
+      question: "How secure is my data?",
       answer:
         "We use secure protocols and end-to-end encryption to keep your data protected at every step. Your privacy is our top priority — always.",
     },
     {
-      question: "↳ Is it free to contact you?",
+      question: "Is it free to contact you?",
       answer: "Yes! Reaching out is free — we’re here to help.",
     },
     {
-      question: "↳ Do you offer personalized matchmaking?",
+      question: "Do you offer personalized matchmaking?",
       answer:
         "Yes, we have human-assisted and algorithm-powered matchmaking features under our premium plan.",
     },
     {
-      question: "↳ What documents are required to get started?",
+      question: "What documents are required to get started?",
       answer:
         "We keep it simple — a valid ID and a few basic details to ensure authenticity and trust.",
     },
     {
-      question: "↳ Can I hide my profile from public view?",
+      question: "Can I hide my profile from public view?",
       answer:
         "Yes, you can choose to keep your profile private or limit visibility to only selected members.",
     },
     {
-      question: "↳ Do you verify member profiles manually?",
+      question: "Do you verify member profiles manually?",
       answer:
         "Yes, every profile goes through a light manual review to maintain quality and integrity.",
     },
     {
-      question: "↳ Is there an app available for Porinoi?",
+      question: "Is there an app available for Porinoi?",
       answer:
         "We’ve introduced our first web-based app — a sleek, mobile-optimized experience installable right from your browser. It officially rolls out after 15th August. Native iOS and Android apps are also in the works — stay tuned for the full journey ahead!",
     },
     {
-      question: "↳ How do I install the Porinoi web app on my phone?",
+      question: "How do I install the Porinoi web app on my phone?",
       answer:
         "Go to the Porinoi website, register or log in, and you’ll see an option to install the app. Just tap it — Porinoi will be added to your home screen like any native app.",
     },
     {
-      question: "↳ Will the PWA support notifications or offline use?",
+      question: "Will the PWA support notifications or offline use?",
       answer:
         "Yes. The PWA will support key features like push notifications, offline access for certain sections, and fast load times — giving you a seamless experience anytime, anywhere.",
     },
     {
-      question: "↳ What devices or browsers are supported?",
+      question: "What devices or browsers are supported?",
       answer:
         "The web app works smoothly on all modern browsers — Chrome, Safari, Edge, and Firefox — across Android, iOS, and desktop. Make sure your browser is up to date for the best experience.",
     },
     {
-      question: "↳ When can I expect the native app to launch?",
+      question: "When can I expect the native app to launch?",
       answer:
         "Our iOS and Android apps are currently in development. We’ll share early access and launch timelines soon after the PWA release — so stay connected!",
     },
     {
-      question: "↳ What makes Porinoi different from other platforms?",
+      question: "What makes Porinoi different from other platforms?",
       answer:
         "Porinoi blends tradition with tech — combining cultural sensitivity, human support, and smart matchmaking.",
     },
@@ -147,9 +142,10 @@ export const footerSection = {
       { label: "Contact", path: "/contact" },
     ],
     connect: [
-      { label: "Help Center", path: "/help" },
-      { label: "Privacy Policy", path: "/legal/privacy" },
-      { label: "Terms of Service", path: "/legal/terms" },
+      { label: "FAQ", path: "/help/faq" },
+      { label: "Help Center", path: "/help/helpCenter" },
+      { label: "Privacy Policy", path: "/legal/privacyPolicy" },
+      { label: "Terms of Use", path: "/legal/termsOfUse" },
     ],
   },
 
@@ -174,7 +170,7 @@ export const footerSection = {
   ],
 
   credits: {
-    copyright: "©2025 Porinoi",
+    copyright: `© ${year} Porinoi. All rights reserved.`,
     tagline: "A platform by dreamers, for soulmates.",
   },
 
@@ -185,140 +181,174 @@ export const footerSection = {
 
 export const authenticationPages = {
   signUpPage: {
-    title: "Start your journey",
-    subTitle: "of companionship, commitment, and community values.",
-    button: {
-      label: "Already a member?",
-      path: "/signIn",
-      name: "Login Instead",
-    },
+    imag: "/assets/img/signUp.webp",
+    title:
+      "We believe every story begins with intention. Let’s begin yours by knowing you a little better.",
+    subTitle: "Set up your Porinoi profile — it starts with a hello.",
+
     formDetails: {
-      formTitle: "Join Porinoi Today",
+      formTitle: "Let’s take the first step together.",
+      additionalInfo:
+        "Your story is safe with us. We never share your data, and every profile is carefully verified to keep the Porinoi circle secure.",
+
+      switchForm: {
+        label: "Already a member? ",
+        path: "/signIn",
+        name: "[ Login Instead ]",
+      },
+
       formFields: [
         {
-          label: "Your Full Name",
+          label: "Hi! My full name is",
           type: "text",
-          placeholder: "Eg: Rupam Das",
-          name: "fullName",
+          placeholder: "e.g. Rupam Das",
+          pattern: "^[A-Za-z]{2,}(?: [A-Za-z]{2,}){1,2}$",
+          name: "name",
           required: true,
         },
         {
-          label: "Mobile Number",
+          label: "I heard about Porinoi through...",
+          type: "select",
+          name: "referralSource",
+          options: [
+            "Word of Mouth",
+            "Instagram Ad or Post",
+            "Facebook Page or Group",
+            "Google Search Result",
+            "Referred by a Friend",
+          ],
+          required: true,
+          description: "Select",
+        },
+        {
+          label: "You can call me at",
           type: "tel",
-          placeholder: "Enter 10-digit mobile number",
+          placeholder: "Enter your 10-digit mobile number",
           prefix: "+91",
           name: "phone",
           pattern: "^[6-9]\\d{9}$",
           required: true,
         },
         {
-          label: "Set a password",
+          label: "And I’d like to set a password",
           type: "password",
-          placeholder: "Try something like MyPass@123",
+          placeholder: "e.g. Love@123 or something strong and secure",
           name: "password",
           minLength: 8,
           pattern:
             "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*])[A-Za-z\\d!@#$%^&*]{8,}$",
           required: true,
         },
+        {
+          label: "Let’s confirm my secret key",
+          type: "password",
+          placeholder: "Type it again, just to be sure",
+          name: "confirmPassword",
+          msg: "Close, but not twins", //Mismatch in the matrix
+          required: true,
+        },
       ],
-      submitButton: {
-        text: "Create an Account",
+
+      checkConfirm: {
+        text: "I agree to Porinoi’s [Terms] and [Privacy Policy].",
+        name: "termsAndPrivacy",
+        required: true,
       },
-      formLowerPart: {
-        text: "By signing up you agree to our",
-        links: [
-          {
-            label: "Terms Of Use",
-            path: "/terms",
-          },
-          {
-            label: "Privacy Policy",
-            path: "/privacy-policy",
-          },
-        ],
+
+      submitButton: {
+        text: "[ Let’s Begin ]",
+        icon: <Arrow width={24} height={24} />,
+      },
+
+      helpLinks: {
+        link: {
+          label: "Need help registering?",
+          path: "/help/helpCenter",
+          name: "[Help me out!]",
+        },
       },
     },
   },
 
   signInPage: {
-    title: "Sign in and continue your journey",
-    subTitle:
-      "toward meaningful connections rooted in trust, culture, and compatibility.",
-    button: {
-      label: "New here?",
-      path: "/signUp",
-      name: "Register Now!",
-    },
+    imag: "/assets/img/signIn.webp",
+    title:
+      "Whether you're here to reconnect, rediscover, or restart — we're glad you're back.",
+    subTitle: "Just a few clicks to continue your journey",
+
     formDetails: {
-      formTitle: "Welcome to Porinoi",
-      formDescription:
-        "Enter your Register mobile number and we will send you a OTP for login",
+      formTitle: "Welcome back. We’ve missed you.",
+      additionalInfo:
+        "Your login is private, verified, and secure. We respect your trust — no spam, no sharing, no nonsense.",
+
+      switchForm: {
+        label: "New to Porinoi?",
+        path: "/signUp",
+        name: "[ Register Now ]",
+      },
+
       formFields: [
         {
-          label: "Mobile Number",
+          label: "I’m signing in with my",
           type: "tel",
-          placeholder: "Enter Porinoi verified mobile number",
+          placeholder: "[ Enter your mobile number* ]",
           prefix: "+91",
           name: "phone",
           pattern: "^[6-9]\\d{9}$",
           required: true,
         },
+        {
+          label: "And my password is",
+          type: "password",
+          placeholder: "[ Enter your password* ]",
+          name: "password",
+          required: true,
+        },
       ],
-      submitButton: {
-        text: "Generate OTP",
+
+      checkConfirm: {
+        text: "Keep me logged in on this device",
+        name: "keepLogin",
+        required: false,
       },
-      formLowerPart: {
-        text: "Need Help in Login?",
-        links: [
-          {
-            label: "Help Center",
-            path: "/help-center",
-          },
-        ],
+
+      submitButton: {
+        text: "[ Let Me In ]",
+        icon: <Arrow width={24} height={24} />,
+      },
+
+      helpLinks: {
+        link: {
+          label: "Forgot Your Password?",
+          path: "/forgotPassword",
+          name: "[Reset it here]",
+        },
       },
     },
   },
 
-  additionalInfo:
-    "All profiles go through strict Verification. We never share your data. Your safety is our first priority.",
-
-  highlights: [
+  links: [
     {
-      name: "Trusted Connection",
-      icon: <StartOne className={"text-white"} width={25} />,
+      label: "Terms Of Use",
+      path: "/legal/termsOfUse",
     },
     {
-      name: "Verified with Love",
-      icon: <StartTwo className={"text-white"} width={25} />,
+      label: "Privacy Policy",
+      path: "/legal/privacyPolicy",
     },
     {
-      name: "Rooted in Culture",
-      icon: <StartThree className={"text-white"} width={25} />,
+      label: "Help Center",
+      path: "/help/helpCenter",
     },
     {
-      name: "New Age Platform",
-      icon: <StartFour className={"text-white"} width={25} />,
+      label: "FAQ",
+      path: "/help/faq",
     },
   ],
 
-  footer: {
-    copyright: "© 2025 Porinoi. All rights reserved.",
+  credit: {
+    copyright: `© ${year} Porinoi. All rights reserved.`,
     note: "A platform by dreamers, for soulmates.",
-    links: [
-      {
-        label: "Terms Of Use",
-        path: "/terms",
-      },
-      {
-        label: "Privacy Policy",
-        path: "/privacy-policy",
-      },
-      {
-        label: "FAQ",
-        path: "/faq",
-      },
-    ],
   },
 };
 
@@ -393,33 +423,32 @@ export const landingPage = {
   },
 
   stepsSection: {
-    title: "Find Your Perfect Match in 3 Simple Steps",
+    title: "Find Your Perfect Match in 3 Effortless Steps",
     description:
-      "At Porinoi, we believe in making the matchmaking process as simple and effective as possible. Our three-step approach ensures that you find your ideal partner with ease and confidence.",
+      "At Porinoi, we believe that meaningful connections begin with simplicity. Our thoughtfully designed three-step journey takes you from self-expression to heartfelt conversation—guiding you gently toward someone who truly understands you.",
     steps: [
       {
-        title: "Create Profile",
-        description: "Share your basic information and preferences.",
+        title: "Tell Your Tale",
+        description:
+          "Begin by crafting a profile that reflects the real you—your values, passions, and the qualities you seek in a partner. Share your essence, and let your story set the stage for a genuine connection.",
         image: "/assets/img/Create Profile.jpeg",
         button: {
           text: "Start Creating",
           path: "/register",
         },
-        color: "oklch(70.7% 0.165 254.624)",
       },
       {
-        title: "Explore Matches",
+        title: "Uncover Possibilities",
         description:
-          "Browse through personalized matches based on your criteria and interests.",
+          "Explore a curated selection of potential matches tailored to your preferences, lifestyle, and shared goals. Every profile you see is a door to possibility—waiting to be opened by curiosity and heart.",
         image: "/assets/img/Explore Matches.jpeg",
         color: "oklch(59.2% 0.249 0.584)",
       },
       {
-        title: "Communicate",
+        title: "Spark the Connection",
         description:
-          "Initiate conversations with potential matches and get to know them better.",
+          "When sparks fly, don't hold back. Reach out, exchange thoughts, and build something real through open and thoughtful communication. It’s the beginning of something beautifully unexpected.",
         image: "/assets/img/Connect.jpeg",
-        color: "oklch(75% 0.183 55.934)",
       },
     ],
   },
@@ -445,31 +474,13 @@ export const landingPage = {
       },
     ],
 
-    socialLinks: [
-      {
-        handleName: "@porinoi_assam",
-        icon: <Instagram width={25} height={25} />,
-        url: "https://www.instagram.com/porinoi_assam?igsh=N3I3d2libDZpcXpj",
-        backgroundColor:
-          "linear-gradient(136deg,rgba(249, 206, 52, 1) 0%, rgba(238, 42, 123, 1) 40%, rgba(98, 40, 215, 1) 89%)",
-      },
-      {
-        handleName: "@porinoi_community",
-        icon: <WhatsApp width={25} height={25} />,
-        url: "https://www.whatsApp.com/porinoi",
-        backgroundColor:
-          "linear-gradient(44deg,rgba(7, 94, 84, 1) 0%, rgba(37, 211, 102, 1) 28%)",
-      },
-    ],
-
     formDetails: {
-      // formTitle: "",
-      // formDescription: "",
       formFields: [
         {
           label: "Your name",
           type: "text",
           placeholder: "Eg: Rupam Das",
+          pattern: "^[A-Za-z]{2,}(?: [A-Za-z]{2,}){1,2}$",
           name: "name",
           required: true,
         },
@@ -495,6 +506,7 @@ export const landingPage = {
             "I’d like early access before the app launches.",
             "I’m dreaming of something real and rooted.",
           ],
+          required: true,
         },
         {
           label: "Share your thoughts with Porinoi",
@@ -502,7 +514,7 @@ export const landingPage = {
           placeholder:
             "Share your thoughts, questions, or anything you'd like us to know…",
           name: "message",
-          required: true,
+          required: false,
         },
         {
           label: "I’d love to join the early bird waitlist for Porinoi",
@@ -521,7 +533,8 @@ export const landingPage = {
         },
       ],
       submitButton: {
-        text: "Count Me In",
+        text: "[ Count Me In ]",
+        icon: <Arrow45deg width={13} height={13} />,
       },
     },
   },
@@ -531,11 +544,11 @@ export const landingPage = {
     description:
       "Porinoi is dedicated to connecting Assamese individuals with shared values and backgrounds. Join us in celebrating love, tradition, and community.",
     links: [
-      { name: "FAQ", path: "/faq" },
+      { name: "FAQ", path: "/help/faq" },
       { name: "About", path: "/about" },
       { name: "Contact", path: "/contact" },
-      { name: "Privacy Policy", path: "/privacy-policy" },
-      { name: "Terms of Service", path: "/terms-of-service" },
+      { name: "Privacy Policy", path: "/legal/privacyPolicy" },
+      { name: "Terms of Use", path: "/legal/termsOfUse" },
     ],
     copyright: `© ${year} Porinoi. All rights reserved.`,
     endParagraph: "Made with love in Assam, India.",
@@ -638,6 +651,7 @@ export const contactPage = {
   gif: "/assets/img/handShake.gif",
 
   tag: "Contact Porinoi —",
+
   formDetails: {
     formFields: [
       {
@@ -704,7 +718,7 @@ export const contactPage = {
         type: "textarea",
         placeholder: "Describe your concern, query, or idea in brief.",
         name: "message",
-        required: true,
+        required: false,
       },
     ],
 
@@ -716,6 +730,7 @@ export const contactPage = {
       },
       required: true,
     },
+
     submitButton: {
       text: "Send Inquiry",
     },
@@ -728,49 +743,49 @@ export const contactPage = {
       "We’ve gathered some common questions to help you get to know Porinoi better. If you’re curious, confused, or just exploring — these might be just what you’re looking for.",
     items: [
       {
-        question: "↳ What makes Porinoi different from other platforms?",
+        question: "What makes Porinoi different from other platforms?",
         answer:
           "Porinoi blends tradition with tech — combining cultural sensitivity, human support, and smart matchmaking.",
       },
       {
-        question: "↳ Is Porinoi only for Assamese people?",
+        question: "Is Porinoi only for Assamese people?",
         answer:
           "Porinoi is built with love for Assam, but anyone who resonates with our values and approach is welcome.",
       },
       {
-        question: "↳ Is there an app available for Porinoi?",
+        question: "Is there an app available for Porinoi?",
         answer:
           "We’ve introduced our first web-based app — a sleek, mobile-optimized experience installable right from your browser. It officially rolls out after 15th August. Native iOS and Android apps are also in the works — stay tuned for the full journey ahead!",
       },
       {
-        question: "↳ How do I install the Porinoi web app on my phone?",
+        question: "How do I install the Porinoi web app on my phone?",
         answer:
           "Go to the Porinoi website, register or log in, and you’ll see an option to install the app. Just tap it — Porinoi will be added to your home screen like any native app.",
       },
       {
-        question: "↳ Can I update my profile after submitting?",
+        question: "Can I update my profile after submitting?",
         answer:
           "Absolutely. You can edit your profile anytime by logging into your dashboard.",
       },
       {
-        question: "↳ How secure is my data?",
+        question: "How secure is my data?",
         answer:
           "We use secure protocols and end-to-end encryption to keep your data protected at every step. Your privacy is our top priority — always.",
       },
       {
-        question: "↳ Do you offer personalized matchmaking?",
+        question: "Do you offer personalized matchmaking?",
         answer:
           "Yes, we have human-assisted and algorithm-powered matchmaking features under our premium plan.",
       },
       {
-        question: "↳ What documents are required to get started?",
+        question: "What documents are required to get started?",
         answer:
           "We keep it simple — a valid ID and a few basic details to ensure authenticity and trust.",
       },
     ],
     cta: {
       label: "Still curious? See all questions",
-      href: "/faq",
+      href: "/help/faq",
     },
   },
 };

@@ -1,14 +1,11 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import {
-  LetterByLetterRevealTitle,
-  LineStaggerFlowTitle,
-  WordStaggerFlowTitle,
-} from "@/components/ui/sectionTitle";
+import { WordStaggerFlowTitle } from "@/components/ui/sectionTitle";
 import { contactPage } from "@/data/siteStaticData";
 import { useEffect, useRef, useState } from "react";
 import { CustomBtn2 } from "@/components/ui/customBtn";
+import ArrowRightward from "../../../public/assets/svg/arrowRightward";
 
 export default function ContactFAQ() {
   const { faq_section } = contactPage;
@@ -49,7 +46,7 @@ export default function ContactFAQ() {
         </div>
       </div>
 
-      <div className="mt-32 flex flex-col gap-6">
+      <div className="mt-32 flex flex-col gap-2">
         {faq_section.items.map((item, idx) => {
           const isOpen = openIdx === idx;
           return (
@@ -67,7 +64,7 @@ export default function ContactFAQ() {
   );
 }
 
-const FAQItem = ({ itemNum, item, isOpen, onClick }) => {
+export const FAQItem = ({ itemNum, item, isOpen, onClick }) => {
   const ref = useRef(null);
   const [height, setHeight] = useState(0);
 
@@ -106,9 +103,12 @@ const FAQItem = ({ itemNum, item, isOpen, onClick }) => {
         }}
         className={`px-6 py-5 `}
       >
-        <WordStaggerFlowTitle className="text-base font-medium font-porinoi-sans leading-snug">
-          {item.question}
-        </WordStaggerFlowTitle>
+        <div className="flex items-end gap-3">
+          <ArrowRightward width={25} height={25} />
+          <WordStaggerFlowTitle className="text-base font-medium font-porinoi-sans leading-snug">
+            {item.question}
+          </WordStaggerFlowTitle>
+        </div>
 
         <AnimatePresence initial={false}>
           {isOpen && (

@@ -3,20 +3,21 @@ import React, { useLayoutEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import Footer from "@/components/shared/Footer";
 
-const layout = ({ children }) => {
-  const [isShow, setIsShow] = useState(true);
+export default function PageLayout({ children }) {
+  const [isShow, setIsShow] = useState(false);
   const pathname = usePathname();
 
   useLayoutEffect(() => {
     const timeout = setTimeout(() => {
       setIsShow(true);
-    }, 500);
+    }, 650);
 
     return () => {
       setIsShow(false);
       clearTimeout(timeout);
     };
   }, [pathname]);
+
   return (
     <>
       {isShow && (
@@ -26,6 +27,4 @@ const layout = ({ children }) => {
       )}
     </>
   );
-};
-
-export default layout;
+}

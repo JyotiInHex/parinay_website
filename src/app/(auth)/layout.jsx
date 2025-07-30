@@ -8,9 +8,8 @@ export const metadata = {
 
 export default function AuthLayout({ children }) {
   return (
-    <div className="w-full h-auto overflow-hidden">
+    <div className="w-full h-full min-h-screen px-24 pt-20 pb-8 flex flex-col items-center justify-between overflow-hidden select-none">
       {children}
-      <AuthFooter {...authenticationPages}/>
     </div>
   );
 }

@@ -9,7 +9,7 @@ import {
 } from "../ui/sectionTitle";
 import { CustomBtn2 } from "../ui/customBtn";
 import Link from "next/link";
-import Arrow from "../../../public/assets/svg/arrow";
+import Arrow45deg from "../../../public/assets/svg/arrow45deg";
 
 export default function Header() {
   const { logoText, menu } = navigationSection;
@@ -72,8 +72,8 @@ export default function Header() {
 
   return (
     <header ref={menuRef} className={headerClass}>
-      <nav className="relative w-full h-auto flex items-start justify-between px-24 py-12">
-        <LetterByLetterRevealTitle className="text-zinc-800 text-2xl font-porinoi-sans font-semibold">
+      <nav className="relative w-full h-auto flex items-start justify-between px-10 lg:px-24 py-8 lg:py-12">
+        <LetterByLetterRevealTitle className="text-zinc-800 text-lg lg:text-2xl font-porinoi-sans font-semibold">
           {logoText.default}
         </LetterByLetterRevealTitle>
 
@@ -89,13 +89,13 @@ export default function Header() {
             <motion.div
               key="menu-panel"
               initial={{ height: 0 }}
-              animate={{ height: "410px" }}
+              animate={{ height: "450px" }}
               exit={{ height: 0 }}
               transition={{ duration: 0.4, ease: [0.33, 1, 0.68, 1] }}
-              className="w-full max-h-[410px] bg-[#f8f3e9] absolute inset-0 z-50 overflow-hidden"
+              className="w-full max-h-[450px] bg-[#f8f3e9] absolute inset-0 z-50 overflow-hidden"
             >
-              <div className="px-24 py-12 w-full h-auto min-h-[400px]">
-                <h2 className="text-zinc-800 text-2xl font-porinoi-sans font-semibold uppercase overflow-hidden">
+              <div className="px-10 lg:px-24 py-8 lg:py-12 w-full h-auto">
+                <h2 className="text-zinc-800 text-lg lg:text-2xl font-porinoi-sans font-semibold uppercase overflow-hidden">
                   {logoText.menu.split(" ").map((chr, idx) => {
                     return (
                       <motion.span
@@ -147,7 +147,11 @@ export default function Header() {
                   transition={{ duration: 0.4, delay: 0.2 }}
                   className="w-fit ml-auto my-3"
                 >
-                  <CustomBtn2 type="link" path={menu.cta.path} className={"bg-white"}>
+                  <CustomBtn2
+                    type="link"
+                    path={menu.cta.path}
+                    className={"bg-white"}
+                  >
                     {menu.cta.label}
                   </CustomBtn2>
                 </motion.div>
@@ -159,12 +163,12 @@ export default function Header() {
                   className="border-zinc-600 mt-4 border rounded-full"
                 />
 
-                <div className="flex flex-row justify-between items-center mt-3">
+                <div className="mt-3 flex flex-col-reverse lg:flex-row justify-between items-center gap-y-2 lg:gap-y-0">
                   <WordStaggerFlowTitle className="text-lg text-zinc-800 font-medium font-porinoi-sans">
                     {menu.footer.tagline}
                   </WordStaggerFlowTitle>
 
-                  <ul className="flex flex-row items-center justify-between gap-5">
+                  <ul className="flex flex-row items-center justify-between gap-3 lg:gap-5">
                     {menu.footer.social.map((social, idx) => {
                       return (
                         <motion.li
@@ -179,7 +183,7 @@ export default function Header() {
                             <Link href={social.url} target="_blank">
                               {social.label}
                             </Link>
-                            <Arrow
+                            <Arrow45deg
                               width={15}
                               height={15}
                               className="group-hover:translate-x-1 group-hover:-translate-y-1.5 transition-transform duration-200 ease-linear"

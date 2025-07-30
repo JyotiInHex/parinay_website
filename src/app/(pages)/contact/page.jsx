@@ -9,7 +9,9 @@ export default function Contact() {
   return (
     <div className="w-full h-auto min-h-screen">
       <ContactHero />
+      
       <ContactForm />
+      
       <motion.hr
         initial={{ width: 0 }}
         whileInView={{ width: "100%" }}
@@ -17,7 +19,9 @@ export default function Contact() {
         transition={{ duration: 0.4, delay: 0.4 }}
         className="border-zinc-400 mt-4 border rounded-full"
       />
+      
       <ContactFAQ />
+
       <motion.hr
         initial={{ width: 0 }}
         whileInView={{ width: "100%" }}

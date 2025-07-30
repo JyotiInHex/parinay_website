@@ -14,14 +14,14 @@ const ShortAboutSection = () => {
     <div className="mt-10 select-none">
       <LetterByLetterRevealTitle
         isWhileInView={true}
-        className="font-semibold text-8xl text-zinc-800 font-porinoi-sans"
+        className="font-semibold text-center text-4xl lg:text-8xl text-zinc-800 font-porinoi-sans"
       >
         {about.title}
       </LetterByLetterRevealTitle>
       
-      <div className="mt-10 w-fit h-full grid grid-cols-2">
-        <div className="flex flex-col flex-wrap">
-          <WordStaggerFlowTitle className="w-4/8 text-4xl text-zinc-800 font-porinoi-sans font-semibold leading-snug">
+      <div className="mt-10 w-fit h-full grid lg:grid-cols-2 space-y-10 lg:space-y-0 ">
+        <div className="w-fit lg:w-4/7 flex flex-col flex-wrap">
+          <WordStaggerFlowTitle className="text-2xl lg:text-4xl text-zinc-800 font-porinoi-sans font-semibold leading-relaxed">
             {about.description.left}
           </WordStaggerFlowTitle>
           
@@ -50,11 +50,11 @@ const ShortAboutSection = () => {
           </ul>
         </div>
         
-        <div className="place-self-end w-[79%] flex flex-col flex-wrap pb-10">
+        <div className="place-self-end w-fit lg:w-[79%] flex flex-col flex-wrap pb-10">
           <LineStaggerFlowTitle
             wordsPerLine={5}
             delayStep={0.05}
-            className="text-2xl text-zinc-800 font-normal font-porinoi-display leading-relaxed"
+            className="text-2xl text-zinc-800 font-normal font-porinoi-display leading-snug lg:leading-relaxed"
           >
             {about.description.right}
           </LineStaggerFlowTitle>

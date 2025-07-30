@@ -250,7 +250,7 @@ input[type="number"] {
   height: 5px;
   border-left: 2px solid white;
   border-bottom: 2px solid white;
-  transform: translate(-50%, -60%) rotate(-45deg);
+  transform: translate(-50%, -70%) rotate(-45deg);
   opacity: 0;
   transition: opacity 0.2s ease-in-out;
 }
@@ -288,3 +288,6 @@ input[type="radio"].radio-custom:checked::before {
     }
   }
 }
+
+
+
