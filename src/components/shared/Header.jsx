@@ -89,10 +89,10 @@ export default function Header() {
             <motion.div
               key="menu-panel"
               initial={{ height: 0 }}
-              animate={{ height: "450px" }}
+              animate={{ height: device === "mobile" ? "100vh" : "460px" }}
               exit={{ height: 0 }}
               transition={{ duration: 0.4, ease: [0.33, 1, 0.68, 1] }}
-              className="w-full max-h-[450px] bg-[#f8f3e9] absolute inset-0 z-50 overflow-hidden"
+              className="w-full max-h-screen bg-[#f8f3e9] absolute inset-0 z-50 overflow-hidden"
             >
               <div className="px-10 lg:px-24 py-8 lg:py-12 w-full h-auto">
                 <h2 className="text-zinc-800 text-lg lg:text-2xl font-porinoi-sans font-semibold uppercase overflow-hidden">
@@ -116,45 +116,66 @@ export default function Header() {
                   })}
                 </h2>
 
-                <ul className="mt-5 w-full flex flex-col items-end gap-5 overflow-hidden">
-                  {menu.links.map((link, idx) => (
-                    <motion.li
-                      key={idx}
-                      onClick={() => setIsOpen(false)}
-                      initial={{ filter: "blur(5px)", y: 40 }}
-                      animate={{ filter: "blur(0px)", y: 0 }}
-                      exit={{ filter: "blur(5px)", y: 40 }}
-                      transition={{
-                        duration: 0.3,
-                        delay: idx * 0.08,
-                        ease: [0.33, 1, 0.68, 1],
-                      }}
-                    >
-                      <CustomLink
-                        path={link.path}
-                        label={link.label}
-                        className="text-3xl text-zinc-800 font-porinoi-sans font-semibold cursor-pointer uppercase"
-                      />
-                    </motion.li>
-                  ))}
-                </ul>
-
-                <motion.div
-                  onClick={() => setIsOpen(false)}
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 30 }}
-                  transition={{ duration: 0.4, delay: 0.2 }}
-                  className="w-fit ml-auto my-3"
-                >
-                  <CustomBtn2
-                    type="link"
-                    path={menu.cta.path}
-                    className={"bg-white"}
+                <div className="relative mt-5 flex flex-col-reverse lg:flex-row justify-between lg:items-center">
+                  <motion.figure
+                    initial={{ opacity: 0, filter: "blur(10px)", y: 50 }}
+                    animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}
+                    exit={{ opacity: 0, filter: "blur(10px)", y: -50 }}
+                    transition={{ duration: 0.4, delay: 0.35 }}
+                    className="absolute bottom-10 lg:static mt-5 w-full h-auto min-w-[200px] lg:min-w-[240px] max-w-[100px] lg:max-w-[250px] min-h-[100px] rounded-md shadow-xl overflow-hidden pointer-events-none"
                   >
-                    {menu.cta.label}
-                  </CustomBtn2>
-                </motion.div>
+                    <video
+                      preload="none"
+                      src="/assets/video/nav-video.mp4"
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      controls={false}
+                      className="w-full h-full object-cover pointer-events-none"
+                    />
+                  </motion.figure>
+
+                  <ul className="mt-5 w-full lg:w-fit flex flex-col items-end gap-5 overflow-hidden">
+                    {menu.links.map((link, idx) => (
+                      <motion.li
+                        key={idx}
+                        onClick={() => setIsOpen(false)}
+                        initial={{ filter: "blur(5px)", y: 40 }}
+                        animate={{ filter: "blur(0px)", y: 0 }}
+                        exit={{ filter: "blur(5px)", y: 40 }}
+                        transition={{
+                          duration: 0.3,
+                          delay: idx * 0.08,
+                          ease: [0.33, 1, 0.68, 1],
+                        }}
+                        className="mix-blend-difference lg:mix-blend-normal"
+                      >
+                        <CustomLink
+                          path={link.path}
+                          label={link.label}
+                          className="text-3xl text-zinc-400 lg:text-zinc-800 font-porinoi-sans font-semibold cursor-pointer uppercase"
+                        />
+                      </motion.li>
+                    ))}
+                    <motion.div
+                      onClick={() => setIsOpen(false)}
+                      initial={{ opacity: 0, y: 30 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 30 }}
+                      transition={{ duration: 0.4, delay: 0.2 }}
+                      className="w-fit ml-auto my-3"
+                    >
+                      <CustomBtn2
+                        type="link"
+                        path={menu.cta.path}
+                        className={"bg-white"}
+                      >
+                        {menu.cta.label}
+                      </CustomBtn2>
+                    </motion.div>
+                  </ul>
+                </div>
 
                 <motion.hr
                   initial={{ width: 0 }}

@@ -9,7 +9,7 @@ import { CustomBtn2 } from "@/components/ui/customBtn";
 const AboutCTASection = () => {
   const { ctaSection } = aboutPage;
   return (
-    <div className="relative px-20 py-24 flex flex-row gap-30 items-end bg-gradient-to-b from-white to-zinc-50">
+    <div className="relative px-10 lg:px-20 py-12 lg:py-24 flex flex-col lg:flex-row gap-10 lg:gap-30 items-end bg-gradient-to-b from-white to-zinc-50">
       <div>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -27,16 +27,20 @@ const AboutCTASection = () => {
           </LetterByLetterRevealTitle>
         </motion.div>
 
-        <div className="mt-10 w-fit space-y-10">
-          <WordStaggerFlowTitle className="text-7xl nth-[6]:text-orange-500 nth-[7]:text-orange-500 font-semibold font-porinoi-sans leading-tight">
-            {ctaSection.heading}
-          </WordStaggerFlowTitle>
-          <WordStaggerFlowTitle
-            delayStep={0.03}
-            className="w-4/5 text-3xl text-zinc-800 font-medium font-porinoi-display leading-snug"
-          >
-            {ctaSection.subtext}
-          </WordStaggerFlowTitle>
+        <div className="mt-5 lg:mt-10 w-fit space-y-10">
+          <div className="w-full">
+            <WordStaggerFlowTitle className="text-5xl lg:text-7xl nth-[6]:text-orange-500 nth-[7]:text-orange-500 font-semibold font-porinoi-sans leading-tight">
+              {ctaSection.heading}
+            </WordStaggerFlowTitle>
+          </div>
+          <div className="w-4/5">
+            <WordStaggerFlowTitle
+              delayStep={0.03}
+              className=" text-3xl text-zinc-800 font-medium font-porinoi-display leading-snug"
+            >
+              {ctaSection.subtext}
+            </WordStaggerFlowTitle>
+          </div>
         </div>
       </div>
 

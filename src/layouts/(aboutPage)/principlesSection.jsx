@@ -32,15 +32,17 @@ const AboutPrinciple = () => {
   return (
     <div className="relative w-full h-auto select-none">
       <div className="w-full h-auto">
-        <div className="mt-10 px-20 pb-10 grid grid-cols-2 place-content-center justify-items-center items-end">
-          <div className="space-y-5">
-            <WordStaggerFlowTitle
-              delayStep={0.03}
-              wordsPerLine={5}
-              className="w-1/2 text-2xl text-zinc-800 font-porinoi-display font-medium"
-            >
-              {principles.intro}
-            </WordStaggerFlowTitle>
+        <div className="mt-10 px-10 lg:px-20 pb-10 grid grid-cols-1 lg:grid-cols-2 place-content-center justify-items-center items-end">
+          <div className="space-y-3 lg:space-y-5">
+            <div className="w-fit lg:w-1/2">
+              <WordStaggerFlowTitle
+                delayStep={0.03}
+                wordsPerLine={5}
+                className="text-2xl text-zinc-800 font-porinoi-display font-medium"
+              >
+                {principles.intro}
+              </WordStaggerFlowTitle>
+            </div>
             <motion.figure
               ref={imageOneRef}
               initial={{ opacity: 0, filter: "blur(10px)", y: -10 }}
@@ -71,8 +73,8 @@ const AboutPrinciple = () => {
               </motion.div>
             </motion.figure>
           </div>
-          <div className="space-y-16">
-            <ul className="flex flex-col items-start space-y-2">
+          <div className="space-y-8 lg:space-y-16 mt-10 lg:mt-0">
+            <ul className="flex flex-col items-start gap-y-5 lg:gap-y-2">
               {principles.points.map((point, idx) => {
                 return (
                   <li key={idx}>
@@ -88,6 +90,7 @@ const AboutPrinciple = () => {
                 );
               })}
             </ul>
+            
             <WordStaggerFlowTitle
               delayStep={0.015}
               className="text-2xl text-zinc-800 font-porinoi-display font-medium"

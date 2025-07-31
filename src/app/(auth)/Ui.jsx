@@ -29,17 +29,21 @@ export const AuthWrapper = (props) => {
   return (
     isShow && (
       <>
-        <div className="grid grid-cols-[45%_1fr] gap-20">
+        <div className="grid grid-cols-1 lg:grid-cols-[45%_1fr] gap-10 lg:gap-20">
           <AuthLeft {...props} />
-          <AuthRight {...props}/>
+          <AuthRight {...props} />
         </div>
-        <div className="mt-10 w-full h-auto flex flex-col items-center">
-          <WordStaggerFlowTitle className="w-fit text-center text-base text-zinc-800 font-porinoi-sans font-semibold">
-            {credit.copyright}
-          </WordStaggerFlowTitle>
-          <WordStaggerFlowTitle className="w-fit text-center text-sm text-zinc-500 font-porinoi-sans font-medium">
-            {credit.note}
-          </WordStaggerFlowTitle>
+        <div className="mt-10 w-full h-auto flex flex-col items-center justify-center">
+          <div className="w-full lg:w-fit">
+            <WordStaggerFlowTitle className="justify-center text-base text-zinc-800 font-porinoi-sans font-semibold">
+              {credit.copyright}
+            </WordStaggerFlowTitle>
+          </div>
+          <div className="w-full lg:w-fit">
+            <WordStaggerFlowTitle className="justify-center text-sm text-zinc-500 font-porinoi-sans font-medium">
+              {credit.note}
+            </WordStaggerFlowTitle>
+          </div>
         </div>
       </>
     )
@@ -52,7 +56,7 @@ export const AuthLeft = ({ imag, title, subTitle }) => {
   return (
     <div className="w-full h-full space-y-3 flex flex-col items-start justify-center ">
       <motion.figure
-        initial={{ width: 0, opacity: 0, filter: "grayscale(100%)"}}
+        initial={{ width: 0, opacity: 0, filter: "grayscale(100%)" }}
         whileInView={{ width: "150px", opacity: 1, filter: "grayscale(0%)" }}
         viewport={{ once: true, amount: 0.5 }}
         transition={{
@@ -60,8 +64,8 @@ export const AuthLeft = ({ imag, title, subTitle }) => {
           ease: [0.33, 1, 0.68, 1],
           delay: 0.4,
           filter: {
-            delay: 0.95
-          }
+            delay: 0.95,
+          },
         }}
         className="h-[100px] origin-right overflow-hidden rounded-xl"
       >
@@ -76,7 +80,7 @@ export const AuthLeft = ({ imag, title, subTitle }) => {
         />
       </motion.figure>
 
-      <div className="">
+      <div>
         <WordStaggerFlowTitle
           delayStep={0.06}
           className="py-0.5 text-4xl text-zinc-800 font-porinoi-sans font-semibold"
@@ -99,7 +103,7 @@ export const AuthLeft = ({ imag, title, subTitle }) => {
             ease: [0.33, 1, 0.68, 1],
           }}
         >
-          <Arrow width={30} className="text-zinc-800" />
+          <Arrow width={30} className="text-zinc-800 rotate-90 lg:rotate-0" />
         </motion.span>
       </div>
 
@@ -147,7 +151,7 @@ export const AuthRight = ({ formDetails }) => {
     checkConfirm,
     submitButton,
     helpLinks,
-    additionalInfo
+    additionalInfo,
   } = formDetails;
   return (
     <CustomForm
@@ -158,8 +162,6 @@ export const AuthRight = ({ formDetails }) => {
       submitButton={submitButton}
       helpLinks={helpLinks}
       additionalInfo={additionalInfo}
-      backGround={"#fafafa"}
     />
   );
 };
-

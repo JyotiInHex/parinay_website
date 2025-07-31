@@ -10,25 +10,25 @@ const AboutWhyChooseSection = () => {
   const { whyChooseUs } = aboutPage;
 
   return (
-    <div className="w-full h-auto py-20 px-6 md:px-20">
-      <div className="flex flex-row gap-5 justify-between">
-        <span className="w-1/6">
+    <div className="w-full h-auto py-10 lg:py-20 px-6 md:px-20">
+      <div className="flex flex-col lg:flex-row gap-5 justify-between">
+        <span className="w-fit lg:w-1/6">
           <WordStaggerFlowTitle
             delayStep={0.05}
-            className="text-xl md:text-3xl text-zinc-700 font-porinoi-sans font-semibold tracking-wide"
+            className="text-2xl lg:text-3xl text-zinc-700 font-porinoi-sans font-semibold tracking-wide"
           >
             {whyChooseUs.title}
           </WordStaggerFlowTitle>
         </span>
         <WordStaggerFlowTitle
           delayStep={0.025}
-          className="px-1 max-w-4xl text-4xl text-zinc-800 font-porinoi-sans font-normal italic leading-snug"
+          className="px-1 max-w-4xl text-2xl lg:text-4xl text-zinc-800 font-porinoi-sans font-normal italic leading-snug"
         >
           {`"${whyChooseUs.description}"`}
         </WordStaggerFlowTitle>
       </div>
 
-      <ul className="mt-26 relative w-auto h-auto flex flex-row gap-0">
+      <ul className="mt-10 lg:mt-26 relative w-auto h-auto flex flex-col lg:flex-row gap-0">
         {whyChooseUs.points.map((point, idx) => (
           <motion.li
             key={idx}

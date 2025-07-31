@@ -30,9 +30,10 @@ export default function ClientWrapper({ children }) {
         <motion.main
           key={pathname}
           className="relative z-10"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+          initial={{ padding: 10 }}
+          animate={{ padding: 0 }}
           transition={{ delay: 0.1, duration: 0.4 }}
+          style={{ padding: 0 }}
         >
           <Header />
           <section className="mt-18 md:m-0">{children}</section>

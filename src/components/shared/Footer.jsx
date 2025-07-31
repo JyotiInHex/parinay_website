@@ -45,7 +45,7 @@ const Footer = () => {
           </CustomBtn2>
         </div>
 
-        <div>
+        <div className="w-full lg:w-fit">
           <div className="space-y-10 lg:space-y-32">
             <ul className="flex flex-col lg:flex-row justify-end gap-5">
               {social.map((link, idx) => {

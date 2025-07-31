@@ -129,7 +129,7 @@ export const footerSection = {
 
   contact: {
     email: {
-      label: "hello@porinoi.com ➚",
+      label: "hello@porinoi.com ↗",
       path: "mailto:hello@porinoi.com",
     },
     location: "Based in Assam, rooted in culture.",
@@ -142,7 +142,6 @@ export const footerSection = {
       { label: "Contact", path: "/contact" },
     ],
     connect: [
-      { label: "FAQ", path: "/help/faq" },
       { label: "Help Center", path: "/help/helpCenter" },
       { label: "Privacy Policy", path: "/legal/privacyPolicy" },
       { label: "Terms of Use", path: "/legal/termsOfUse" },
@@ -244,7 +243,7 @@ export const authenticationPages = {
           type: "password",
           placeholder: "Type it again, just to be sure",
           name: "confirmPassword",
-          msg: "Close, but not twins", //Mismatch in the matrix
+          // msg: "Close, but not twins", //Mismatch in the matrix
           required: true,
         },
       ],
@@ -340,10 +339,6 @@ export const authenticationPages = {
       label: "Help Center",
       path: "/help/helpCenter",
     },
-    {
-      label: "FAQ",
-      path: "/help/faq",
-    },
   ],
 
   credit: {
@@ -354,13 +349,17 @@ export const authenticationPages = {
 
 export const landingPage = {
   hero: {
-    title: "LOVE WITH MEANING",
+    title: ["FIND CONNECTION", "BEYOND TRADITION", "LOVE, REDEFINED."],
     subtitle:
-      "Find your life partner with trust, dignity, and Assamese values.",
-    description: "Porinoi blends tradition with modern love — mindfully.",
-    buttonValue: "Join Now",
+      "A mindful approach to relationships — where culture meets clarity.",
+    description:
+      "Built on trust. Rooted in Assamese values. Aligned with modern love.",
+    button: {
+      label: "Begin the Journey",
+      path: "/signUp"
+    },
     image: {
-      src: "/assets/img/hero-couple.jpeg",
+      src: "/assets/img/hero-couple.webp",
       alt: "happy_couple_smiling",
     },
     scroller: {
@@ -464,7 +463,7 @@ export const landingPage = {
         icon: <Mail />,
         label: "Chat to us",
         subLabel: "Our friendly team is here to help.",
-        address: "support@porinoi.com",
+        address: "Hello@porinoi.com",
       },
       {
         icon: <MapPin />,
@@ -514,7 +513,7 @@ export const landingPage = {
           placeholder:
             "Share your thoughts, questions, or anything you'd like us to know…",
           name: "message",
-          required: false,
+          required: true,
         },
         {
           label: "I’d love to join the early bird waitlist for Porinoi",
@@ -538,21 +537,6 @@ export const landingPage = {
       },
     },
   },
-
-  footer: {
-    logo: "assets/svg/logo_main.svg",
-    description:
-      "Porinoi is dedicated to connecting Assamese individuals with shared values and backgrounds. Join us in celebrating love, tradition, and community.",
-    links: [
-      { name: "FAQ", path: "/help/faq" },
-      { name: "About", path: "/about" },
-      { name: "Contact", path: "/contact" },
-      { name: "Privacy Policy", path: "/legal/privacyPolicy" },
-      { name: "Terms of Use", path: "/legal/termsOfUse" },
-    ],
-    copyright: `© ${year} Porinoi. All rights reserved.`,
-    endParagraph: "Made with love in Assam, India.",
-  },
 };
 
 export const aboutPage = {
@@ -563,8 +547,7 @@ export const aboutPage = {
   },
 
   principles: {
-    intro:
-      "At Porinoi, we follow values that honor emotion, tradition, and intention.",
+    intro: "We follow values that honor emotion, tradition, and intention.",
     image: "/assets/img/principles-bg.png",
     points: [
       "Prioritize emotional authenticity over appearances.",
@@ -726,7 +709,7 @@ export const contactPage = {
       text: "I agree with Porinoi's",
       links: {
         label: "Privacy Policy",
-        path: "/privacyPolicy",
+        path: "/legal/privacyPolicy",
       },
       required: true,
     },
@@ -784,8 +767,9 @@ export const contactPage = {
       },
     ],
     cta: {
-      label: "Still curious? See all questions",
-      href: "/help/faq",
+      label: "Still curious? Browse Help Center",
+      href: "/help/helpCenter",
     },
   },
 };
+

@@ -24,11 +24,11 @@ const AboutHighlight = () => {
   });
 
   return (
-    <div className="mt-20 px-20 pb-24 grid grid-cols-2 gap-0">
-      <div className="border-r px-4 border-zinc-300">
+    <div className="mt-10 lg:mt-20 px-10 lg:px-20 lg:pb-24 grid grid-cols-1 lg:grid-cols-2 gap-0">
+      <div className="lg:border-r lg:px-4 border-zinc-300">
         <WordStaggerFlowTitle
           delayStep={0.05}
-          className="text-6xl text-zinc-800 font-porinoi-sans font-semibold leading-tight uppercase"
+          className="text-4xl lg:text-6xl text-zinc-800 font-porinoi-sans font-semibold leading-tight uppercase"
         >
           {highlights.caption}
         </WordStaggerFlowTitle>
@@ -64,13 +64,13 @@ const AboutHighlight = () => {
           <WordStaggerFlowTitle
             duration={0.55}
             delayStep={0.03}
-            className="text-6xl text-zinc-800 font-porinoi-sans font-semibold leading-tight"
+            className="text-4xl lg:text-6xl text-zinc-800 font-porinoi-sans font-semibold leading-tight"
           >
             {highlights.sectionTitle}
           </WordStaggerFlowTitle>
         </div>
 
-        <ul className="mt-10 grid grid-cols-2 items-start">
+        <ul className="mt-10 grid grid-cols-1 lg:grid-cols-2 items-start">
           {highlights.items.map((item, idx) => {
             return (
               <motion.li
@@ -83,7 +83,7 @@ const AboutHighlight = () => {
                   delay: idx * 0.2,
                   ease: [0.33, 1, 0.68, 1],
                 }}
-                className="last:col-span-2 nth-[2]:bg-gradient-to-tr from-orange-500 to-pink-500 group flex flex-col items-start p-5 border-t border-zinc-300 h-full"
+                className=" lg:last:col-span-2 nth-[2]:bg-gradient-to-tr from-orange-500 to-pink-500 group flex flex-col items-start p-5 border-t border-zinc-300 h-full"
               >
                 <WordStaggerFlowTitle
                   delayStep={0.1}

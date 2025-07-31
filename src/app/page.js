@@ -25,7 +25,7 @@ export default function Home() {
     showContent && (
       <>
         <div className="bg-white overflow-x-hidden">
-          <div className="px-10 lg:px-24 py-10 lg:py-16 w-full h-auto min-h-screen select-none">
+          <div className="py-14 lg:py-16 w-full h-auto lg:min-h-screen select-none">
             <HeaderSection />
           </div>
 

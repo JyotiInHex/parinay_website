@@ -9,18 +9,16 @@ import { WordStaggerFlowTitle } from "./sectionTitle";
 export default function CustomForm({
   formTitle,
   switchForm,
-  formFields,
+  formFields = [],
   checkConfirm,
-  submitButton,
+  submitButton = { label: "Submit" },
   helpLinks,
   additionalInfo,
-  backGround,
 }) {
   const [formData, setFormData] = useState({});
   const [showPhone, setShowPhone] = useState(false);
+  const [errors, setErrors] = useState({});
   const [isSubmitted, setSubmitted] = useState(false);
-  const [isPasswordNotMatch, setPasswordNotMatch] = useState(false);
-  const [isCheckValid, setCheckValid] = useState();
 
   const handleChange = (e) => {
     const { name, type, value, checked } = e.target;
@@ -65,33 +63,59 @@ export default function CustomForm({
     }));
   };
 
+  const validateForm = () => {
+    const newErrors = {};
+
+    formFields.forEach((field) => {
+      if (field.requiredIf && !showPhone) return;
+
+      const value = formData[field.name]?.toString().trim() || "";
+
+      if (field.required && value === "") {
+        newErrors[field.name] = true;
+        return;
+      }
+
+      if (field.pattern && value !== "") {
+        const regex = new RegExp(field.pattern);
+        if (!regex.test(value)) {
+          newErrors[field.name] = true;
+          return;
+        }
+      }
+
+      if (field.minLength && value.length < field.minLength) {
+        newErrors[field.name] = true;
+      }
+
+      newErrors[field.name] = false;
+    });
+
+    if (formData.password && formData.confirmPassword) {
+      const isMismatch = formData.password !== formData.confirmPassword;
+
+      if (isMismatch) {
+        newErrors.confirmPassword = "mismatch";
+      }
+    }
+
+    setErrors(newErrors);
+    return !Object.values(newErrors).some((err) => err === true);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (
-      formData.password &&
-      formData.confirmPassword &&
-      formData.password !== formData.confirmPassword
-    ) {
-      setPasswordNotMatch(true);
-      return;
+    if (validateForm()) {
+      // setFormData({});
+      setSubmitted(true);
+      setShowPhone(false);
+
+      console.log("✅ Form Submitted:", formData); // Add validation or API submission here
+    } else {
+      console.warn("❌ Form Validation Failed.");
     }
-
-    // setFormData({});
-    setSubmitted(true);
-    setShowPhone(false);
-    setPasswordNotMatch(false);
-
-    // Add validation or API submission here
-    console.log("Form Submitted: ", formData);
   };
-
-  useEffect(() => {
-    const clearSetTimeOut = setTimeout(() => {
-      setSubmitted(false);
-    }, 200);
-    return clearTimeout(() => clearSetTimeOut);
-  }, [isSubmitted, setSubmitted]);
 
   return (
     <motion.div
@@ -99,8 +123,7 @@ export default function CustomForm({
       whileInView={{ opacity: 1 }}
       transition={{ duration: 0.4, delay: 0.05, ease: "easeOut" }}
       viewport={{ once: true, amount: 0.2 }}
-      className="lg:max-w-xl lg:min-w-lg mx-auto rounded-xl shadow-2xl shadow-zinc-600/15 overflow-hidden px-8 lg:px-12 py-5 lg:py-10 space-y-1"
-      style={{ background: backGround || "#f8f3e9" }}
+      className="lg:max-w-xl lg:min-w-lg lg:bg-white mx-auto rounded-xl lg:shadow-2xl shadow-zinc-600/15 lg:overflow-hidden lg:px-12 py-5 lg:py-10 space-y-1"
     >
       {formTitle && (
         <WordStaggerFlowTitle
@@ -112,10 +135,12 @@ export default function CustomForm({
       )}
 
       {switchForm && (
-        <div className="flex flex-row items-end gap-3 mb-10">
-          <WordStaggerFlowTitle className="text-sm lg:text-base text-zinc-700 font-porinoi-sans font-medium">
-            {switchForm.label}
-          </WordStaggerFlowTitle>
+        <div className="flex flex-col lg:flex-row lg:items-end items-start justify-center lg:gap-3 mb-10">
+          <div className="w-fit">
+            <WordStaggerFlowTitle className="text-base text-zinc-700 font-porinoi-sans font-medium">
+              {switchForm.label}
+            </WordStaggerFlowTitle>
+          </div>
           <CustomLink
             path={switchForm.path}
             label={switchForm.name}
@@ -142,8 +167,7 @@ export default function CustomForm({
                   {...field}
                   value={formData[field.name] || ""}
                   onChange={handleChange}
-                  isSubmitted={isSubmitted}
-                  isPasswordNotMatch={isPasswordNotMatch}
+                  error={errors[field.name]}
                 />
               </div>
             );
@@ -165,11 +189,12 @@ export default function CustomForm({
             return (
               <TextAreaField
                 key={idx}
+                indexKey={idx}
                 {...field}
                 value={formData[field.name] || ""}
-                rows={5}
                 onChange={handleChange}
-                isSubmitted={isSubmitted}
+                error={errors[field.name]}
+                rows={1}
               />
             );
           }
@@ -182,7 +207,6 @@ export default function CustomForm({
                 selected={formData[field.name] || []}
                 onChange={(e) => handleCheckboxGroup(e, field.name)}
                 isSubmitted={isSubmitted}
-                isCheckValid={isCheckValid}
               />
             );
           }
@@ -227,35 +251,33 @@ export default function CustomForm({
                 delay: 0.2,
                 ease: [0.33, 1, 0.68, 1],
               }}
-              className="flex flex-row items-start gap-2 mb-5"
+              className="grid grid-cols-[auto_1fr] items-start gap-3 mb-5"
             >
-              <div className="flex flex-row items-start gap-2">
-                <motion.input
-                  whileTap={{ scale: 0.5 }}
-                  type="checkbox"
-                  name={checkConfirm.name}
-                  id={checkConfirm.name}
-                  className="checkbox-custom inline-block"
-                  required={checkConfirm.required}
-                  checked={!!formData[checkConfirm.name]}
-                  onChange={(e) => {
-                    const { name, checked } = e.target;
-                    setFormData((prev) => ({
-                      ...prev,
-                      [name]: checked,
-                    }));
-                  }}
-                />
+              <motion.input
+                whileTap={{ scale: 0.5 }}
+                type="checkbox"
+                name={checkConfirm.name}
+                id={checkConfirm.name}
+                className="checkbox-custom inline-block bg-red-600 w-10"
+                required={checkConfirm.required}
+                checked={!!formData[checkConfirm.name]}
+                onChange={(e) => {
+                  const { name, checked } = e.target;
+                  setFormData((prev) => ({
+                    ...prev,
+                    [name]: checked,
+                  }));
+                }}
+              />
 
-                <label
-                  htmlFor={checkConfirm.name}
-                  className="flex flex-row items-center gap-3 text-sm text-zinc-800 font-medium font-porinoi-sans"
-                >
-                  <WordStaggerFlowTitle>
-                    [ {checkConfirm.text} ]
-                  </WordStaggerFlowTitle>
-                </label>
-              </div>
+              <label
+                htmlFor={checkConfirm.name}
+                className="flex flex-wrap flex-row items-center gap-3 "
+              >
+                <WordStaggerFlowTitle className="text-xs lg:text-base text-zinc-800 font-medium font-porinoi-sans">
+                  {checkConfirm.text}
+                </WordStaggerFlowTitle>
+              </label>
             </motion.div>
           )}
 
@@ -290,7 +312,7 @@ export default function CustomForm({
                 delay: 0.2,
                 ease: [0.33, 1, 0.68, 1],
               }}
-              className="flex flex-row items-center gap-2 mx-auto"
+              className="mt-3 flex flex-col lg:flex-row items-center lg:gap-2 mx-auto"
             >
               <WordStaggerFlowTitle className="text-sm text-zinc-500 font-porinoi-sans font-medium">
                 {helpLinks.link.label}
@@ -316,10 +338,37 @@ export default function CustomForm({
   );
 }
 
+const requiredFallbackMessages = [
+  "Can’t skip this!",
+  "Need this filled.",
+  "Oops, empty!",
+  "Required here.",
+  "Don’t leave it blank.",
+];
+
+const patternFallbackMessages = [
+  "Format’s off.",
+  "Try again?",
+  "Hmm… not right.",
+  "Check the format.",
+  "Almost! Fix format.",
+];
+
+const mismatchMessages = [
+  "Not quite a match!",
+  "These should be twins.",
+  "Mismatch alert!",
+  "Try matching both.",
+  "Close, but nope.",
+];
+
+const getRandomMessage = (messages) =>
+  messages[Math.floor(Math.random() * messages.length)];
+
 const CheckboxField = ({ label, name, checked, onChange }) => {
   const inputId = `${label.replace(/\s+/g, "-").toLowerCase()}-checkbox`;
   return (
-    <fieldset className="flex items-center space-x-2">
+    <fieldset className="grid grid-cols-[auto_1fr] gap-3">
       <input
         id={inputId}
         type="checkbox"
@@ -330,7 +379,7 @@ const CheckboxField = ({ label, name, checked, onChange }) => {
       />
       <label
         htmlFor={inputId}
-        className="text-xs lg:text-base text-zinc-800 font-porinoi-sans font-medium cursor-pointer"
+        className="text-lg lg:text-base text-zinc-800 font-porinoi-sans font-medium cursor-pointer"
       >
         {label}
       </label>
@@ -349,13 +398,12 @@ const CheckboxGroupField = ({
   return (
     <fieldset className="relative space-y-3">
       <label className="inline-block">
-        <WordStaggerFlowTitle className="text-xl lg:text-2xl text-zinc-800 font-porinoi-sans font-medium">
+        <WordStaggerFlowTitle className="text-lg lg:text-2xl text-zinc-800 font-porinoi-sans font-medium">
           {`[${label}]`}
         </WordStaggerFlowTitle>
         <input
           type="checkbox"
           tabIndex={-1}
-          aria-hidden="true"
           className="pointer-events-none opacity-0 absolute top-10 left-0"
           required={required}
           checked={selected.length > 0}
@@ -364,10 +412,18 @@ const CheckboxGroupField = ({
       </label>
       <div className="flex flex-row flex-wrap gap-2">
         {options.map((opt, idx) => (
-          <label
-            htmlFor={`for-${idx}-option`}
+          <motion.label
             key={idx}
-            className="w-full grid grid-cols-[auto_1fr] items-start space-x-2 text-sm lg:text-base text-zinc-800 font-porinoi-sans font-medium cursor-pointer"
+            htmlFor={`for-${idx}-option`}
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{
+              duration: 0.5,
+              delay: idx * 0.025,
+              ease: [0.33, 1, 0.68, 1],
+            }}
+            className="w-full grid grid-cols-[auto_1fr] items-start space-x-2"
           >
             <input
               id={`for-${idx}-option`}
@@ -378,8 +434,10 @@ const CheckboxGroupField = ({
               onChange={onChange}
               className="checkbox-custom"
             />
-            <span>{opt}</span>
-          </label>
+            <WordStaggerFlowTitle className="text-sm lg:text-base text-zinc-800 font-porinoi-sans font-medium cursor-pointer">
+              {opt}
+            </WordStaggerFlowTitle>
+          </motion.label>
         ))}
       </div>
     </fieldset>
@@ -388,56 +446,30 @@ const CheckboxGroupField = ({
 
 const InputField = ({
   indexKey,
-  label,
-  type,
   name,
-  placeholder,
-  value,
-  msg,
+  label,
+  type = "text",
   required,
   pattern,
+  placeholder,
   prefix,
+  value,
   onChange,
-  isSubmitted,
-  isPasswordNotMatch,
+  error,
+  msg,
 }) => {
   const [isTouched, setTouched] = useState(false);
-  useEffect(() => {
-    if (isSubmitted) {
-      setTouched(false);
-    }
-  }, [isSubmitted]);
+  const showError = isTouched && error;
 
   return (
-    <fieldset className="space-y-3 ">
+    <fieldset className="space-y-3 lg:space-y-2.5">
       <label htmlFor={name} className="inline-block">
-        <WordStaggerFlowTitle className="text-xl lg:text-2xl text-zinc-800 font-porinoi-sans font-medium">
+        <WordStaggerFlowTitle className="text-lg lg:text-2xl text-zinc-800 font-porinoi-sans font-medium">
           {`[${label}]`}
         </WordStaggerFlowTitle>
       </label>
 
-      <div
-        style={{
-          display: prefix ? "flex" : "block",
-          gap: prefix ? "3px" : "0",
-        }}
-        className="w-full items-end"
-      >
-        {prefix && (
-          <motion.span
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.5 }}
-            transition={{
-              duration: 0.5,
-              delay: 0.2,
-              ease: [0.33, 1, 0.68, 1],
-            }}
-            className="text-base text-zinc-400 font-medium font-porinoi-sans select-none"
-          >
-            {prefix}
-          </motion.span>
-        )}
+      <div className="w-full items-end">
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -450,8 +482,29 @@ const InputField = ({
               },
             },
           }}
-          className="overflow-hidden w-full"
+          className="overflow-hidden w-full items-end"
+          style={{
+            display: prefix ? "flex" : "inline-block whitespace-nowrap",
+            gap: prefix ? "3px" : "0",
+          }}
         >
+          {prefix && (
+            <motion.span
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                visible: { opacity: 1, y: 0 },
+              }}
+              transition={{
+                duration: 0.5,
+                delay: 0.2,
+                ease: [0.33, 1, 0.68, 1],
+              }}
+              className="inline-block whitespace-nowrap text-base text-zinc-400 font-medium font-porinoi-sans select-none"
+            >
+              {prefix}
+            </motion.span>
+          )}
+
           <motion.input
             variants={{
               hidden: { y: 100 },
@@ -472,7 +525,6 @@ const InputField = ({
             aria-label={`${name}_input`}
             value={value}
             required={required}
-            pattern={pattern}
             onChange={onChange}
             onBlur={() => {
               if (required) {
@@ -491,11 +543,25 @@ const InputField = ({
           />
         </motion.div>
 
-        {isPasswordNotMatch && name === "confirmPassword" ? (
-          <span className="text-base text-red-500 font-medium font-porinoi-sans select-none">
-            {msg}
-          </span>
-        ) : null}
+        <AnimatePresence mode="wait" initial={false}>
+          {showError && (
+            <motion.span
+              key={`${name}-error`}
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 20 }}
+              transition={{ duration: 0.3, ease: "anticipate" }}
+              className=" text-base text-red-500 font-medium font-porinoi-sans mt-1"
+            >
+              {msg ||
+                (error === "mismatch"
+                  ? getRandomMessage(mismatchMessages)
+                  : pattern
+                  ? getRandomMessage(patternFallbackMessages)
+                  : getRandomMessage(requiredFallbackMessages))}
+            </motion.span>
+          )}
+        </AnimatePresence>
       </div>
     </fieldset>
   );
@@ -537,7 +603,7 @@ const SelectField = ({
   return (
     <fieldset ref={fieldRef} className="relative">
       <label onClick={() => setToggleDropDown((prev) => !prev)}>
-        <WordStaggerFlowTitle className="text-2xl text-zinc-800 font-porinoi-sans font-medium">
+        <WordStaggerFlowTitle className="text-lg lg:text-2xl text-zinc-800 font-porinoi-sans font-medium">
           {`[${label}]`}
         </WordStaggerFlowTitle>
       </label>
@@ -644,7 +710,7 @@ const SelectField = ({
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: 10 }}
               transition={{ duration: 0.25, ease: "easeInOut" }}
-              className="absolute right-0 z-100 mt-2 w-full min-w-xs h-auto bg-neutral-100 flex flex-col items-center rounded-lg overflow-hidden shadow-xl"
+              className="absolute right-0 z-100 mt-2 w-full lg:min-w-xs h-auto bg-neutral-100 flex flex-col items-center rounded-lg overflow-hidden shadow-xl"
             >
               {options.map((option, idx) => (
                 <motion.li
@@ -683,23 +749,18 @@ const TextAreaField = ({
   placeholder,
   value,
   required,
+  rows = 4,
+  error,
+  msg,
   onChange,
-  isSubmitted,
 }) => {
   const [isTouched, setTouched] = useState(false);
-  const [isFocus, setIsFocus] = useState(false);
-
-  useEffect(() => {
-    if (isSubmitted) {
-      setTouched(false);
-      setIsFocus(false);
-    }
-  }, [isSubmitted]);
+  const showError = isTouched && error;
 
   return (
     <fieldset>
       <label htmlFor={name} className="inline-block pt-2">
-        <WordStaggerFlowTitle className="text-xl lg:text-2xl text-zinc-800 font-porinoi-sans font-medium">
+        <WordStaggerFlowTitle className="text-lg lg:text-2xl text-zinc-800 font-porinoi-sans font-medium">
           {`[${label}]`}
         </WordStaggerFlowTitle>
       </label>
@@ -730,10 +791,9 @@ const TextAreaField = ({
           }}
           id={name}
           name={name}
-          placeholder={placeholder || ""}
+          placeholder={placeholder || "Write Something..."}
           value={value}
-          required={required}
-          rows={1}
+          rows={rows}
           onChange={onChange}
           onBlur={() => {
             if (required) {
@@ -742,17 +802,30 @@ const TextAreaField = ({
               setTouched(false);
             }
           }}
-          className={`w-full h-24 lg:h-auto pt-4 pb-1.5 resize-none text-base font-medium font-porinoi-sans outline-none border-b-2 ${
+          className={`w-full text-sm lg:text-base font-medium font-porinoi-sans outline-none border-b-2 focus:border-zinc-800 ${
             isTouched & !value?.trim()
-              ? "border-red-500 text-red-500"
+              ? "border-red-500 text-red-500 "
               : value?.trim()
               ? "border-zinc-800 text-zinc-800"
-              : isFocus
-              ? "border-zinc-800"
-              : "border-zinc-300 hover:border-zinc-800"
-          }  hover:border-zinc-800 transition-all duration-500 ease-in-out`}
+              : "border-zinc-300"
+          } transition-all duration-300 ease-in-out `}
         />
       </motion.div>
+
+      <AnimatePresence mode="wait" initial={false}>
+        {showError && (
+          <motion.span
+            key={`${name}-error`} // important for exit/enter distinction
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 20 }}
+            transition={{ duration: 0.3, ease: "anticipate" }}
+            className="block text-base text-red-500 font-medium font-porinoi-sans mt-1"
+          >
+            {msg || (error && getRandomMessage(requiredFallbackMessages))}
+          </motion.span>
+        )}
+      </AnimatePresence>
     </fieldset>
   );
 };

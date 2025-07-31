@@ -1,11 +1,9 @@
-import React from 'react'
+"use client";
+import { motion, useAnimation } from "framer-motion";
+import { useEffect, useRef } from "react";
 
-const TermsOfUse = () => {
-  return (
-    <div>
-      TermsOfUse
-    </div>
-  )
-}
+const Help = () => {
+  return <div>help</div>;
+};
 
-export default TermsOfUse
+export default Help;

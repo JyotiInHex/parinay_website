@@ -1,86 +1,138 @@
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import { landingPage } from "@/data/siteStaticData";
 import { CustomBtn2 } from "@/components/ui/customBtn";
 import Image from "next/image";
 import {
-  LineStaggerFlowTitle,
+  LetterByLetterRevealTitle,
   WordStaggerFlowTitle,
 } from "@/components/ui/sectionTitle";
+import Link from "next/link";
+import Arrow from "../../../public/assets/svg/arrow";
 
 const LandingHero = () => {
   const hero = landingPage.hero;
+  const scrollRef = useRef(null);
+
+  const { scrollYProgress } = useScroll({
+    target: scrollRef,
+    offset: ["start center", "end start"],
+  });
+
+  const rawX1 = useTransform(scrollYProgress, [0, 1], ["0%", "10%"]);
+  const rawX2 = useTransform(scrollYProgress, [0, 1], ["0%", "-25%"]);
+  const rawX3 = useTransform(scrollYProgress, [0, 1], ["0%", "-40%"]);
+
+  const imgY = useSpring(
+    useTransform(scrollYProgress, [0, 1], ["0%", "-20%"]),
+    { stiffness: 80, damping: 18, mass: 0.4 }
+  );
+
+  const springConfig = {
+    stiffness: 80,
+    damping: 18,
+    mass: 0.4,
+  };
+
+  const x1 = useSpring(rawX1, springConfig);
+  const x2 = useSpring(rawX2, springConfig);
+  const x3 = useSpring(rawX3, springConfig);
+
   return (
-    <>
-      <div className="grid grid-cols-1 lg:grid-cols-2 items-center">
-        <div className="order-1 lg:order-2 place-items-end flex flex-col justify-end h-full">
-          <WordStaggerFlowTitle className="w-full lg:w-3/3 h-fit justify-center lg:justify-end text-[55px] lg:text-7xl text-right text-zinc-900 font-porinoi-sans font-black first:text-pink-500 last:text-orange-500 tracking-wide">
-            {hero.title}
-          </WordStaggerFlowTitle>
+    <div ref={scrollRef}>
+      <div className="space-y-10 px-10 lg:px-18 relative z-[2]">
+        <div className="w-full h-full flex flex-col lg:-space-y-5 -space-y-4">
+          <motion.div
+            className="translate-x-[-16%] lg:translate-x-[0%] w-fit"
+            style={{ x: x1 }}
+          >
+            <LetterByLetterRevealTitle
+              delayStep={0.025}
+              className="w-max h-fit text-[32px] lg:text-7xl text-right text-pink-500 font-porinoi-sans font-black tracking-wide"
+            >
+              {hero.title[0]}
+            </LetterByLetterRevealTitle>
+          </motion.div>
+
+          <motion.div
+            className="translate-x-[7%] lg:translate-x-[70%] w-fit"
+            style={{ x: x2 }}
+          >
+            <LetterByLetterRevealTitle
+              delayStep={0.025}
+              className="w-max text-[32px] lg:text-7xl text-right text-zinc-800 font-porinoi-sans font-black tracking-wide"
+            >
+              {hero.title[1]}
+            </LetterByLetterRevealTitle>
+          </motion.div>
+
+          <motion.div
+            className="translate-x-[18%] lg:translate-x-[54%] w-fit"
+            style={{ x: x3 }}
+          >
+            <LetterByLetterRevealTitle
+              delayStep={0.025}
+              className="w-max text-[32px] lg:text-7xl text-right text-orange-500 font-porinoi-sans font-black tracking-wide"
+            >
+              {hero.title[2]}
+            </LetterByLetterRevealTitle>
+          </motion.div>
         </div>
 
-        <div className="order-2 lg:order-1 mt-10 lg:mt-0 w-fit h-full pb-4">
-          <LineStaggerFlowTitle
-            delayStep={0.055}
+        <div className="w-full lg:w-2/7 mx-auto lg:mx-0 lg:ml-auto">
+          <WordStaggerFlowTitle
+            delayStep={0.015}
             wordsPerLine={5}
-            className="lg:w-4/5 text-2xl lg:text-3xl text-zinc-800 font-porinoi-display font-normal leading-snug lg:leading-9"
+            className="lg:-space-y-3 text-base text-zinc-800 font-porinoi-sans font-normal leading-snug lg:leading-9"
           >
-            {hero.subtitle + "<br/>" + hero.description}
-          </LineStaggerFlowTitle>
+            {hero.subtitle + " " + hero.description}
+          </WordStaggerFlowTitle>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
+            viewport={{ once: true, amount: 0.5 }}
             transition={{
-              duration: 0.45,
-              delay: 0.025,
+              duration: 0.4,
+              delay: 0.075,
               ease: [0.33, 1, 0.68, 1],
             }}
+            className="mt-5 w-full h-auto bg-zinc-800 rounded-full"
           >
-            <CustomBtn2
-              path="/signUp"
-              className={"bg-[#f8f3e9] w-full lg:w-fit"}
+            <Link
+              href={hero.button.path}
+              className="flex items-center justify-center gap-3 w-full py-1 text-center text-neutral-50 text-sm font-porinoi-sans font-semibold"
             >
-              {hero.buttonValue}
-            </CustomBtn2>
+              {hero.button.label}
+              <Arrow width={24} height={24} />
+            </Link>
           </motion.div>
         </div>
       </div>
 
-      <motion.hr
-        initial={{ width: "0%" }}
-        whileInView={{ width: "100%" }}
-        viewport={{ once: true, amount: 0.6 }}
-        transition={{
-          duration: 0.25,
-          delay: 0.15,
-          ease: [0.33, 1, 0.68, 1],
-        }}
-        className="mt-0 border border-zinc-600 rounded-full transition-all duration-500 ease-linear"
-      />
-
       <motion.figure
-        initial={{ opacity: 0, y: 80 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.1 }}
+        style={{ y: imgY }}
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
         transition={{
           duration: 0.55,
           delay: 0.35,
           ease: [0.33, 1, 0.68, 1],
         }}
-        className="mt-4 w-full h-[30vh] lg:h-auto lg:max-h-[500px] overflow-hidden rounded-2xl"
+        className="relative z-0 h-[30vh] lg:h-full lg:max-h-[650px] overflow-hidden pointer-events-none"
       >
-        <Image
+        <motion.img
           src={hero.image.src}
           alt={hero.image.alt}
-          width={1000}
-          height={1000}
-          quality={100}
+          width={100}
+          height={100}
           loading="lazy"
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover pointer-events-none"
+          style={{ y: imgY }}
         />
       </motion.figure>
-    </>
+    </div>
   );
 };
 

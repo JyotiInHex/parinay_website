@@ -38,7 +38,7 @@ const ShortAboutSection = () => {
                     delay: idx * 0.3,
                     ease: [0.33, 1, 0.68, 1],
                   }}
-                  className="flex items-center justify-center gap-2 origin-left"
+                  className="grid grid-cols-[auto_1fr] items-center justify-center gap-2 origin-left"
                 >
                   <Star />
                   <span className="text-base text-zinc-800 font-porinoi-sans font-semibold">

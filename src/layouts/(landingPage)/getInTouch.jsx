@@ -1,18 +1,14 @@
-import Link from "next/link";
 import { landingPage } from "@/data/siteStaticData";
-import Paragraph from "@/components/ui/paragraph";
 import {
-  FadeInSlideTitle,
   WordStaggerFlowTitle,
 } from "@/components/ui/sectionTitle";
 import CustomForm from "@/components/ui/customForm";
-import { TooltipText } from "@/components/ui/tooltipText";
 
 export default function GetInTouch() {
   const { title, subtitle, socialLinks, contactDetails, formDetails } =
     landingPage.contactSection;
   return (
-    <div className="w-full h-full select-none grid grid-cols-1 lg:grid-cols-[40%_1fr] items-start justify-between gap-20">
+    <div className="w-full h-full select-none grid grid-cols-1 lg:grid-cols-[40%_1fr] items-start justify-between gap-10 lg:gap-20">
       <div className="flex flex-col space-y-14">
         <ul className="flex flex-col items-start gap-10">
           {contactDetails.map((details, index) => {
@@ -48,7 +44,7 @@ export default function GetInTouch() {
           </WordStaggerFlowTitle>
         </div>
       </div>
-      <div>
+      <div className="px-5">
         <CustomForm {...formDetails} />
       </div>
     </div>

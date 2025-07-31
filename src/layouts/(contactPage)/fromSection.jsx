@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import {
   LineStaggerFlowTitle,
@@ -48,11 +48,12 @@ export default function ContactForm() {
     if (!formData.privacyPolicy) {
       return;
     }
+    setIsPrivacyChecked(false);
     setFormData({});
     console.log("Form Submitted: ", formData);
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const clearSetTimeOut = setTimeout(() => {
       setSubmitted(false);
     }, 200);
@@ -60,9 +61,9 @@ export default function ContactForm() {
   }, [isSubmitted, setSubmitted]);
 
   return (
-    <div className="px-24 pb-20">
+    <div className="px-10 lg:px-24 pb-20">
       <div className="w-full h-full">
-        <div className="w-2/4 mt-10">
+        <div className="w-2/4 lg:mt-10 mb-5 lg:mb-0">
           <LineStaggerFlowTitle
             wordsPerLine={10}
             delayStep={0.06}
@@ -74,7 +75,7 @@ export default function ContactForm() {
 
         <form
           onSubmit={handleSubmit}
-          className="w-full mt-5 grid grid-cols-1 md:grid-cols-2 gap-2"
+          className="w-full lg:mt-5 lg:grid grid-cols-2 gap-2 space-y-6 lg:space-y-0"
         >
           {formDetails.formFields.map((field, idx) => {
             const textTypes = ["text", "email", "tel", "number", "password"];
@@ -82,7 +83,7 @@ export default function ContactForm() {
 
             if (textTypes.includes(field.type)) {
               return (
-                <div className="w-full" key={idx}>
+                <div className="lg:w-full" key={idx}>
                   <InputField
                     indexKey={idx}
                     {...field}
@@ -137,7 +138,7 @@ export default function ContactForm() {
                 transition: { duration: 0.6, ease: [0.33, 1, 0.68, 1] },
               },
             }}
-            className="col-span-2 w-full flex flex-row items-center justify-end gap-5"
+            className="lg:mt-5 col-span-2 w-full flex flex-col lg:flex-row lg:items-center justify-end gap-5"
           >
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -148,9 +149,9 @@ export default function ContactForm() {
                 delay: 0.2,
                 ease: [0.33, 1, 0.68, 1],
               }}
-              className="flex flex-row items-end gap-2"
+              className="flex flex-row items-end lg:items-center gap-1 lg:gap-2"
             >
-              <div className="flex flex-row items-start gap-2">
+              <div className="flex flex-row items-center lg:items-start gap-1 lg:gap-2">
                 <motion.input
                   whileTap={{ scale: 0.5 }}
                   type="checkbox"
@@ -169,21 +170,20 @@ export default function ContactForm() {
                   }}
                 />
 
-                <label
-                  htmlFor="privacyPolicy"
-                  className="flex flex-row items-center gap-3 text-base text-zinc-800 font-medium font-porinoi-sans"
-                >
-                  <WordStaggerFlowTitle>
+                <label htmlFor="privacyPolicy">
+                  <WordStaggerFlowTitle className="whitespace-nowrap text-sm lg:text-base text-zinc-800 font-medium font-porinoi-sans underline cursor-pointer">
                     {formDetails.consent.text}
                   </WordStaggerFlowTitle>
                 </label>
               </div>
 
-              <CustomLink
-                path={formDetails.consent.links.path}
-                label={formDetails.consent.links.label}
-                className="text-base text-zinc-800 font-medium font-porinoi-sans underline cursor-pointer"
-              />
+              <div className="w-fit">
+                <CustomLink
+                  path={formDetails.consent.links.path}
+                  label={formDetails.consent.links.label}
+                  className="text-sm lg:text-base text-zinc-800 font-medium font-porinoi-sans underline cursor-pointer"
+                />
+              </div>
             </motion.div>
 
             <motion.div
@@ -198,14 +198,11 @@ export default function ContactForm() {
                   },
                 },
               }}
-              className="w-fit overflow-hidden"
-              style={{
-                opacity: !isPrivacyChecked ? 0.5 : 1,
-                pointerEvents: !isPrivacyChecked ? "none" : "auto",
-              }}
+              className="w-full lg:w-fit overflow-hidden"
             >
               <motion.button
                 type="submit"
+                disabled={!isPrivacyChecked}
                 variants={{
                   hidden: { y: 100 },
                   visible: { y: 0 },
@@ -215,14 +212,18 @@ export default function ContactForm() {
                   delay: 0.05,
                   ease: [0.33, 1, 0.68, 1],
                 }}
-                className="md:col-span-2 w-fit ml-auto bg-zinc-800 rounded-full hover:bg-zinc-700 transition-all duration-200 ease-linear flex flex-row items-center group overflow-hidden cursor-pointer"
+                className="lg:col-span-2 w-full lg:w-fit lg:ml-auto bg-zinc-800 rounded-full hover:bg-zinc-700 transition-all duration-200 ease-linear flex flex-row items-center justify-between group overflow-hidden cursor-pointer"
+                style={{
+                  opacity: !isPrivacyChecked && 0.5,
+                  pointerEvents: !isPrivacyChecked && "none",
+                }}
               >
                 <span className="pl-6 text-white text-base font-porinoi-sans font-semibold">
                   <WordStaggerFlowTitle>
                     {formDetails.submitButton.text}
                   </WordStaggerFlowTitle>
                 </span>
-                <span className="relative w-14 h-14 before:w-[10px] before:h-[10px] before:bg-white before:rounded-full before:absolute before:mx-auto before:-z-1 flex items-center justify-center before:transition-all before:duration-300 before:ease-linear z-0 group-hover:before:w-[38px] group-hover:before:h-[38px]">
+                <span className="relative w-12 lg:w-14 h-12 lg:h-14 before:w-[10px] before:h-[10px] before:bg-white before:rounded-full before:absolute before:mx-auto before:-z-1 flex items-center justify-center before:transition-all before:duration-300 before:ease-linear z-0 group-hover:before:w-[35px] group-hover:before:h-[35px] group-hover:lg:before:w-[38px] group-hover:lg:before:h-[38px]">
                   <i className="text-zinc-800 text-xl font-mono scale-0 opacity-0 invisible group-hover:visible group-hover:opacity-100 group-hover:scale-100 transition-all duration-200 ease-linear">
                     🡭
                   </i>
@@ -258,9 +259,9 @@ const InputField = ({
   }, [isSubmitted]);
 
   return (
-    <fieldset initial={{}} className="grid grid-cols-[auto_1fr]">
-      <label htmlFor={name} className="inline-block">
-        <WordStaggerFlowTitle className="text-4xl text-zinc-800 font-porinoi-sans font-medium">
+    <fieldset className="grid grid-cols-1 lg:grid-cols-[auto_1fr]">
+      <label htmlFor={name} className="lg:inline-block">
+        <WordStaggerFlowTitle className="text-xl lg:text-4xl text-zinc-800 font-porinoi-sans font-medium">
           {label}
         </WordStaggerFlowTitle>
       </label>
@@ -277,7 +278,7 @@ const InputField = ({
             },
           },
         }}
-        className="ml-2 overflow-hidden"
+        className="lg:ml-2 overflow-hidden"
       >
         <motion.input
           variants={{
@@ -308,7 +309,7 @@ const InputField = ({
               setTouched(false);
             }
           }}
-          className={`w-full text-center text-base font-medium font-porinoi-sans outline-none border-b-2 focus:border-zinc-800 ${
+          className={`w-full lg:text-center text-base font-medium font-porinoi-sans outline-none border-b-2 focus:border-zinc-800 ${
             isTouched & !value?.trim()
               ? "border-red-500 text-red-500 "
               : value?.trim()
@@ -357,10 +358,10 @@ const SelectField = ({
   return (
     <fieldset
       ref={fieldRef}
-      className="relative grid grid-cols-[auto_1fr] gap-3 items-center my-4"
+      className="relative grid grid-cols-1 lg:grid-cols-[auto_1fr] gap-3 items-center my-4"
     >
       <label onClick={() => setToggleDropDown((prev) => !prev)}>
-        <WordStaggerFlowTitle className="text-4xl text-zinc-800 font-porinoi-sans font-medium">
+        <WordStaggerFlowTitle className="text-xl lg:text-4xl text-zinc-800 font-porinoi-sans font-medium">
           {label}
         </WordStaggerFlowTitle>
       </label>
@@ -378,7 +379,7 @@ const SelectField = ({
               },
             },
           }}
-          className="ml-2 overflow-hidden"
+          className="lg:ml-2 overflow-hidden"
         >
           <motion.input
             variants={{
@@ -404,7 +405,7 @@ const SelectField = ({
                 setTouched(false);
               }
             }}
-            className={`w-full text-center text-base font-medium font-porinoi-sans outline-none border-b-2
+            className={`w-full lg:text-center text-base font-medium font-porinoi-sans outline-none border-b-2
               text-transparent text-shadow-[0_0_0_#9f9fa9] ${
                 isTouched & !value?.trim()
                   ? "border-red-500 text-red-300 text-shadow-[0_0_0_#ffa2a2]"
@@ -467,7 +468,7 @@ const SelectField = ({
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: 10 }}
               transition={{ duration: 0.25, ease: "easeInOut" }}
-              className="absolute right-0 z-100 mt-2 w-full min-w-xs h-auto bg-neutral-100 flex flex-col items-center rounded-lg overflow-hidden shadow-xl"
+              className="absolute right-0 z-100 mt-2 w-full lg:min-w-xs h-auto bg-neutral-100 flex flex-col items-center rounded-lg overflow-hidden shadow-xl"
             >
               {options.map((option, idx) => (
                 <motion.li
@@ -484,9 +485,9 @@ const SelectField = ({
                     onChange(option);
                     setToggleDropDown(false);
                   }}
-                  className="hover:bg-neutral-200 w-full p-3 transition-all duration-200 ease-linear cursor-pointer"
+                  className="hover:bg-neutral-200 w-full p-2 lg:p-3 transition-all duration-200 ease-linear cursor-pointer"
                 >
-                  <span className="text-center text-base text-zinc-800 font-semibold font-porinoi-sans cursor-pointer w-full pointer-events-none">
+                  <span className="text-center text-sm lg:text-base text-zinc-800 font-semibold font-porinoi-sans cursor-pointer w-full pointer-events-none">
                     {option}
                   </span>
                 </motion.li>
@@ -520,9 +521,9 @@ const TextAreaField = ({
   }, [isSubmitted]);
 
   return (
-    <fieldset className="grid grid-cols-[auto_1fr] gap-4 items-start">
+    <fieldset className="grid grid-cols-1 lg:grid-cols-[auto_1fr] gap-4 items-start">
       <label htmlFor={name} className="inline-block pt-2">
-        <WordStaggerFlowTitle className="text-4xl text-zinc-800 font-porinoi-sans font-medium">
+        <WordStaggerFlowTitle className="text-xl lg:text-4xl text-zinc-800 font-porinoi-sans font-medium">
           {label}
         </WordStaggerFlowTitle>
       </label>
@@ -539,7 +540,7 @@ const TextAreaField = ({
             },
           },
         }}
-        className="ml-2 overflow-hidden"
+        className="lg:ml-2 overflow-hidden"
       >
         <motion.textarea
           variants={{
@@ -565,7 +566,7 @@ const TextAreaField = ({
               setTouched(false);
             }
           }}
-          className={`w-full pt-4 pb-1.5 resize-none text-center text-base font-medium font-porinoi-sans outline-none border-b-2  ${
+          className={`w-full h-20 lg:h-auto pt-4 pb-1.5 resize-none lg:text-center text-base font-medium font-porinoi-sans outline-none border-b-2  ${
             isTouched & !value?.trim()
               ? "border-red-500 text-red-500"
               : value?.trim()
