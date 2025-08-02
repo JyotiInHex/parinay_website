@@ -1,12 +1,12 @@
 "use client";
 import Image from "next/image";
 import { useLayoutEffect, useState } from "react";
+import { WordStaggerFlowTitle } from "@/components/ui/sectionTitle";
+import { authenticationPages } from "@/data/siteStaticData";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import CustomForm from "@/components/ui/customForm";
 import Arrow from "../../../public/assets/svg/arrow";
-import { WordStaggerFlowTitle } from "@/components/ui/sectionTitle";
-import { authenticationPages } from "@/data/siteStaticData";
 import Arrow45deg from "../../../public/assets/svg/arrow45deg";
 import Link from "next/link";
 
@@ -54,7 +54,7 @@ export const AuthLeft = ({ imag, title, subTitle }) => {
   const { links } = authenticationPages;
 
   return (
-    <div className="w-full h-full space-y-3 flex flex-col items-start justify-center ">
+    <div className="order-1 lg:order-0 flex w-full h-full space-y-3 flex-col items-start justify-center ">
       <motion.figure
         initial={{ width: 0, opacity: 0, filter: "grayscale(100%)" }}
         whileInView={{ width: "150px", opacity: 1, filter: "grayscale(0%)" }}
@@ -67,7 +67,7 @@ export const AuthLeft = ({ imag, title, subTitle }) => {
             delay: 0.95,
           },
         }}
-        className="h-[100px] origin-right overflow-hidden rounded-xl"
+        className="hidden lg:block h-[100px] origin-right overflow-hidden rounded-xl"
       >
         <Image
           src={imag}
@@ -80,7 +80,7 @@ export const AuthLeft = ({ imag, title, subTitle }) => {
         />
       </motion.figure>
 
-      <div>
+      <div className="hidden lg:block">
         <WordStaggerFlowTitle
           delayStep={0.06}
           className="py-0.5 text-4xl text-zinc-800 font-porinoi-sans font-semibold"
@@ -89,7 +89,7 @@ export const AuthLeft = ({ imag, title, subTitle }) => {
         </WordStaggerFlowTitle>
       </div>
 
-      <div className="flex items-center gap-3">
+      <div className="hidden lg:flex items-center gap-3">
         <WordStaggerFlowTitle className="text-base text-zinc-800 font-porinoi-sans font-normal">
           {subTitle}
         </WordStaggerFlowTitle>
@@ -107,7 +107,7 @@ export const AuthLeft = ({ imag, title, subTitle }) => {
         </motion.span>
       </div>
 
-      <ul className="mt-10 w-full h-auto flex flex-wrap-reverse items-center gap-4">
+      <ul className="lg:mt-10 w-full h-auto flex flex-wrap-reverse items-center justify-center lg:justify-start gap-4">
         {links.map((link, idx) => {
           return (
             <motion.li
@@ -152,16 +152,20 @@ export const AuthRight = ({ formDetails }) => {
     submitButton,
     helpLinks,
     additionalInfo,
+    serverAction,
   } = formDetails;
   return (
-    <CustomForm
-      formTitle={formTitle}
-      switchForm={switchForm}
-      formFields={formFields}
-      checkConfirm={checkConfirm}
-      submitButton={submitButton}
-      helpLinks={helpLinks}
-      additionalInfo={additionalInfo}
-    />
+    <div>
+      <CustomForm
+        formTitle={formTitle}
+        switchForm={switchForm}
+        formFields={formFields}
+        checkConfirm={checkConfirm}
+        submitButton={submitButton}
+        helpLinks={helpLinks}
+        additionalInfo={additionalInfo}
+        serverAction={serverAction}
+      />
+    </div>
   );
 };

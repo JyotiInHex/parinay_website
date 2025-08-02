@@ -117,24 +117,26 @@ export default function Header() {
                 </h2>
 
                 <div className="relative mt-5 flex flex-col-reverse lg:flex-row justify-between lg:items-center">
-                  <motion.figure
+                  <motion.video
                     initial={{ opacity: 0, filter: "blur(10px)", y: 50 }}
                     animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}
                     exit={{ opacity: 0, filter: "blur(10px)", y: -50 }}
                     transition={{ duration: 0.4, delay: 0.35 }}
-                    className="absolute bottom-10 lg:static mt-5 w-full h-auto min-w-[200px] lg:min-w-[240px] max-w-[100px] lg:max-w-[250px] min-h-[100px] rounded-md shadow-xl overflow-hidden pointer-events-none"
+                    width="250"
+                    height="200"
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    controls={false}
+                    preload="none"
+                    className="absolute bottom-20 lg:static mt-5 w-full h-auto min-w-[200px] lg:min-w-[240px] max-w-[100px] lg:max-w-[250px] rounded-md shadow-xl overflow-hidden pointer-events-none"
                   >
-                    <video
-                      preload="none"
-                      src="/assets/video/nav-video.mp4"
-                      autoPlay
-                      loop
-                      muted
-                      playsInline
-                      controls={false}
+                    <source
+                      src={menu.video.source}
                       className="w-full h-full object-cover pointer-events-none"
                     />
-                  </motion.figure>
+                  </motion.video>
 
                   <ul className="mt-5 w-full lg:w-fit flex flex-col items-end gap-5 overflow-hidden">
                     {menu.links.map((link, idx) => (

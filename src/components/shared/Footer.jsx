@@ -159,12 +159,12 @@ const Footer = () => {
           </div>
 
           <div className="mt-20 flex flex-col lg:flex-row items-center justify-between">
-            <LetterByLetterRevealTitle
+            <WordStaggerFlowTitle
               delayStep={0.02}
               className="text-sm text-zinc-400 font-medium font-porinoi-sans"
             >
               {credits.copyright}
-            </LetterByLetterRevealTitle>
+            </WordStaggerFlowTitle>
             <WordStaggerFlowTitle className="text-sm justify-center text-zinc-400 font-medium font-porinoi-sans">
               {credits.tagline}
             </WordStaggerFlowTitle>

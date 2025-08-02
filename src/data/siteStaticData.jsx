@@ -4,6 +4,7 @@ import Star from "../../public/assets/svg/star";
 import Heart2 from "../../public/assets/svg/heart-2";
 import Arrow from "../../public/assets/svg/arrow";
 import Arrow45deg from "../../public/assets/svg/arrow45deg";
+import { signinAction, signupAction } from "@/actions/auth";
 
 const year = new Date().getFullYear();
 
@@ -89,6 +90,10 @@ export const navigationSection = {
   menu: {
     label: "Menu",
     closeLabel: "Close",
+    video: {
+      source: "/assets/video/nav-video.webm",
+      caption: "",
+    },
     links: [
       { label: "Home", path: "/" },
       { label: "About", path: "/about" },
@@ -196,12 +201,13 @@ export const authenticationPages = {
         name: "[ Login Instead ]",
       },
 
+      serverAction: signupAction,
+
       formFields: [
         {
           label: "Hi! My full name is",
           type: "text",
           placeholder: "e.g. Rupam Das",
-          pattern: "^[A-Za-z]{2,}(?: [A-Za-z]{2,}){1,2}$",
           name: "name",
           required: true,
         },
@@ -225,7 +231,6 @@ export const authenticationPages = {
           placeholder: "Enter your 10-digit mobile number",
           prefix: "+91",
           name: "phone",
-          pattern: "^[6-9]\\d{9}$",
           required: true,
         },
         {
@@ -243,7 +248,6 @@ export const authenticationPages = {
           type: "password",
           placeholder: "Type it again, just to be sure",
           name: "confirmPassword",
-          // msg: "Close, but not twins", //Mismatch in the matrix
           required: true,
         },
       ],
@@ -286,6 +290,8 @@ export const authenticationPages = {
         name: "[ Register Now ]",
       },
 
+      serverAction: signinAction,
+
       formFields: [
         {
           label: "I’m signing in with my",
@@ -326,6 +332,53 @@ export const authenticationPages = {
     },
   },
 
+  forgotPasswordPage: {
+    imag: "/assets/img/forgotPassword.webp",
+    title: "Lost your key? No worries — we’ll help you find your way back.",
+    subTitle: "Enter your registered number to reset your password.",
+
+    formDetails: {
+      formTitle: "Let’s get you back in.",
+      additionalInfo:
+        "Password resets are private, encrypted, and effortless. We’re here to help — no hassle, no hoops.",
+
+      switchForm: {
+        label: "Remembered your password?",
+        path: "/signIn",
+        name: "[ Sign In Instead ]",
+      },
+
+      // serverAction: forgotPasswordAction, // Replace with your real server action
+
+      formFields: [
+        {
+          label: "I registered with my",
+          type: "tel",
+          placeholder: "[ Enter your mobile number* ]",
+          prefix: "+91",
+          name: "phone",
+          pattern: "^[6-9]\\d{9}$",
+          required: true,
+        },
+      ],
+
+      checkConfirm: null, // No checkbox needed for forgot password
+
+      submitButton: {
+        text: "[ Send Otp ]",
+        icon: <Arrow width={24} height={24} />,
+      },
+
+      helpLinks: {
+        link: {
+          label: "Need more help?",
+          path: "/contactSupport",
+          name: "[Contact Support]",
+        },
+      },
+    },
+  },
+
   links: [
     {
       label: "Terms Of Use",
@@ -356,7 +409,7 @@ export const landingPage = {
       "Built on trust. Rooted in Assamese values. Aligned with modern love.",
     button: {
       label: "Begin the Journey",
-      path: "/signUp"
+      path: "/signUp",
     },
     image: {
       src: "/assets/img/hero-couple.webp",
@@ -772,4 +825,3 @@ export const contactPage = {
     },
   },
 };
-

@@ -18,8 +18,8 @@ export function FadeInSlideTitle({ children, className }) {
 export function LetterByLetterRevealTitle({
   children,
   className = "",
-  delayStep = 0.06,
-  blurAmount = 10,
+  delayStep = 0.05,
+  blurAmount = 5,
 }) {
   const isString = typeof children === "string";
   const letters = isString ? children.split("") : [];
@@ -52,14 +52,14 @@ export function LetterByLetterRevealTitle({
       variants={parentVariants}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, amount: 0.5 }}
+      viewport={{ once: true, amount: 0.3}}
       className={`w-fit ${className}`}
     >
       {letters.map((chr, idx) => {
         const transition = {
-          duration: 0.25,
-          ease: [0.33, 1, 0.68, 1],
+          duration: 0.35,
           delay: idx * delayStep,
+          ease: [0.33, 1, 0.68, 1],
         };
 
         return (

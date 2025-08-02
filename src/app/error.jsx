@@ -61,7 +61,7 @@ export default function NotFound() {
             variants={fadeUp}
             className="w-fit lg:w-1/3 text-xl lg:text-3xl font-semibold font-porinoi-sans text-zinc-700"
           >
-            Something broke behind the scenes at Parinay!
+            Something broke behind the scenes at Porinoi!
           </motion.h5>
 
           <motion.p

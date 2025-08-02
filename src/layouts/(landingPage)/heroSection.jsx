@@ -1,12 +1,8 @@
 import { useRef } from "react";
 import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import { landingPage } from "@/data/siteStaticData";
-import { CustomBtn2 } from "@/components/ui/customBtn";
 import Image from "next/image";
-import {
-  LetterByLetterRevealTitle,
-  WordStaggerFlowTitle,
-} from "@/components/ui/sectionTitle";
+import { WordStaggerFlowTitle } from "@/components/ui/sectionTitle";
 import Link from "next/link";
 import Arrow from "../../../public/assets/svg/arrow";
 
@@ -23,11 +19,6 @@ const LandingHero = () => {
   const rawX2 = useTransform(scrollYProgress, [0, 1], ["0%", "-25%"]);
   const rawX3 = useTransform(scrollYProgress, [0, 1], ["0%", "-40%"]);
 
-  const imgY = useSpring(
-    useTransform(scrollYProgress, [0, 1], ["0%", "-20%"]),
-    { stiffness: 80, damping: 18, mass: 0.4 }
-  );
-
   const springConfig = {
     stiffness: 80,
     damping: 18,
@@ -39,43 +30,43 @@ const LandingHero = () => {
   const x3 = useSpring(rawX3, springConfig);
 
   return (
-    <div ref={scrollRef}>
-      <div className="space-y-10 px-10 lg:px-18 relative z-[2]">
-        <div className="w-full h-full flex flex-col lg:-space-y-5 -space-y-4">
+    <div ref={scrollRef} className="flex flex-col gap-5">
+      <div className="space-y-10 px-10 lg:px-18 relative z-[1]">
+        <div className="w-full h-full flex flex-col">
           <motion.div
             className="translate-x-[-16%] lg:translate-x-[0%] w-fit"
             style={{ x: x1 }}
           >
-            <LetterByLetterRevealTitle
+            <WordStaggerFlowTitle
               delayStep={0.025}
               className="w-max h-fit text-[32px] lg:text-7xl text-right text-pink-500 font-porinoi-sans font-black tracking-wide"
             >
               {hero.title[0]}
-            </LetterByLetterRevealTitle>
+            </WordStaggerFlowTitle>
           </motion.div>
 
           <motion.div
             className="translate-x-[7%] lg:translate-x-[70%] w-fit"
             style={{ x: x2 }}
           >
-            <LetterByLetterRevealTitle
+            <WordStaggerFlowTitle
               delayStep={0.025}
               className="w-max text-[32px] lg:text-7xl text-right text-zinc-800 font-porinoi-sans font-black tracking-wide"
             >
               {hero.title[1]}
-            </LetterByLetterRevealTitle>
+            </WordStaggerFlowTitle>
           </motion.div>
 
           <motion.div
             className="translate-x-[18%] lg:translate-x-[54%] w-fit"
             style={{ x: x3 }}
           >
-            <LetterByLetterRevealTitle
+            <WordStaggerFlowTitle
               delayStep={0.025}
               className="w-max text-[32px] lg:text-7xl text-right text-orange-500 font-porinoi-sans font-black tracking-wide"
             >
               {hero.title[2]}
-            </LetterByLetterRevealTitle>
+            </WordStaggerFlowTitle>
           </motion.div>
         </div>
 
@@ -111,25 +102,25 @@ const LandingHero = () => {
       </div>
 
       <motion.figure
-        style={{ y: imgY }}
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
+        initial={{ opacity: 0, y: 60 }}
+        whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{
-          duration: 0.55,
-          delay: 0.35,
+          duration: 0.6,
+          delay: 0.095,
           ease: [0.33, 1, 0.68, 1],
         }}
-        className="relative z-0 h-[30vh] lg:h-full lg:max-h-[650px] overflow-hidden pointer-events-none"
+        className="px-2 lg:px-0 relative z-0 h-[30vh] lg:h-full lg:max-h-[650px] overflow-hidden pointer-events-none"
       >
-        <motion.img
+        <Image
           src={hero.image.src}
           alt={hero.image.alt}
-          width={100}
-          height={100}
+          width={750}
+          height={750}
+          quality={100}
+          priority={false}
           loading="lazy"
-          className="w-full h-full object-cover pointer-events-none"
-          style={{ y: imgY }}
+          className="w-full h-full object-cover pointer-events-none rounded-lg lg:rounded-none"
         />
       </motion.figure>
     </div>

@@ -2,6 +2,7 @@ import "./globals.css";
 import { Geist_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import ClientWrapper from "@/global/ClientWrapper";
+import ToastProvider from "@/context/ToastContext";
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
@@ -61,7 +62,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${geistMono.variable} ${porinoi_sans.variable} ${porinoi_display.variable} `}>
       <body className="antialiased">
-        <ClientWrapper>{children}</ClientWrapper>
+        <ToastProvider>
+          <ClientWrapper>{children}</ClientWrapper>
+        </ToastProvider>
       </body>
     </html>
   );

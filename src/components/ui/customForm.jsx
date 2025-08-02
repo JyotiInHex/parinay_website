@@ -1,10 +1,11 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import { AnimatePresence, frameData, motion } from "framer-motion";
-import Check from "../../../public/assets/svg/check";
+import { AnimatePresence, motion } from "framer-motion";
 import { CustomLink } from "./customLink";
 import { WordStaggerFlowTitle } from "./sectionTitle";
+import { formValidationCheck } from "@/utils/validators";
+import { useToast } from "@/context/ToastContext";
 
 export default function CustomForm({
   formTitle,
@@ -14,11 +15,15 @@ export default function CustomForm({
   submitButton = { label: "Submit" },
   helpLinks,
   additionalInfo,
+  serverAction,
 }) {
+  const formRef = useRef(null);
   const [formData, setFormData] = useState({});
   const [showPhone, setShowPhone] = useState(false);
   const [errors, setErrors] = useState({});
   const [isSubmitted, setSubmitted] = useState(false);
+
+  const { ThrowToast } = useToast();
 
   const handleChange = (e) => {
     const { name, type, value, checked } = e.target;
@@ -63,59 +68,65 @@ export default function CustomForm({
     }));
   };
 
-  const validateForm = () => {
-    const newErrors = {};
-
-    formFields.forEach((field) => {
-      if (field.requiredIf && !showPhone) return;
-
-      const value = formData[field.name]?.toString().trim() || "";
-
-      if (field.required && value === "") {
-        newErrors[field.name] = true;
-        return;
-      }
-
-      if (field.pattern && value !== "") {
-        const regex = new RegExp(field.pattern);
-        if (!regex.test(value)) {
-          newErrors[field.name] = true;
-          return;
-        }
-      }
-
-      if (field.minLength && value.length < field.minLength) {
-        newErrors[field.name] = true;
-      }
-
-      newErrors[field.name] = false;
-    });
-
-    if (formData.password && formData.confirmPassword) {
-      const isMismatch = formData.password !== formData.confirmPassword;
-
-      if (isMismatch) {
-        newErrors.confirmPassword = "mismatch";
-      }
-    }
-
-    setErrors(newErrors);
-    return !Object.values(newErrors).some((err) => err === true);
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (validateForm()) {
+    const { isValid, errors } = formValidationCheck({ formFields, formData });
+
+    if (!isValid) {
+      Object.entries(errors).forEach(([field, errorObj]) => {
+        if (errorObj?.status)
+          setErrors((prev) => ({
+            ...prev,
+            [field]: errorObj.message,
+          }));
+      });
+      return;
+    }
+
+    const formattedData = new FormData();
+    Object.entries(formData).forEach(([key, value]) => {
+      if (Array.isArray(value)) {
+        value.forEach((val) => formattedData.append(key, val));
+      } else {
+        formattedData.append(key, value);
+      }
+    });
+
+    const result = await serverAction(formattedData);
+    if (result?.success) {
+      console.log("Success:", result.message);
+
+      ThrowToast({
+        message: result.message,
+        state: "success",
+        timeOut: 3000,
+        direction: "center",
+        timeStampView: true,
+      });
+
       // setFormData({});
+      setErrors({});
       setSubmitted(true);
       setShowPhone(false);
-
-      console.log("✅ Form Submitted:", formData); // Add validation or API submission here
     } else {
-      console.warn("❌ Form Validation Failed.");
+      ThrowToast({
+        message: result.message,
+        state: "error",
+        timeOut: 3000,
+        direction: "center",
+        timeStampView: false,
+      });
+      console.log("Error:", result?.message || "Something went wrong.");
     }
   };
+
+  useEffect(() => {
+    const clearSetTimeOut = setTimeout(() => {
+      setSubmitted(false);
+    }, 100);
+    return clearTimeout(() => clearSetTimeOut);
+  }, [isSubmitted, setSubmitted]);
 
   return (
     <motion.div
@@ -135,7 +146,7 @@ export default function CustomForm({
       )}
 
       {switchForm && (
-        <div className="flex flex-col lg:flex-row lg:items-end items-start justify-center lg:gap-3 mb-10">
+        <div className="flex flex-col lg:flex-row lg:items-end items-start justify-center lg:justify-start lg:gap-3 mb-10">
           <div className="w-fit">
             <WordStaggerFlowTitle className="text-base text-zinc-700 font-porinoi-sans font-medium">
               {switchForm.label}
@@ -150,6 +161,7 @@ export default function CustomForm({
       )}
 
       <form
+        ref={formRef}
         onSubmit={handleSubmit}
         className="flex flex-col gap-y-6 w-full h-auto"
       >
@@ -167,6 +179,7 @@ export default function CustomForm({
                   {...field}
                   value={formData[field.name] || ""}
                   onChange={handleChange}
+                  isSubmitted={isSubmitted}
                   error={errors[field.name]}
                 />
               </div>
@@ -193,6 +206,7 @@ export default function CustomForm({
                 {...field}
                 value={formData[field.name] || ""}
                 onChange={handleChange}
+                isSubmitted={isSubmitted}
                 error={errors[field.name]}
                 rows={1}
               />
@@ -338,32 +352,8 @@ export default function CustomForm({
   );
 }
 
-const requiredFallbackMessages = [
-  "Can’t skip this!",
-  "Need this filled.",
-  "Oops, empty!",
-  "Required here.",
-  "Don’t leave it blank.",
-];
 
-const patternFallbackMessages = [
-  "Format’s off.",
-  "Try again?",
-  "Hmm… not right.",
-  "Check the format.",
-  "Almost! Fix format.",
-];
 
-const mismatchMessages = [
-  "Not quite a match!",
-  "These should be twins.",
-  "Mismatch alert!",
-  "Try matching both.",
-  "Close, but nope.",
-];
-
-const getRandomMessage = (messages) =>
-  messages[Math.floor(Math.random() * messages.length)];
 
 const CheckboxField = ({ label, name, checked, onChange }) => {
   const inputId = `${label.replace(/\s+/g, "-").toLowerCase()}-checkbox`;
@@ -455,11 +445,16 @@ const InputField = ({
   prefix,
   value,
   onChange,
+  isSubmitted,
   error,
   msg,
 }) => {
   const [isTouched, setTouched] = useState(false);
-  const showError = isTouched && error;
+
+  useEffect(() => {
+    if (!isSubmitted) return;
+    setTouched(false);
+  }, [isSubmitted]);
 
   return (
     <fieldset className="space-y-3 lg:space-y-2.5">
@@ -524,7 +519,7 @@ const InputField = ({
             spellCheck="false"
             aria-label={`${name}_input`}
             value={value}
-            required={required}
+            // required={required}
             onChange={onChange}
             onBlur={() => {
               if (required) {
@@ -544,23 +539,16 @@ const InputField = ({
         </motion.div>
 
         <AnimatePresence mode="wait" initial={false}>
-          {showError && (
-            <motion.span
-              key={`${name}-error`}
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 20 }}
-              transition={{ duration: 0.3, ease: "anticipate" }}
-              className=" text-base text-red-500 font-medium font-porinoi-sans mt-1"
-            >
-              {msg ||
-                (error === "mismatch"
-                  ? getRandomMessage(mismatchMessages)
-                  : pattern
-                  ? getRandomMessage(patternFallbackMessages)
-                  : getRandomMessage(requiredFallbackMessages))}
-            </motion.span>
-          )}
+          <motion.span
+            key={`${name}-error`}
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 20 }}
+            transition={{ duration: 0.3, ease: "anticipate" }}
+            className=" text-base text-red-500 font-medium font-porinoi-sans mt-1"
+          >
+            {error}
+          </motion.span>
         </AnimatePresence>
       </div>
     </fieldset>
@@ -584,10 +572,9 @@ const SelectField = ({
   const [isFocus, setIsFocus] = useState(false);
 
   useEffect(() => {
-    if (isSubmitted) {
-      setTouched(false);
-      setIsFocus(false);
-    }
+    if (!isSubmitted) return;
+    setTouched(false);
+    setIsFocus(false);
   }, [isSubmitted]);
 
   useEffect(() => {
@@ -690,17 +677,6 @@ const SelectField = ({
               />
             </svg>
           </motion.span>
-          <input
-            type="text"
-            name=""
-            id=""
-            className="absolute inset-0 opacity-0 pointer-events-none"
-            tabIndex={-1}
-            required={required}
-            value={value || ""}
-            onChange={() => {}}
-            aria-hidden={true}
-          />
         </motion.div>
 
         <AnimatePresence mode="wait">
@@ -750,12 +726,18 @@ const TextAreaField = ({
   value,
   required,
   rows = 4,
+  isSubmitted,
   error,
   msg,
   onChange,
 }) => {
   const [isTouched, setTouched] = useState(false);
   const showError = isTouched && error;
+
+  useEffect(() => {
+    if (!isSubmitted) return;
+    setTouched(false);
+  }, [isSubmitted]);
 
   return (
     <fieldset>
@@ -808,7 +790,7 @@ const TextAreaField = ({
               : value?.trim()
               ? "border-zinc-800 text-zinc-800"
               : "border-zinc-300"
-          } transition-all duration-300 ease-in-out `}
+          } transition-all duration-300 ease-in-out resize-none`}
         />
       </motion.div>
 

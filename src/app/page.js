@@ -14,7 +14,7 @@ export default function Home() {
   useLayoutEffect(() => {
     const timeout = setTimeout(() => {
       setShowContent(true);
-    }, 800);
+    }, 650);
 
     return () => {
       setShowContent(false);
@@ -25,7 +25,7 @@ export default function Home() {
     showContent && (
       <>
         <div className="bg-white overflow-x-hidden">
-          <div className="py-14 lg:py-16 w-full h-auto lg:min-h-screen select-none">
+          <div className="py-14 lg:py-16 w-full h-auto min-h-screen select-none">
             <HeaderSection />
           </div>
 
