@@ -6,6 +6,7 @@ import { CustomLink } from "./customLink";
 import { WordStaggerFlowTitle } from "./sectionTitle";
 import { formValidationCheck } from "@/utils/validators";
 import { useToast } from "@/context/ToastContext";
+import { useRouter } from "next/navigation";
 
 export default function CustomForm({
   formTitle,
@@ -18,12 +19,12 @@ export default function CustomForm({
   serverAction,
 }) {
   const formRef = useRef(null);
+  const { ThrowToast } = useToast();
+  const router = useRouter();
   const [formData, setFormData] = useState({});
   const [showPhone, setShowPhone] = useState(false);
   const [errors, setErrors] = useState({});
   const [isSubmitted, setSubmitted] = useState(false);
-
-  const { ThrowToast } = useToast();
 
   const handleChange = (e) => {
     const { name, type, value, checked } = e.target;
@@ -94,30 +95,29 @@ export default function CustomForm({
     });
 
     const result = await serverAction(formattedData);
-    if (result?.success) {
-      console.log("Success:", result.message);
-
+    const { success, message, redirection, error } = result;
+    if (success) {
       ThrowToast({
-        message: result.message,
+        message: message,
         state: "success",
-        timeOut: 3000,
+        timeOut: 5500,
         direction: "center",
         timeStampView: true,
       });
 
+      if (redirection) router.push(redirection);
       // setFormData({});
       setErrors({});
       setSubmitted(true);
       setShowPhone(false);
     } else {
       ThrowToast({
-        message: result.message,
+        message: message,
         state: "error",
-        timeOut: 3000,
+        timeOut: 5500,
         direction: "center",
-        timeStampView: false,
+        timeStampView: true,
       });
-      console.log("Error:", result?.message || "Something went wrong.");
     }
   };
 
@@ -351,9 +351,6 @@ export default function CustomForm({
     </motion.div>
   );
 }
-
-
-
 
 const CheckboxField = ({ label, name, checked, onChange }) => {
   const inputId = `${label.replace(/\s+/g, "-").toLowerCase()}-checkbox`;

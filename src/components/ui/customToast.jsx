@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useState } from "react";
+import React from "react";
 import clsx from "clsx";
 import { AnimatePresence, motion } from "framer-motion";
 import {
@@ -8,72 +8,85 @@ import {
   Warning,
 } from "../../../public/assets/svg/alertsSymbols";
 
-export default function CustomToast({ toasts = [], className}) {
+export default function CustomToast({ toasts = [], className }) {
   return (
     <motion.div
       initial="initial"
       whileHover="hover"
       whileTap="tap"
       className={clsx(
-        "fixed inset-0 z-[300] p-10 w-full h-fit space-y-0 pointer-events-none select-none",
+        "fixed inset-0 z-[300] p-3 lg:p-10 w-full h-fit pointer-events-none select-none",
         className
       )}
     >
       <AnimatePresence initial={false}>
-        {toasts.slice(0, 3).map((toast, i, arr) => {
-          const total = arr.length;
-          const initialY = -i * 75;
-          const hoverY = i * 10;
-          const scale = 1 - i * 0.08;
-          const zIndex = total - i;
+        {toasts
+          .slice(0, 3)
+          .reverse()
+          .map((toast, i, arr) => {
+            const total = arr.length;
+            const initialY = -i * 75;
+            const hoverY = i * 10;
+            const scale = 1 - i * 0.08;
+            const zIndex = total - i;
 
-          const {
-            id,
-            message = "Hmm... PORINOI got a little dizzy. Give it a sec and try again!",
-            state = "neutral",
-            direction = "center",
-            timeStampView = true,
-          } = toast;
+            const {
+              id,
+              message = "Hmm... PORINOI got a little dizzy. Give it a sec and try again!",
+              state = "neutral",
+              direction = "center",
+              timeStampView = true,
+            } = toast;
 
-          return (
-            <motion.div
-              key={i}
-              initial={{
-                translateY: i === 0 ? top : initialY,
-                scale,
-                opacity: 0,
-              }}
-              animate={{ opacity: 1 }}
-              exit={{
-                opacity: 0,
-                translateY: 60,
-              }}
-              variants={{
-                hover: { scale: 1, translateY: hoverY },
-                tap: { scale: 1, translateY: hoverY },
-              }}
-              transition={{ duration: 0.5, ease: [0.33, 1, 0.68, 1] }}
-              style={{ zIndex }}
-              className={clsx(
-                "relative w-fit min-w-[80vw] max-w-[80vw] lg:min-w-[30vw] lg:max-w-[30vw] h-fit min-h-[90px] px-4 py-4 bg-white flex flex-col items-start justify-center rounded-xl shadow-[3px_4px_20px_#00000010] backdrop-blur-2xl first:pointer-events-auto pointer-events-none cursor-pointer",
-                getPosition(direction)
-              )}
-            >
-              <div className="flex items-center gap-2">
-                <figure>{getIcon(state)}</figure>
-                <p className="text-sm font-semibold font-porinoi-sans text-zinc-800">
-                  {message}
-                </p>
-              </div>
+            return (
+              <motion.div
+                key={`${i}_toast`}
+                initial={{
+                  y: -30,
+                  scale: 0.8,
+                  opacity: 0,
+                }}
+                animate={{ y: 0, scale: 1, opacity: 1 }}
+                exit={{
+                  y: -30,
+                  scale: 0.8,
+                  opacity: 0,
+                }}
+                transition={{ duration: 0.5, ease: [0.33, 1, 0.68, 1] }}
+              >
+                <motion.div
+                  initial={{
+                    translateY: i === 0 ? top : initialY,
+                    scale,
+                  }}
+                  variants={{
+                    hover: { scale: 1, translateY: hoverY },
+                    tap: { scale: 1, translateY: hoverY },
+                  }}
+                  transition={{ duration: 0.5, ease: [0.33, 1, 0.68, 1] }}
+                  className={clsx(
+                    "relative w-fit min-w-[90vw] max-w-[90vw] lg:min-w-[30vw] lg:max-w-[30vw] h-fit min-h-[90px] px-4 py-4 bg-white flex flex-col items-start justify-center rounded-xl shadow-[3px_4px_20px_#00000010] backdrop-blur-2xl first:pointer-events-auto pointer-events-none cursor-pointer",
+                    getPosition(direction)
+                  )}
+                  style={{ zIndex }}
+                  aria-label={id}
+                >
+                  <div className="flex items-center gap-2">
+                    <figure>{getIcon(state)}</figure>
+                    <p className="text-sm font-semibold font-porinoi-sans text-zinc-800">
+                      {message}
+                    </p>
+                  </div>
 
-              {timeStampView && (
-                <span className="text-right text-xs font-medium font-mono text-zinc-400 mt-2">
-                  {getTime()}
-                </span>
-              )}
-            </motion.div>
-          );
-        })}
+                  {timeStampView && (
+                    <span className="text-right text-xs font-medium font-mono text-zinc-400 mt-2">
+                      {getTime()}
+                    </span>
+                  )}
+                </motion.div>
+              </motion.div>
+            );
+          })}
       </AnimatePresence>
     </motion.div>
   );

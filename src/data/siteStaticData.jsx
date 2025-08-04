@@ -4,7 +4,11 @@ import Star from "../../public/assets/svg/star";
 import Heart2 from "../../public/assets/svg/heart-2";
 import Arrow from "../../public/assets/svg/arrow";
 import Arrow45deg from "../../public/assets/svg/arrow45deg";
-import { signinAction, signupAction } from "@/actions/auth";
+import {
+  forgotPasswordAction,
+  signinAction,
+  signupAction,
+} from "@/lib/actions/auth";
 
 const year = new Date().getFullYear();
 
@@ -115,10 +119,6 @@ export const navigationSection = {
           label: "Facebook",
           url: "https://facebook.com/porinoi_assam/",
         },
-        {
-          label: "Threads",
-          url: "https://www.threads.net/@porinoi_assam",
-        },
       ],
     },
   },
@@ -166,10 +166,6 @@ export const footerSection = {
     {
       label: "Facebook",
       url: "https://facebook.com/porinoi_assam/",
-    },
-    {
-      label: "Threads",
-      url: "https://www.threads.net/@porinoi_assam",
     },
   ],
 
@@ -341,14 +337,13 @@ export const authenticationPages = {
       formTitle: "Let’s get you back in.",
       additionalInfo:
         "Password resets are private, encrypted, and effortless. We’re here to help — no hassle, no hoops.",
-
       switchForm: {
         label: "Remembered your password?",
         path: "/signIn",
         name: "[ Sign In Instead ]",
       },
 
-      // serverAction: forgotPasswordAction, // Replace with your real server action
+      serverAction: forgotPasswordAction,
 
       formFields: [
         {
@@ -361,8 +356,6 @@ export const authenticationPages = {
           required: true,
         },
       ],
-
-      checkConfirm: null, // No checkbox needed for forgot password
 
       submitButton: {
         text: "[ Send Otp ]",

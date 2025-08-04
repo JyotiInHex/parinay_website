@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 
-
 const MONGODB_URI = process.env.MONGODB_URI;
 
 if (!MONGODB_URI) throw new Error("Missing MONGODB_URI in ENV File");
@@ -11,6 +10,5 @@ export async function connectDB() {
         useNewUrlParser: true,
         useUnifiedTopology: true,
     });
-
     console.log("MongoDB Connect")
 }

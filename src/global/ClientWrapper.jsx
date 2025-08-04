@@ -6,9 +6,11 @@ import { AnimatePresence, motion } from "framer-motion";
 import Header from "@/components/shared/Header";
 import CustomCursor from "@/components/ui/customCursor";
 import Image from "next/image";
+import { useToastFromCookie } from "@/hooks/useCookieToast";
 
 export default function ClientWrapper({ children }) {
   useLenis();
+  useToastFromCookie();
   const pathname = usePathname();
   const [showContent, setShowContent] = useState(false);
   useLayoutEffect(() => {

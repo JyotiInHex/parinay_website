@@ -15,6 +15,7 @@ export const AuthWrapper = (props) => {
   const [isShow, setIsShow] = useState(false);
   const pathname = usePathname();
 
+
   useLayoutEffect(() => {
     const timeout = setTimeout(() => {
       setIsShow(true);
@@ -35,12 +36,12 @@ export const AuthWrapper = (props) => {
         </div>
         <div className="mt-10 w-full h-auto flex flex-col items-center justify-center">
           <div className="w-full lg:w-fit">
-            <WordStaggerFlowTitle className="justify-center text-base text-zinc-800 font-porinoi-sans font-semibold">
+            <WordStaggerFlowTitle className="justify-center text-sm text-zinc-800 font-porinoi-sans font-semibold">
               {credit.copyright}
             </WordStaggerFlowTitle>
           </div>
           <div className="w-full lg:w-fit">
-            <WordStaggerFlowTitle className="justify-center text-sm text-zinc-500 font-porinoi-sans font-medium">
+            <WordStaggerFlowTitle className="justify-center text-xs text-zinc-500 font-porinoi-sans font-medium">
               {credit.note}
             </WordStaggerFlowTitle>
           </div>
@@ -57,7 +58,7 @@ export const AuthLeft = ({ imag, title, subTitle }) => {
     <div className="order-1 lg:order-0 flex w-full h-full space-y-3 flex-col items-start justify-center ">
       <motion.figure
         initial={{ width: 0, opacity: 0, filter: "grayscale(100%)" }}
-        whileInView={{ width: "150px", opacity: 1, filter: "grayscale(0%)" }}
+        whileInView={{ width: "160px", opacity: 1, filter: "grayscale(0%)" }}
         viewport={{ once: true, amount: 0.5 }}
         transition={{
           duration: 0.8,
@@ -67,7 +68,7 @@ export const AuthLeft = ({ imag, title, subTitle }) => {
             delay: 0.95,
           },
         }}
-        className="hidden lg:block h-[100px] origin-right overflow-hidden rounded-xl"
+        className="hidden lg:block h-[130px] origin-right overflow-hidden rounded-xl"
       >
         <Image
           src={imag}
@@ -76,7 +77,7 @@ export const AuthLeft = ({ imag, title, subTitle }) => {
           height={1000}
           quality={100}
           loading="lazy"
-          className="object-cover w-full h-[130px] pointer-events-none"
+          className="object-cover w-full h-full pointer-events-none"
         />
       </motion.figure>
 
