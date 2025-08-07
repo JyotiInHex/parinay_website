@@ -5,7 +5,7 @@ import {
 import CustomForm from "@/components/ui/customForm";
 
 export default function GetInTouch() {
-  const { title, subtitle, socialLinks, contactDetails, formDetails } =
+  const { title, subtitle, contactDetails, formDetails } =
     landingPage.contactSection;
   return (
     <div className="w-full h-full select-none grid grid-cols-1 lg:grid-cols-[40%_1fr] items-start justify-between gap-10 lg:gap-20">

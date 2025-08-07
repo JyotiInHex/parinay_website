@@ -2,6 +2,10 @@ import mongoose from 'mongoose';
 
 const userSchema = new mongoose.Schema(
     {
+        userName: {
+            type: String,
+            trim: true
+        },
         name: {
             type: String,
             required: true,
@@ -21,6 +25,11 @@ const userSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
+        profileStatus: {
+            type: String,
+            default: 'pending',
+            trim: true,
+        }
     },
     { timestamps: true }
 );

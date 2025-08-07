@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import Star from "../../../public/assets/svg/star";
+import Star from "../../../../public/assets/svg/star";
 import { landingPage } from "@/data/siteStaticData";
 import {
   LetterByLetterRevealTitle,
@@ -18,13 +18,13 @@ const ShortAboutSection = () => {
       >
         {about.title}
       </LetterByLetterRevealTitle>
-      
+
       <div className="mt-10 w-fit h-full grid lg:grid-cols-2 space-y-10 lg:space-y-0 ">
         <div className="w-fit lg:w-4/7 flex flex-col flex-wrap">
           <WordStaggerFlowTitle className="text-2xl lg:text-4xl text-zinc-800 font-porinoi-sans font-semibold leading-relaxed">
             {about.description.left}
           </WordStaggerFlowTitle>
-          
+
           <ul className="flex flex-col items-start gap-2 mt-5">
             {about.points.map((point, idx) => {
               return (
@@ -49,7 +49,7 @@ const ShortAboutSection = () => {
             })}
           </ul>
         </div>
-        
+
         <div className="place-self-end w-fit lg:w-[79%] flex flex-col flex-wrap pb-10">
           <LineStaggerFlowTitle
             wordsPerLine={5}

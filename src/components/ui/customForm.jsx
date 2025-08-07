@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { CustomLink } from "./customLink";
 import { WordStaggerFlowTitle } from "./sectionTitle";
@@ -18,7 +18,6 @@ export default function CustomForm({
   additionalInfo,
   serverAction,
 }) {
-  const formRef = useRef(null);
   const { ThrowToast } = useToast();
   const router = useRouter();
   const [formData, setFormData] = useState({});
@@ -28,32 +27,20 @@ export default function CustomForm({
 
   const handleChange = (e) => {
     const { name, type, value, checked } = e.target;
-
-    if (name === "earlyAccess") {
-      setShowPhone(checked);
-    }
-
-    if (type === "tel") {
-      const cleaned = value.replace(/\D/g, "");
-      if (cleaned.length <= 10) {
-        setFormData((prev) => ({
-          ...prev,
-          [name]: cleaned,
-        }));
-      }
-      return;
-    }
-
     setFormData((prev) => ({
       ...prev,
-      [name]: type === "checkbox" ? checked : value,
+      [name]:
+        type === "checkbox"
+          ? checked
+          : type === "tel"
+          ? value.replace(/\D/g, "").slice(0, 10)
+          : value,
     }));
   };
 
   const handleCheckboxGroup = (e, groupName) => {
     const { value, checked } = e.target;
     const prev = formData[groupName] || [];
-
     setFormData((prevState) => ({
       ...prevState,
       [groupName]: checked
@@ -62,183 +49,135 @@ export default function CustomForm({
     }));
   };
 
-  const handleSelectChange = (name, value) => {
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
+  const handleSelectChange = (name, value) =>
+    setFormData((prev) => ({ ...prev, [name]: value }));
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const { isValid, errors } = formValidationCheck({ formFields, formData });
 
     if (!isValid) {
-      Object.entries(errors).forEach(([field, errorObj]) => {
-        if (errorObj?.status)
-          setErrors((prev) => ({
-            ...prev,
-            [field]: errorObj.message,
-          }));
-      });
+      setErrors(errors);
       return;
     }
 
     const formattedData = new FormData();
     Object.entries(formData).forEach(([key, value]) => {
-      if (Array.isArray(value)) {
-        value.forEach((val) => formattedData.append(key, val));
-      } else {
-        formattedData.append(key, value);
-      }
+      Array.isArray(value)
+        ? value.forEach((v) => formattedData.append(key, v))
+        : formattedData.append(key, value);
     });
 
     const result = await serverAction(formattedData);
-    const { success, message, redirection, error } = result;
-    if (success) {
-      ThrowToast({
-        message: message,
-        state: "success",
-        timeOut: 5500,
-        direction: "center",
-        timeStampView: true,
-      });
+    const { success, message, redirection } = result;
+    
+    ThrowToast({
+      message,
+      state: success ? "success" : "error",
+      timeOut: 5500,
+      direction: "center",
+      timeStampView: true,
+    });
 
-      if (redirection) router.push(redirection);
-      // setFormData({});
+    if (success) {
+      setFormData({});
       setErrors({});
       setSubmitted(true);
       setShowPhone(false);
-    } else {
-      ThrowToast({
-        message: message,
-        state: "error",
-        timeOut: 5500,
-        direction: "center",
-        timeStampView: true,
-      });
+      if (redirection) router.push(redirection);
     }
   };
 
   useEffect(() => {
-    const clearSetTimeOut = setTimeout(() => {
-      setSubmitted(false);
-    }, 100);
-    return clearTimeout(() => clearSetTimeOut);
-  }, [isSubmitted, setSubmitted]);
+    if (isSubmitted) {
+      const timeout = setTimeout(() => setSubmitted(false), 100);
+      return () => clearTimeout(timeout);
+    }
+  }, [isSubmitted]);
 
   return (
     <motion.div
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
-      transition={{ duration: 0.4, delay: 0.05, ease: "easeOut" }}
+      transition={{ duration: 0.4, delay: 0.05 }}
       viewport={{ once: true, amount: 0.2 }}
-      className="lg:max-w-xl lg:min-w-lg lg:bg-white mx-auto rounded-xl lg:shadow-2xl shadow-zinc-600/15 lg:overflow-hidden lg:px-12 py-5 lg:py-10 space-y-1"
+      className="lg:max-w-xl mx-auto rounded-xl lg:shadow-2xl lg:px-12 py-5 lg:py-10 space-y-1"
     >
       {formTitle && (
-        <WordStaggerFlowTitle
-          delayStep={0.065}
-          className="text-zinc-800 text-4xl font-semibold font-porinoi-sans leading-snug"
-        >
+        <WordStaggerFlowTitle className="text-zinc-800 text-4xl font-semibold font-porinoi-sans leading-snug">
           {formTitle}
         </WordStaggerFlowTitle>
       )}
 
       {switchForm && (
-        <div className="flex flex-col lg:flex-row lg:items-end items-start justify-center lg:justify-start lg:gap-3 mb-10">
-          <div className="w-fit">
-            <WordStaggerFlowTitle className="text-base text-zinc-700 font-porinoi-sans font-medium">
-              {switchForm.label}
-            </WordStaggerFlowTitle>
-          </div>
+        <div className="lg:flex flex-row lg:items-end gap-3 mb-10">
+          <WordStaggerFlowTitle className="text-base text-zinc-700 font-porinoi-sans font-medium">
+            {switchForm.label}
+          </WordStaggerFlowTitle>
           <CustomLink
             path={switchForm.path}
             label={switchForm.name}
-            className="text-lg lg:text-xl text-zinc-700 font-porinoi-sans font-medium cursor-pointer"
+            className="text-lg text-zinc-700 font-porinoi-sans font-medium cursor-pointer"
           />
         </div>
       )}
 
-      <form
-        ref={formRef}
-        onSubmit={handleSubmit}
-        className="flex flex-col gap-y-6 w-full h-auto"
-      >
+      <form onSubmit={handleSubmit} className="flex flex-col gap-y-6 w-full">
         {formFields.map((field, idx) => {
-          const textTypes = ["text", "email", "tel", "number", "password"];
-          const checkTypes = ["checkbox", "radio"];
+          const commonProps = {
+            ...field,
+            value: formData[field.name] || "",
+            onChange: handleChange,
+            isSubmitted,
+            error: errors[field.name],
+          };
 
-          if (textTypes.includes(field.type)) {
-            if (field.requiredIf && !showPhone) return null;
+          if (field.requiredIf && !showPhone) return null;
 
-            return (
-              <div className="w-full" key={idx}>
-                <InputField
-                  indexKey={idx}
+          switch (field.type) {
+            case "text":
+            case "email":
+            case "tel":
+            case "number":
+            case "password":
+              return <InputField key={idx} {...commonProps} />;
+            case "textarea":
+              return <TextAreaField key={idx} {...commonProps} rows={1} />;
+            case "checkbox":
+            case "radio":
+              return (
+                <CheckboxField
+                  key={idx}
+                  {...field}
+                  checked={!!formData[field.name]}
+                  onChange={handleChange}
+                  isSubmitted={isSubmitted}
+                />
+              );
+            case "checkbox-group":
+              return (
+                <CheckboxGroupField
+                  key={idx}
+                  {...field}
+                  selected={formData[field.name] || []}
+                  onChange={(e) => handleCheckboxGroup(e, field.name)}
+                  isSubmitted={isSubmitted}
+                />
+              );
+            case "select":
+              return (
+                <SelectField
+                  key={idx}
                   {...field}
                   value={formData[field.name] || ""}
-                  onChange={handleChange}
+                  onChange={(val) => handleSelectChange(field.name, val)}
                   isSubmitted={isSubmitted}
                   error={errors[field.name]}
                 />
-              </div>
-            );
+              );
+            default:
+              return null;
           }
-
-          if (checkTypes.includes(field.type)) {
-            return (
-              <CheckboxField
-                key={idx}
-                {...field}
-                checked={formData[field.name] || false}
-                onChange={handleChange}
-                isSubmitted={isSubmitted}
-              />
-            );
-          }
-
-          if (field.type === "textarea") {
-            return (
-              <TextAreaField
-                key={idx}
-                indexKey={idx}
-                {...field}
-                value={formData[field.name] || ""}
-                onChange={handleChange}
-                isSubmitted={isSubmitted}
-                error={errors[field.name]}
-                rows={1}
-              />
-            );
-          }
-
-          if (field.type === "checkbox-group") {
-            return (
-              <CheckboxGroupField
-                key={idx}
-                {...field}
-                selected={formData[field.name] || []}
-                onChange={(e) => handleCheckboxGroup(e, field.name)}
-                isSubmitted={isSubmitted}
-              />
-            );
-          }
-
-          if (field.type === "select") {
-            return (
-              <div className="w-full" key={idx}>
-                <SelectField
-                  indexKey={idx}
-                  {...field}
-                  value={formData[field.name] || ""}
-                  onChange={(value) => handleSelectChange(field.name, value)}
-                  isSubmitted={isSubmitted}
-                />
-              </div>
-            );
-          }
-          return null;
         })}
 
         <motion.div
@@ -253,18 +192,14 @@ export default function CustomForm({
               transition: { duration: 0.6, ease: [0.33, 1, 0.68, 1] },
             },
           }}
-          className="col-span-2 w-full flex flex-col items-start justify-end gap-2"
+          className="w-full flex flex-col items-start gap-2"
         >
           {checkConfirm && (
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.5 }}
-              transition={{
-                duration: 0.5,
-                delay: 0.2,
-                ease: [0.33, 1, 0.68, 1],
-              }}
+              transition={{ duration: 0.5, delay: 0.2 }}
               className="grid grid-cols-[auto_1fr] items-start gap-3 mb-5"
             >
               <motion.input
@@ -272,21 +207,14 @@ export default function CustomForm({
                 type="checkbox"
                 name={checkConfirm.name}
                 id={checkConfirm.name}
-                className="checkbox-custom inline-block bg-red-600 w-10"
+                className="checkbox-custom"
                 required={checkConfirm.required}
                 checked={!!formData[checkConfirm.name]}
-                onChange={(e) => {
-                  const { name, checked } = e.target;
-                  setFormData((prev) => ({
-                    ...prev,
-                    [name]: checked,
-                  }));
-                }}
+                onChange={handleChange}
               />
-
               <label
                 htmlFor={checkConfirm.name}
-                className="flex flex-wrap flex-row items-center gap-3 "
+                className="flex flex-wrap gap-3"
               >
                 <WordStaggerFlowTitle className="text-xs lg:text-base text-zinc-800 font-medium font-porinoi-sans">
                   {checkConfirm.text}
@@ -297,20 +225,9 @@ export default function CustomForm({
 
           <motion.button
             type="submit"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.5 }}
-            variants={{
-              hidden: {},
-              visible: {
-                transition: {
-                  staggerChildren: 0.05,
-                },
-              },
-            }}
-            className="group flex flex-row items-center justify-center gap-2 overflow-hidden cursor-pointer md:col-span-2 w-full py-2 bg-[#FFB360]/12 transition-all duration-200 ease-linear  hover:bg-[#FFB360]/100 group"
+            className="group flex justify-center items-center gap-2 w-full py-2 bg-[#FFB360]/12 hover:bg-[#FFB360]/100 cursor-pointer transition-colors duration-300 ease-linear"
           >
-            <WordStaggerFlowTitle className="text-zinc-900 text-base font-porinoi-sans font-semibold transition-colors duration-200 ease-linear group-hover:text-zinc-800">
+            <WordStaggerFlowTitle className="text-zinc-900 text-base font-semibold font-porinoi-sans group-hover:text-zinc-800">
               {submitButton.text}
             </WordStaggerFlowTitle>
             {submitButton.icon}
@@ -321,12 +238,8 @@ export default function CustomForm({
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.5 }}
-              transition={{
-                duration: 0.5,
-                delay: 0.2,
-                ease: [0.33, 1, 0.68, 1],
-              }}
-              className="mt-3 flex flex-col lg:flex-row items-center lg:gap-2 mx-auto"
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="mt-3 flex flex-col lg:flex-row items-center gap-2 mx-auto"
             >
               <WordStaggerFlowTitle className="text-sm text-zinc-500 font-porinoi-sans font-medium">
                 {helpLinks.link.label}
@@ -334,7 +247,7 @@ export default function CustomForm({
               <CustomLink
                 path={helpLinks.link.path}
                 label={helpLinks.link.name}
-                className="text-lg lg:text-base text-zinc-700 font-porinoi-sans font-medium cursor-pointer"
+                className="text-base text-zinc-700 font-medium font-porinoi-sans"
               />
             </motion.div>
           )}
@@ -343,7 +256,7 @@ export default function CustomForm({
 
       {additionalInfo && (
         <div className="mt-12">
-          <WordStaggerFlowTitle className="justify-center text-xs text-zinc-400 font-porinoi-sans font-medium">
+          <WordStaggerFlowTitle className="text-xs text-zinc-400 font-porinoi-sans font-medium">
             {additionalInfo}
           </WordStaggerFlowTitle>
         </div>
@@ -354,6 +267,7 @@ export default function CustomForm({
 
 const CheckboxField = ({ label, name, checked, onChange }) => {
   const inputId = `${label.replace(/\s+/g, "-").toLowerCase()}-checkbox`;
+
   return (
     <fieldset className="grid grid-cols-[auto_1fr] gap-3">
       <input
@@ -381,55 +295,53 @@ const CheckboxGroupField = ({
   selected,
   onChange,
   required,
-}) => {
-  return (
-    <fieldset className="relative space-y-3">
-      <label className="inline-block">
-        <WordStaggerFlowTitle className="text-lg lg:text-2xl text-zinc-800 font-porinoi-sans font-medium">
-          {`[${label}]`}
-        </WordStaggerFlowTitle>
-        <input
-          type="checkbox"
-          tabIndex={-1}
-          className="pointer-events-none opacity-0 absolute top-10 left-0"
-          required={required}
-          checked={selected.length > 0}
-          onChange={() => {}}
-        />
-      </label>
-      <div className="flex flex-row flex-wrap gap-2">
-        {options.map((opt, idx) => (
-          <motion.label
-            key={idx}
-            htmlFor={`for-${idx}-option`}
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{
-              duration: 0.5,
-              delay: idx * 0.025,
-              ease: [0.33, 1, 0.68, 1],
-            }}
-            className="w-full grid grid-cols-[auto_1fr] items-start space-x-2"
-          >
-            <input
-              id={`for-${idx}-option`}
-              type="checkbox"
-              name={name}
-              value={opt}
-              checked={selected.includes(opt)}
-              onChange={onChange}
-              className="checkbox-custom"
-            />
-            <WordStaggerFlowTitle className="text-sm lg:text-base text-zinc-800 font-porinoi-sans font-medium cursor-pointer">
-              {opt}
-            </WordStaggerFlowTitle>
-          </motion.label>
-        ))}
-      </div>
-    </fieldset>
-  );
-};
+}) => (
+  <fieldset className="relative space-y-3">
+    <label className="inline-block">
+      <WordStaggerFlowTitle className="text-lg lg:text-2xl text-zinc-800 font-porinoi-sans font-medium">
+        {`[${label}]`}
+      </WordStaggerFlowTitle>
+      <input
+        type="checkbox"
+        tabIndex={-1}
+        className="pointer-events-none opacity-0 absolute top-10 left-0"
+        required={required}
+        checked={selected.length > 0}
+        onChange={() => {}}
+      />
+    </label>
+    <div className="flex flex-wrap gap-2">
+      {options.map((opt, idx) => (
+        <motion.label
+          key={idx}
+          htmlFor={`for-${idx}-option`}
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{
+            duration: 0.5,
+            delay: idx * 0.025,
+            ease: [0.33, 1, 0.68, 1],
+          }}
+          className="w-full grid grid-cols-[auto_1fr] items-start space-x-2"
+        >
+          <input
+            id={`for-${idx}-option`}
+            type="checkbox"
+            name={name}
+            value={opt}
+            checked={selected.includes(opt)}
+            onChange={onChange}
+            className="checkbox-custom"
+          />
+          <WordStaggerFlowTitle className="text-sm lg:text-base text-zinc-800 font-porinoi-sans font-medium cursor-pointer">
+            {opt}
+          </WordStaggerFlowTitle>
+        </motion.label>
+      ))}
+    </div>
+  </fieldset>
+);
 
 const InputField = ({
   indexKey,
@@ -437,21 +349,21 @@ const InputField = ({
   label,
   type = "text",
   required,
-  pattern,
   placeholder,
   prefix,
   value,
   onChange,
   isSubmitted,
   error,
-  msg,
 }) => {
   const [isTouched, setTouched] = useState(false);
 
   useEffect(() => {
-    if (!isSubmitted) return;
-    setTouched(false);
+    if (isSubmitted) setTouched(false);
   }, [isSubmitted]);
+
+  const isEmpty = !value?.trim();
+  const showError = isTouched && isEmpty;
 
   return (
     <fieldset className="space-y-3 lg:space-y-2.5">
@@ -461,93 +373,64 @@ const InputField = ({
         </WordStaggerFlowTitle>
       </label>
 
-      <div className="w-full items-end">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.5 }}
-          variants={{
-            hidden: {},
-            visible: {
-              transition: {
-                staggerChildren: 0.05,
-              },
-            },
-          }}
-          className="overflow-hidden w-full items-end"
-          style={{
-            display: prefix ? "flex" : "inline-block whitespace-nowrap",
-            gap: prefix ? "3px" : "0",
-          }}
-        >
-          {prefix && (
-            <motion.span
-              variants={{
-                hidden: { opacity: 0, y: 20 },
-                visible: { opacity: 1, y: 0 },
-              }}
-              transition={{
-                duration: 0.5,
-                delay: 0.2,
-                ease: [0.33, 1, 0.68, 1],
-              }}
-              className="inline-block whitespace-nowrap text-base text-zinc-400 font-medium font-porinoi-sans select-none"
-            >
-              {prefix}
-            </motion.span>
-          )}
-
-          <motion.input
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.5 }}
+        variants={{ visible: { transition: { staggerChildren: 0.05 } } }}
+        className={`overflow-hidden w-full ${prefix ? "flex gap-1" : ""}`}
+      >
+        {prefix && (
+          <motion.span
             variants={{
-              hidden: { y: 100 },
-              visible: { y: 0 },
+              hidden: { opacity: 0, y: 20 },
+              visible: { opacity: 1, y: 0 },
             }}
-            transition={{
-              duration: 0.09,
-              delay: indexKey * 0.04,
-              ease: [0.33, 1, 0.68, 1],
-            }}
-            type={type}
-            name={name}
-            id={name}
-            placeholder={placeholder || ""}
-            autoComplete="off"
-            autoCorrect="false"
-            spellCheck="false"
-            aria-label={`${name}_input`}
-            value={value}
-            // required={required}
-            onChange={onChange}
-            onBlur={() => {
-              if (required) {
-                setTouched(true);
-              } else {
-                setTouched(false);
-              }
-            }}
-            className={`w-full text-sm lg:text-base font-medium font-porinoi-sans outline-none border-b-2 focus:border-zinc-800 ${
-              isTouched & !value?.trim()
-                ? "border-red-500 text-red-500 "
-                : value?.trim()
-                ? "border-zinc-800 text-zinc-800"
-                : "border-zinc-300"
-            } transition-all duration-300 ease-in-out `}
-          />
-        </motion.div>
+            transition={{ duration: 0.5, delay: 0.2, ease: [0.33, 1, 0.68, 1] }}
+            className="text-base text-zinc-400 font-medium font-porinoi-sans select-none"
+          >
+            {prefix}
+          </motion.span>
+        )}
+        <motion.input
+          variants={{ hidden: { y: 100 }, visible: { y: 0 } }}
+          transition={{
+            duration: 0.09,
+            delay: indexKey * 0.04,
+            ease: [0.33, 1, 0.68, 1],
+          }}
+          type={type}
+          name={name}
+          id={name}
+          placeholder={placeholder || ""}
+          autoComplete="off"
+          // value={value}
+          onChange={onChange}
+          onBlur={() => setTouched(required)}
+          className={`w-full text-sm lg:text-base font-medium font-porinoi-sans outline-none border-b-2 transition-all duration-300 ease-in-out ${
+            showError
+              ? "border-red-500 text-red-500"
+              : value?.trim()
+              ? "border-zinc-800 text-zinc-800"
+              : "border-zinc-300"
+          }`}
+        />
+      </motion.div>
 
-        <AnimatePresence mode="wait" initial={false}>
+      <AnimatePresence mode="wait" initial={false}>
+        {error && (
           <motion.span
             key={`${name}-error`}
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
             transition={{ duration: 0.3, ease: "anticipate" }}
-            className=" text-base text-red-500 font-medium font-porinoi-sans mt-1"
+            className="text-base text-red-500 font-medium font-porinoi-sans mt-1"
           >
-            {error}
+            {error.message}
           </motion.span>
-        </AnimatePresence>
-      </div>
+        )}
+      </AnimatePresence>
     </fieldset>
   );
 };
@@ -562,155 +445,132 @@ const SelectField = ({
   required,
   onChange,
   isSubmitted,
+  error,
 }) => {
   const fieldRef = useRef(null);
-  const [isToggleDropDown, setToggleDropDown] = useState(false);
+  const [isOpen, setOpen] = useState(false);
   const [isTouched, setTouched] = useState(false);
-  const [isFocus, setIsFocus] = useState(false);
 
   useEffect(() => {
-    if (!isSubmitted) return;
-    setTouched(false);
-    setIsFocus(false);
+    if (isSubmitted) {
+      setTouched(false);
+      setOpen(false);
+    }
   }, [isSubmitted]);
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (fieldRef.current && !fieldRef.current.contains(event.target)) {
-        setToggleDropDown(false);
-      }
+    const closeOnClickOutside = (e) => {
+      if (!fieldRef.current?.contains(e.target)) setOpen(false);
     };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    document.addEventListener("mousedown", closeOnClickOutside);
+    return () => document.removeEventListener("mousedown", closeOnClickOutside);
   }, []);
+
+  const isEmpty = !value?.trim();
+  const showError = isTouched && isEmpty;
 
   return (
     <fieldset ref={fieldRef} className="relative">
-      <label onClick={() => setToggleDropDown((prev) => !prev)}>
+      <label onClick={() => setOpen((prev) => !prev)}>
         <WordStaggerFlowTitle className="text-lg lg:text-2xl text-zinc-800 font-porinoi-sans font-medium">
           {`[${label}]`}
         </WordStaggerFlowTitle>
       </label>
 
-      <div className="relative w-full">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.5 }}
-          variants={{
-            hidden: {},
-            visible: {
-              transition: {
-                staggerChildren: 0.05,
-              },
-            },
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.5 }}
+        variants={{ visible: { transition: { staggerChildren: 0.05 } } }}
+        className="relative"
+      >
+        <motion.input
+          variants={{ hidden: { y: 100 }, visible: { y: 0 } }}
+          transition={{
+            duration: 0.09,
+            delay: indexKey * 0.04,
+            ease: [0.33, 1, 0.68, 1],
           }}
-          className=" overflow-hidden"
+          type="text"
+          name={name}
+          placeholder={description || "Select Option"}
+          readOnly
+          value={value}
+          onClick={() => setOpen(!isOpen)}
+          onBlur={() => setTouched(required)}
+          className={`w-full text-base font-medium font-porinoi-sans outline-none border-b-2
+            transition-all duration-500 ease-in-out text-transparent text-shadow-[0_0_0_#9f9fa9] ${
+              showError
+                ? "border-red-500 text-shadow-[0_0_0_#ffa2a2]"
+                : value?.trim()
+                ? "border-zinc-800 text-zinc-800"
+                : "border-zinc-300 hover:border-zinc-800"
+            }`}
+        />
+        <motion.span
+          initial={{ y: 100 }}
+          whileInView={{ y: 0 }}
+          transition={{
+            duration: 0.5,
+            delay: indexKey * 0.055,
+            ease: [0.33, 1, 0.68, 1],
+          }}
+          className="absolute right-0.5 bottom-2 pointer-events-none"
         >
-          <motion.input
-            variants={{
-              hidden: { y: 100 },
-              visible: { y: 0 },
-            }}
-            transition={{
-              duration: 0.09,
-              delay: indexKey * 0.04,
-              ease: [0.33, 1, 0.68, 1],
-            }}
-            type={"text"}
-            name={name}
-            placeholder={description || ""}
-            autoComplete="off"
-            value={value}
-            readOnly
-            onClick={() => setToggleDropDown((prev) => !prev)}
-            onBlur={() => {
-              if (required) {
-                setTouched(true);
-              } else {
-                setTouched(false);
-              }
-            }}
-            className={`w-full  text-base font-medium font-porinoi-sans outline-none border-b-2
-              text-transparent text-shadow-[0_0_0_#9f9fa9] ${
-                isTouched & !value?.trim()
-                  ? "border-red-500 text-red-300 text-shadow-[0_0_0_#ffa2a2]"
-                  : value?.trim()
-                  ? "border-zinc-800 text-zinc-800"
-                  : isFocus
-                  ? "border-zinc-800"
-                  : "border-zinc-300 hover:border-zinc-800"
-              }  hover:border-zinc-800 transition-all duration-500 ease-in-out`}
-          />
-          <motion.span
-            initial={{ y: 100 }}
-            whileInView={{ y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{
-              duration: 0.5,
-              delay: indexKey * 0.055,
-              ease: [0.33, 1, 0.68, 1],
-            }}
-            className="absolute right-0.5 bottom-2 pointer-events-none"
-          >
-            <svg
-              width="8"
-              height="14"
-              viewBox="0 0 27 50"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fillRule="evenodd"
-                clipRule="evenodd"
-                d="M10.76 3.5C11.915 1.5 14.803 1.5 15.957 3.5L23.312 16.248C24.466 18.248 23.022 20.748 20.713 20.748H6.00401C3.69501 20.748 2.25201 18.248 3.40601 16.248L10.759 3.5H10.76Z"
-                fill="#9f9fa9"
-              />
-              <path
-                fillRule="evenodd"
-                clipRule="evenodd"
-                d="M10.76 45.9961C11.915 47.9961 14.803 47.9961 15.957 45.9961L23.312 33.2481C24.466 31.2481 23.022 28.7481 20.713 28.7481H6.00401C3.69501 28.7481 2.25201 31.2481 3.40601 33.2481L10.759 45.9961H10.76Z"
-                fill="#9f9fa9"
-              />
-            </svg>
-          </motion.span>
-        </motion.div>
+          {/* Custom arrow icon here */}
+        </motion.span>
+      </motion.div>
 
-        <AnimatePresence mode="wait">
-          {isToggleDropDown && (
-            <motion.ul
-              initial={{ opacity: 0, x: -10 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 10 }}
-              transition={{ duration: 0.25, ease: "easeInOut" }}
-              className="absolute right-0 z-100 mt-2 w-full lg:min-w-xs h-auto bg-neutral-100 flex flex-col items-center rounded-lg overflow-hidden shadow-xl"
-            >
-              {options.map((option, idx) => (
-                <motion.li
-                  key={option + idx}
-                  initial={{ x: -100, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
-                  exit={{ x: 100, opacity: 0 }}
-                  transition={{
-                    duration: 0.2,
-                    delay: idx * 0.025,
-                    ease: [0.33, 1, 0.68, 1],
-                  }}
-                  onClick={() => {
-                    onChange(option);
-                    setToggleDropDown(false);
-                  }}
-                  className="hover:bg-neutral-200 w-full p-3 transition-all duration-200 ease-linear cursor-pointer"
-                >
-                  <span className=" text-base text-zinc-800 font-semibold font-porinoi-sans cursor-pointer w-full pointer-events-none">
-                    {option}
-                  </span>
-                </motion.li>
-              ))}
-            </motion.ul>
-          )}
-        </AnimatePresence>
-      </div>
+      <AnimatePresence>
+        {isOpen && (
+          <motion.ul
+            data-lenis-prevent
+            initial={{ opacity: 0, x: -10 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 10 }}
+            transition={{ duration: 0.25, ease: "easeInOut" }}
+            className="absolute z-50 mt-2 w-full max-h-[50vh] bg-neutral-100 rounded-lg overflow-auto shadow-xl"
+          >
+            {options.map((option, idx) => (
+              <motion.li
+                key={option + idx}
+                initial={{ x: -100, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                exit={{ x: 100, opacity: 0 }}
+                transition={{
+                  duration: 0.2,
+                  delay: idx * 0.025,
+                  ease: [0.33, 1, 0.68, 1],
+                }}
+                onClick={() => {
+                  onChange(option);
+                  setOpen(false);
+                }}
+                className="hover:bg-neutral-200 p-3 cursor-pointer"
+              >
+                <span className="text-base text-zinc-800 font-semibold font-porinoi-sans">
+                  {option}
+                </span>
+              </motion.li>
+            ))}
+          </motion.ul>
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence initial={false}>
+        {error && (
+          <motion.span
+            key={`${name}-error`}
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 20 }}
+            transition={{ duration: 0.3, ease: "anticipate" }}
+            className="text-base text-red-500 font-medium font-porinoi-sans mt-1"
+          >
+            {error.message}
+          </motion.span>
+        )}
+      </AnimatePresence>
     </fieldset>
   );
 };
@@ -725,16 +585,16 @@ const TextAreaField = ({
   rows = 4,
   isSubmitted,
   error,
-  msg,
   onChange,
 }) => {
   const [isTouched, setTouched] = useState(false);
-  const showError = isTouched && error;
 
   useEffect(() => {
-    if (!isSubmitted) return;
-    setTouched(false);
+    if (isSubmitted) setTouched(false);
   }, [isSubmitted]);
+
+  const isEmpty = !value?.trim();
+  const showError = isTouched && isEmpty;
 
   return (
     <fieldset>
@@ -748,21 +608,10 @@ const TextAreaField = ({
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.5 }}
-        variants={{
-          hidden: {},
-          visible: {
-            transition: {
-              staggerChildren: 0.05,
-            },
-          },
-        }}
-        className=" overflow-hidden"
+        variants={{ visible: { transition: { staggerChildren: 0.05 } } }}
       >
         <motion.textarea
-          variants={{
-            hidden: { y: 100 },
-            visible: { y: 0 },
-          }}
+          variants={{ hidden: { y: 100 }, visible: { y: 0 } }}
           transition={{
             duration: 0.09,
             delay: indexKey * 0.04,
@@ -770,38 +619,32 @@ const TextAreaField = ({
           }}
           id={name}
           name={name}
-          placeholder={placeholder || "Write Something..."}
+          placeholder={placeholder || "Write something..."}
           value={value}
           rows={rows}
           onChange={onChange}
-          onBlur={() => {
-            if (required) {
-              setTouched(true);
-            } else {
-              setTouched(false);
-            }
-          }}
-          className={`w-full text-sm lg:text-base font-medium font-porinoi-sans outline-none border-b-2 focus:border-zinc-800 ${
-            isTouched & !value?.trim()
-              ? "border-red-500 text-red-500 "
+          onBlur={() => setTouched(required)}
+          className={`w-full text-sm lg:text-base font-medium font-porinoi-sans outline-none border-b-2 resize-none transition-all duration-300 ease-in-out ${
+            showError
+              ? "border-red-500 text-red-500"
               : value?.trim()
               ? "border-zinc-800 text-zinc-800"
               : "border-zinc-300"
-          } transition-all duration-300 ease-in-out resize-none`}
+          }`}
         />
       </motion.div>
 
-      <AnimatePresence mode="wait" initial={false}>
-        {showError && (
+      <AnimatePresence initial={false}>
+        {error && (
           <motion.span
-            key={`${name}-error`} // important for exit/enter distinction
+            key={`${name}-error`}
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
             transition={{ duration: 0.3, ease: "anticipate" }}
-            className="block text-base text-red-500 font-medium font-porinoi-sans mt-1"
+            className="text-base text-red-500 font-medium font-porinoi-sans mt-1"
           >
-            {msg || (error && getRandomMessage(requiredFallbackMessages))}
+            {error.message}
           </motion.span>
         )}
       </AnimatePresence>

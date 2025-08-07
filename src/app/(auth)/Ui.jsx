@@ -15,7 +15,6 @@ export const AuthWrapper = (props) => {
   const [isShow, setIsShow] = useState(false);
   const pathname = usePathname();
 
-
   useLayoutEffect(() => {
     const timeout = setTimeout(() => {
       setIsShow(true);

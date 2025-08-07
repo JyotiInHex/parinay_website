@@ -1,11 +1,11 @@
 "use client";
 import { usePathname } from "next/navigation";
 import { useLayoutEffect, useState } from "react";
-import HeaderSection from "@/layouts/(landingPage)/heroSection";
-import ShortAboutSection from "@/layouts/(landingPage)/shortAbout";
-import StandOutSection from "@/layouts/(landingPage)/standOut";
-import MatchStepsSection from "@/layouts/(landingPage)/matchSteps";
-import GetInTouch from "@/layouts/(landingPage)/getInTouch";
+import HeaderSection from "@/components/layouts/(landingPage)/heroSection";
+import ShortAboutSection from "@/components/layouts/(landingPage)/shortAbout";
+import StandOutSection from "@/components/layouts/(landingPage)/standOut";
+import MatchStepsSection from "@/components/layouts/(landingPage)/matchSteps";
+import GetInTouch from "@/components/layouts/(landingPage)/getInTouch";
 import Footer from "@/components/shared/Footer";
 
 export default function Home() {

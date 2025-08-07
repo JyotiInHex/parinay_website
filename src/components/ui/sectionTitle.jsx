@@ -1,4 +1,5 @@
 "use client";
+import clsx from "clsx";
 import { motion } from "framer-motion";
 
 export function FadeInSlideTitle({ children, className }) {
@@ -52,7 +53,7 @@ export function LetterByLetterRevealTitle({
       variants={parentVariants}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, amount: 0.3}}
+      viewport={{ once: true, amount: 0.3 }}
       className={`w-fit ${className}`}
     >
       {letters.map((chr, idx) => {
@@ -184,7 +185,7 @@ export function WordStaggerFlowTitle({
   };
 
   return (
-    <motion.h2 className={`flex flex-wrap gap-x-2 ${className}`}>
+    <motion.h2 className={clsx("flex flex-wrap gap-x-2", className)}>
       {words.map((word, idx) => (
         <motion.span
           key={idx}

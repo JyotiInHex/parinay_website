@@ -19,12 +19,9 @@ export async function middleware(request) {
             const userID = payload?.id;
 
             if (!userID) { throw new Error("Token payload missing user ID"); }
-
             return redirectWithToast(`/profile/${userID}`, "302", request);
-        } catch (error) {
-            console.error("❌ Auto Redirect Failed:", error.message);
-            return NextResponse.next();
-        }
+            
+        } catch (error) { return NextResponse.next();}
     }
 
     if (pathname.startsWith("/profile")) {
@@ -32,12 +29,9 @@ export async function middleware(request) {
 
         try {
             await jwtVerify(token, JWT_SECRET);
-            console.log("✅ JWT verified: Access granted.");
             return NextResponse.next();
         } catch (error) {
-            console.warn("⚠️ Invalid/Expired JWT:", error.message);
             const response = redirectWithToast("/signIn", "401", request);
-
             response.cookies.set("auth_token", "", {
                 maxAge: 0,
                 path: "/",
@@ -48,9 +42,10 @@ export async function middleware(request) {
             return response;
         }
     }
-    
+
     return NextResponse.next();
 }
+
 export const config = {
     matcher: ["/profile/:path*", "/signIn"],
 };

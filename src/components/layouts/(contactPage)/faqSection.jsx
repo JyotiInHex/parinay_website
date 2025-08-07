@@ -5,7 +5,7 @@ import { WordStaggerFlowTitle } from "@/components/ui/sectionTitle";
 import { contactPage } from "@/data/siteStaticData";
 import { useEffect, useRef, useState } from "react";
 import { CustomBtn2 } from "@/components/ui/customBtn";
-import ArrowRightward from "../../../public/assets/svg/arrowRightward";
+import ArrowRightward from "../../../../public/assets/svg/arrowRightward";
 
 export default function ContactFAQ() {
   const { faq_section } = contactPage;
@@ -121,7 +121,10 @@ export const FAQItem = ({ itemNum, item, isOpen, onClick }) => {
               className="overflow-hidden"
             >
               <div ref={ref} className="pt-4 pr-2 pb-1">
-                <WordStaggerFlowTitle delayStep={0.015} className="text-zinc-700 text-xl leading-relaxed font-porinoi-sans">
+                <WordStaggerFlowTitle
+                  delayStep={0.015}
+                  className="text-zinc-700 text-xl leading-relaxed font-porinoi-sans"
+                >
                   {item.answer}
                 </WordStaggerFlowTitle>
               </div>

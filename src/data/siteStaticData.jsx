@@ -4,11 +4,12 @@ import Star from "../../public/assets/svg/star";
 import Heart2 from "../../public/assets/svg/heart-2";
 import Arrow from "../../public/assets/svg/arrow";
 import Arrow45deg from "../../public/assets/svg/arrow45deg";
-import {
-  forgotPasswordAction,
-  signinAction,
-  signupAction,
-} from "@/lib/actions/auth";
+
+import signinAction from "@/app/api/auth/signInAction";
+import signupAction from "@/app/api/auth/signUpAction";
+import forgotPasswordAction from "@/app/api/auth/forgotPassAction";
+import { Facebook, Instagram } from "../../public/assets/svg/socialMedia";
+import Edit from "../../public/assets/svg/edit";
 
 const year = new Date().getFullYear();
 
@@ -522,23 +523,8 @@ export const landingPage = {
     formDetails: {
       formFields: [
         {
-          label: "Your name",
-          type: "text",
-          placeholder: "Eg: Rupam Das",
-          pattern: "^[A-Za-z]{2,}(?: [A-Za-z]{2,}){1,2}$",
-          name: "name",
-          required: true,
-        },
-        {
-          label: "Your email",
-          type: "email",
-          placeholder: "Eg: rupam@email.com",
-          name: "email",
-          required: true,
-        },
-        {
           label: "How can we help you?",
-          type: "checkbox-group",
+          type: "select",
           name: "helpOptions",
           options: [
             "I want to know more about Porinoi.",
@@ -554,27 +540,27 @@ export const landingPage = {
           required: true,
         },
         {
+          label: "Your name",
+          type: "text",
+          placeholder: "Eg: Rupam Das",
+          pattern: "^[A-Za-z]{2,}(?: [A-Za-z]{2,}){1,2}$",
+          name: "name",
+          required: true,
+        },
+        {
+          label: "Your email",
+          type: "email",
+          placeholder: "Eg: rupam@email.com",
+          name: "email",
+          required: true,
+        },
+        {
           label: "Share your thoughts with Porinoi",
           type: "textarea",
           placeholder:
             "Share your thoughts, questions, or anything you'd like us to know…",
           name: "message",
-          required: true,
-        },
-        {
-          label: "I’d love to join the early bird waitlist for Porinoi",
-          type: "checkbox",
-          name: "earlyAccess",
-        },
-        {
-          label: "Phone number",
-          type: "tel",
-          placeholder: "Required for early invite access",
-          name: "phone",
-          prefix: "+91",
-          pattern: "^[6-9]\\d{9}$",
-          required: true,
-          requiredIf: "earlyAccess",
+          required: false,
         },
       ],
       submitButton: {
@@ -815,6 +801,100 @@ export const contactPage = {
     cta: {
       label: "Still curious? Browse Help Center",
       href: "/help/helpCenter",
+    },
+  },
+};
+
+export const profilePage = {
+  pendingProfile: {
+    title: "Welcome, {Name} ❤ — your story starts here.",
+    subTitle: ["Your journey towards", "a meaningful connection begins now."],
+    description: [
+      "We're truly delighted to welcome you, {UserName}!",
+      " Porinoi isn’t just another matrimony platform — it’s a heartfelt Assamese initiative crafted to honor your roots, your rhythm, and your romantic aspirations.",
+    ],
+    context: {
+      title: "By completing your profile, you will:",
+      subtitle: [
+        "A little detail goes a long way.",
+        "Start strong, connect deeper, and make it count.",
+      ],
+      bulletPoints: [
+        "Unlock exclusive rewards after our grand public launch.",
+        "Shine brighter with priority visibility to others.",
+        "Get matches handpicked just for you.",
+        "Join a safe, respectful, and culturally enriched community.",
+      ],
+      callToAction: {
+        heading: "Start strong. Shine brighter.",
+        message:
+          "Your journey begins here — let your profile reflect the future you're building.",
+        button: {
+          label: "Build My Profile",
+          path: "/completeProfile",
+        },
+      },
+    },
+  },
+
+  completedProfile: {
+    title: "Beautifully done, {Name} — your journey begins. 🎉",
+    subTitle: ["YOU'RE NOW OFFICIALLY", "PART OF THE PORINOI COMMUNITY."],
+    description: [
+      "YOUR PROFILE IS NOW COMPLETE, AND THE PAΤΗ AHEAD IS WIDE OPEN.",
+      "FROM THIS MOMENT ON, YOUR PRESENCE IS LIVE - VISIBLE TO POTENTIAL MATCHES WHO ARE EQUALLY SERIOUS, RESPECTFUL, AND CULTURALLY ALIGNED.",
+    ],
+    context: {
+      title: "Here’s what happens next:",
+      subtitle: [
+        "STAY TUNED! WE'LL LET YOU KNOW AS SOON AS WE GO LIVE.",
+        "UNTIL THEN, FEEL FREE TO UPDATE YOUR DETAILS OR SPREAD THE WORD.",
+      ],
+      bulletPoints: [
+        "Receive better, more accurate match suggestions",
+        "Get noticed faster by compatible users",
+        "Start meaningful conversations with confidence",
+        "Participate in exclusive Porinoi events and features",
+      ],
+      callToAction: {
+        message:
+          "Refine your story, connect with kindred spirits, and take the next step toward something truly meaningful.",
+        buttons: [
+          {
+            label: "RE-SHAPE MY STORY – EDIT PROFILE",
+            path: "/editProfile",
+            icon: (
+              <Edit
+                width={30}
+                height={30}
+                className="text-zinc-800 transition-colors duration-300 ease-linear group-hover:text-white scale-65 lg:scale-100"
+              />
+            ),
+          },
+          {
+            label: "LIVE IN COLOR – FOLLOW ON INSTAGRAM",
+            path: "https://www.instagram.com/porinoi_assam",
+            icon: (
+              <Instagram
+                width={30}
+                height={30}
+                className="text-zinc-800 transition-colors duration-300 ease-linear group-hover:text-white scale-65 lg:scale-100"
+              />
+            ),
+          },
+          {
+            label: "LIVE IN COMMUNITY – JOIN US ON FACEBOOK",
+            path: "https://www.facebook.com/porinoi_assam",
+            icon: (
+              <Facebook
+                width={30}
+                height={30}
+                className="text-zinc-800 transition-colors duration-300 ease-linear group-hover:text-white scale-65 lg:scale-100"
+              />
+            ),
+          },
+        ],
+      },
     },
   },
 };

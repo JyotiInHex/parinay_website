@@ -132,43 +132,46 @@ export const signinMessages = {
 };
 
 export const guardMessages = {
-    // 🔄 302: Redirect – Already authenticated (e.g., trying to access /signIn while already logged in)
     302: [
-        "302: You're already home — no need to knock twice.",
-        "302: Redirected. The heart remembers the way.",
-        "302: Already logged in — destiny doesn’t ask twice.",
-        "302: Why knock again? You're inside already.",
-        "302: Turned the page, but you’re on the same chapter.",
+        "You're already home — no need to knock twice.",
+        "Redirected. The heart remembers the way.",
+        "Already logged in — destiny doesn’t ask twice.",
+        "Why knock again? You're inside already.",
+        "Turned the page, but you’re on the same chapter.",
     ],
 
-    // 🧩 400: Bad Request – Malformed input, missing fields, etc.
     400: [
-        "400: Mixed signals — try again.",
-        "400: That request was a bit messy.",
-        "400: Not quite what we expected.",
-        "400: Glitched heartbeat — your form forgot how to love.",
-        "400: Oops! Your message was lost in translation.",
+        "Mixed signals — try again.",
+        "That request was a bit messy.",
+        "Not quite what we expected.",
+        "Glitched heartbeat — your form forgot how to love.",
+        "Oops! Your message was lost in translation.",
     ],
 
-    // 🔐 401: Unauthorized – Not authenticated (no or invalid token)
     401: [
-        "401: Who goes there? Log in first.",
-        "401: Access needs a heartbeat — yours.",
-        "401: Love’s locked. You're not signed in.",
-        "401: The stars don’t align — sign in to find your fate.",
-        "401: A stranger at the door — kindly log in.",
+        "Who goes there? Log in first.",
+        "Access needs a heartbeat — yours.",
+        "Love’s locked. You're not signed in.",
+        "The stars don’t align — sign in to find your fate.",
+        "A stranger at the door — kindly log in.",
     ],
 
-    // 🚫 403: Forbidden – Authenticated but not allowed (e.g., role mismatch)
     403: [
-        "403: That door’s not yours to open.",
-        "403: No access — love has rules.",
-        "403: Forbidden. Even Cupid has boundaries.",
-        "403: You knocked, but fate said no.",
-        "403: The garden's locked — some stories aren’t yours to read.",
+        "That door’s not yours to open.",
+        "No access — love has rules.",
+        "Forbidden. Even Cupid has boundaries.",
+        "You knocked, but fate said no.",
+        "The garden's locked — some stories aren’t yours to read.",
+    ],
+
+    404: [
+        "A ghost page — nothing lives here.",
+        "Lost in the ether — no path ahead.",
+        "What you seek doesn’t exist anymore.",
+        "Not all who wander find something.",
+        "This chapter was never written.",
     ],
 };
-
 
 export const getRandomMessage = (messages) => {
     return messages[Math.floor(Math.random() * messages.length)];

@@ -4,7 +4,7 @@ import { landingPage } from "@/data/siteStaticData";
 import Image from "next/image";
 import { WordStaggerFlowTitle } from "@/components/ui/sectionTitle";
 import Link from "next/link";
-import Arrow from "../../../public/assets/svg/arrow";
+import Arrow from "../../../../public/assets/svg/arrow";
 
 const LandingHero = () => {
   const hero = landingPage.hero;

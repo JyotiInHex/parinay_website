@@ -24,6 +24,7 @@ export function useToastFromCookie() {
             case "400":
             case "401":
             case "403":
+            case "404":
                 ThrowToast({
                     message: getRandomMessage(guardMessages[toastType]),
                     state: toastState,
@@ -36,7 +37,7 @@ export function useToastFromCookie() {
                 break;
         }
         document.cookie = "toastMsg=; Max-Age=0; path=/";
-    }, []);
+    });
 }
 
 

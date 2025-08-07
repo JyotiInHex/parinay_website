@@ -7,7 +7,7 @@ import {
 } from "framer-motion";
 import { landingPage } from "@/data/siteStaticData";
 import { WordStaggerFlowTitle } from "@/components/ui/sectionTitle";
-import Arrow from "../../../public/assets/svg/arrow";
+import Arrow from "../../../../public/assets/svg/arrow";
 import { useEffect, useRef, useState } from "react";
 
 export default function MatchStepsSection() {

@@ -10,12 +10,5 @@ export const metadata = {
 };
 
 export default function UserProfileLayout({ children }) {
-  return (
-    <main style={{ padding: "2rem" }}>
-      <section>
-        <h1>User Profile</h1>
-        <div>{children}</div>
-      </section>
-    </main>
-  );
+  return <>{children}</>;
 }
