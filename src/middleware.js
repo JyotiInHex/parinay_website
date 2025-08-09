@@ -20,8 +20,18 @@ export async function middleware(request) {
 
             if (!userID) { throw new Error("Token payload missing user ID"); }
             return redirectWithToast(`/profile/${userID}`, "302", request);
-            
-        } catch (error) { return NextResponse.next();}
+
+        } catch (error) {
+            const response = redirectWithToast("/signIn", "401", request);
+            response.cookies.set("auth_token", "", {
+                maxAge: 0,
+                path: "/",
+                httpOnly: true,
+                secure: true,
+                sameSite: "Lax",
+            });
+            return response;
+        }
     }
 
     if (pathname.startsWith("/profile")) {

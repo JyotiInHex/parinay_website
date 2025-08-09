@@ -5,11 +5,13 @@ import { guardMessages, getRandomMessage } from '@/utils/validators'
 
 export function useToastFromCookie() {
     const { ThrowToast } = useToast();
+    let toastType;
     useEffect(() => {
-        const toastType = document.cookie
+        toastType = document.cookie
             .split("; ")
             .find((row) => row.startsWith("toastMsg="))
             ?.split("=")[1];
+            
         const toastStates = {
             "302": "info",
             "400": "warning",
@@ -37,7 +39,7 @@ export function useToastFromCookie() {
                 break;
         }
         document.cookie = "toastMsg=; Max-Age=0; path=/";
-    });
+    }, [toastType]);
 }
 
 

@@ -173,6 +173,34 @@ export const guardMessages = {
     ],
 };
 
+export const contactUsMessages = [
+    "Your words just found their way into our day.",
+    "Message received — and already making us smile.",
+    "We’ve got your note, and it’s in good hands now.",
+    "Your message landed softly in our inbox.",
+    "The connection is made — thank you for reaching out.",
+    "We heard you — and we’re so glad you spoke up.",
+    "Your words are now part of our story.",
+    "Delivered beautifully — we’ll reply with care.",
+    "Your message arrived safe and sound.",
+    "We’ve caught your note and tucked it somewhere safe.",
+    "Thank you for trusting us with your words.",
+    "Your thoughts are with us now — and we’re listening.",
+    "All set — your message has a warm welcome here.",
+    "Consider your note officially part of our world.",
+    "Your voice just joined the Porinoi conversation.",
+    "Your note just made our inbox a happier place.",
+    "Message received — and already cared for.",
+    "We’ve welcomed your words like an old friend.",
+    "Your message has taken its first step toward us.",
+    "We’re holding your words close until we reply.",
+    "Your note arrived — and it brought a little sunshine with it.",
+    "The bridge between us just got a little stronger.",
+    "We’ve received your thoughts and are already thinking back.",
+    "Your message has found a warm place to stay.",
+    "We’re keeping your note safe while we craft our reply.",
+];
+
 export const getRandomMessage = (messages) => {
     return messages[Math.floor(Math.random() * messages.length)];
 };

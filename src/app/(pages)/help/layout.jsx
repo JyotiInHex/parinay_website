@@ -5,5 +5,5 @@ export const metadata = {
 };
 
 export default function HelpLayout({ children }) {
-  return <div className="w-full h-auto overflow-hidden">{children}</div>;
+  return <div className="w-full h-auto select-none">{children}</div>;
 }

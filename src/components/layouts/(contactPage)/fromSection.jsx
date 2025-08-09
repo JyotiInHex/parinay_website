@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import {
   LineStaggerFlowTitle,
@@ -8,12 +8,23 @@ import {
 } from "@/components/ui/sectionTitle";
 import { contactPage } from "@/data/siteStaticData";
 import { CustomLink } from "@/components/ui/customLink";
+import { formValidationCheck } from "@/utils/validators";
+import { useToast } from "@/context/ToastContext";
+import {
+  InputField,
+  SelectField,
+  TextAreaField,
+} from "@/components/ui/customForm";
 
 export default function ContactForm() {
   const { tag, formDetails } = contactPage;
+  const formRef = useRef(null);
   const [formData, setFormData] = useState({});
   const [isPrivacyChecked, setIsPrivacyChecked] = useState(false);
+  const [errors, setErrors] = useState({});
   const [isSubmitted, setSubmitted] = useState(false);
+  const { ThrowToast } = useToast();
+  const formFields = formDetails.formFields;
 
   const handleChange = (e) => {
     const { name, type, value, checked } = e.target;
@@ -42,23 +53,51 @@ export default function ContactForm() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitted(true);
-    if (!formData.privacyPolicy) {
+    const { isValid, errors } = formValidationCheck({ formFields, formData });
+    console.log(isValid);
+
+    if (!isValid) {
+      setErrors(errors);
       return;
     }
-    setIsPrivacyChecked(false);
-    setFormData({});
-    console.log("Form Submitted: ", formData);
+
+    const formattedData = new FormData();
+    Object.entries(formData).forEach(([key, value]) => {
+      Array.isArray(value)
+        ? value.forEach((v) => formattedData.append(key, v))
+        : formattedData.append(key, value);
+    });
+
+    const result = await formDetails.serverAction(formattedData);
+    const { success, message, redirection } = result;
+
+    console.log(success + message);
+
+    ThrowToast({
+      message,
+      state: success ? "success" : "error",
+      timeOut: 5500,
+      direction: "center",
+      timeStampView: true,
+    });
+
+    if (success) {
+      formRef.current.reset();
+      setFormData({});
+      setErrors({});
+      setSubmitted(true);
+      if (redirection) router.push(redirection);
+    }
   };
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const clearSetTimeOut = setTimeout(() => {
       setSubmitted(false);
     }, 200);
     return clearTimeout(() => clearSetTimeOut);
-  }, [isSubmitted, setSubmitted]);
+  }, [isSubmitted]);
 
   return (
     <div className="px-10 lg:px-24 pb-20">
@@ -74,56 +113,56 @@ export default function ContactForm() {
         </div>
 
         <form
+          ref={formRef}
           onSubmit={handleSubmit}
-          className="w-full lg:mt-5 lg:grid grid-cols-2 gap-2 space-y-6 lg:space-y-0"
+          className="w-full lg:mt-5 lg:grid grid-cols-2 gap-10 lg:gap-5 space-y-5 lg:space-y-0"
         >
           {formDetails.formFields.map((field, idx) => {
-            const textTypes = ["text", "email", "tel", "number", "password"];
-            const selectTypes = ["checkbox", "select", "radio"];
+            const commonProps = {
+              ...field,
+              value: formData[field.name] || "",
+              onChange: handleChange,
+              isSubmitted,
+              error: errors[field.name],
+            };
 
-            if (textTypes.includes(field.type)) {
-              return (
-                <div className="lg:w-full" key={idx}>
+            switch (field.type) {
+              case "text":
+              case "email":
+              case "tel":
+              case "number":
+              case "password":
+                return (
                   <InputField
-                    indexKey={idx}
-                    {...field}
-                    value={formData[field.name] || ""}
-                    onChange={handleChange}
-                    isSubmitted={isSubmitted}
+                    key={idx}
+                    {...commonProps}
                   />
-                </div>
-              );
-            }
-
-            if (selectTypes.includes(field.type)) {
-              return (
-                <div className="w-full" key={idx}>
+                );
+              case "textarea":
+                return (
+                  <div className="md:col-span-2 w-full" key={idx}>
+                    <TextAreaField
+                      key={idx}
+                      {...commonProps}
+                      rows={3}
+                    />
+                  </div>
+                );
+              case "checkbox":
+              case "select":
+                return (
                   <SelectField
-                    indexKey={idx}
+                    key={idx}
                     {...field}
                     value={formData[field.name] || ""}
-                    onChange={(value) => handleSelectChange(field.name, value)}
+                    onChange={(val) => handleSelectChange(field.name, val)}
                     isSubmitted={isSubmitted}
+                    error={errors[field.name]}
                   />
-                </div>
-              );
+                );
+              default:
+                return null;
             }
-
-            if (field.type === "textarea") {
-              return (
-                <div className="md:col-span-2 w-full" key={idx}>
-                  <TextAreaField
-                    indexKey={idx}
-                    {...field}
-                    value={formData[field.name] || ""}
-                    onChange={handleChange}
-                    isSubmitted={isSubmitted}
-                  />
-                </div>
-              );
-            }
-
-            return null;
           })}
 
           <motion.div
@@ -236,347 +275,3 @@ export default function ContactForm() {
     </div>
   );
 }
-
-const InputField = ({
-  indexKey,
-  label,
-  type,
-  name,
-  placeholder,
-  value,
-  required,
-  pattern,
-  prefix,
-  onChange,
-  isSubmitted,
-}) => {
-  const [isTouched, setTouched] = useState(false);
-
-  useEffect(() => {
-    if (isSubmitted) {
-      setTouched(false);
-    }
-  }, [isSubmitted]);
-
-  return (
-    <fieldset className="grid grid-cols-1 lg:grid-cols-[auto_1fr]">
-      <label htmlFor={name} className="lg:inline-block">
-        <WordStaggerFlowTitle className="text-xl lg:text-4xl text-zinc-800 font-porinoi-sans font-medium">
-          {label}
-        </WordStaggerFlowTitle>
-      </label>
-
-      <motion.div
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.5 }}
-        variants={{
-          hidden: {},
-          visible: {
-            transition: {
-              staggerChildren: 0.05,
-            },
-          },
-        }}
-        className="lg:ml-2 overflow-hidden"
-      >
-        <motion.input
-          variants={{
-            hidden: { y: 100 },
-            visible: { y: 0 },
-          }}
-          transition={{
-            duration: 0.09,
-            delay: indexKey * 0.04,
-            ease: [0.33, 1, 0.68, 1],
-          }}
-          type={type}
-          name={name}
-          id={name}
-          placeholder={placeholder || ""}
-          autoComplete="off"
-          autoCorrect="false"
-          spellCheck="false"
-          aria-label={`${name}_input`}
-          value={value}
-          required={required}
-          pattern={pattern}
-          onChange={onChange}
-          onBlur={() => {
-            if (required) {
-              setTouched(true);
-            } else {
-              setTouched(false);
-            }
-          }}
-          className={`w-full lg:text-center text-base font-medium font-porinoi-sans outline-none border-b-2 focus:border-zinc-800 ${
-            isTouched & !value?.trim()
-              ? "border-red-500 text-red-500 "
-              : value?.trim()
-              ? "border-zinc-800 text-zinc-800"
-              : "border-zinc-300"
-          } transition-all duration-300 ease-in-out `}
-        />
-      </motion.div>
-    </fieldset>
-  );
-};
-
-const SelectField = ({
-  indexKey,
-  label,
-  name,
-  description,
-  options = [],
-  value,
-  required,
-  onChange,
-  isSubmitted,
-}) => {
-  const fieldRef = useRef(null);
-  const [isToggleDropDown, setToggleDropDown] = useState(false);
-  const [isTouched, setTouched] = useState(false);
-  const [isFocus, setIsFocus] = useState(false);
-
-  useEffect(() => {
-    if (isSubmitted) {
-      setTouched(false);
-      setIsFocus(false);
-    }
-  }, [isSubmitted]);
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (fieldRef.current && !fieldRef.current.contains(event.target)) {
-        setToggleDropDown(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
-  return (
-    <fieldset
-      ref={fieldRef}
-      className="relative grid grid-cols-1 lg:grid-cols-[auto_1fr] gap-3 items-center my-4"
-    >
-      <label onClick={() => setToggleDropDown((prev) => !prev)}>
-        <WordStaggerFlowTitle className="text-xl lg:text-4xl text-zinc-800 font-porinoi-sans font-medium">
-          {label}
-        </WordStaggerFlowTitle>
-      </label>
-
-      <div className="relative w-full">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.5 }}
-          variants={{
-            hidden: {},
-            visible: {
-              transition: {
-                staggerChildren: 0.05,
-              },
-            },
-          }}
-          className="lg:ml-2 overflow-hidden"
-        >
-          <motion.input
-            variants={{
-              hidden: { y: 100 },
-              visible: { y: 0 },
-            }}
-            transition={{
-              duration: 0.09,
-              delay: indexKey * 0.04,
-              ease: [0.33, 1, 0.68, 1],
-            }}
-            type={"text"}
-            name={name}
-            placeholder={description || ""}
-            autoComplete="off"
-            value={value}
-            readOnly
-            onClick={() => setToggleDropDown((prev) => !prev)}
-            onBlur={() => {
-              if (required) {
-                setTouched(true);
-              } else {
-                setTouched(false);
-              }
-            }}
-            className={`w-full lg:text-center text-base font-medium font-porinoi-sans outline-none border-b-2
-              text-transparent text-shadow-[0_0_0_#9f9fa9] ${
-                isTouched & !value?.trim()
-                  ? "border-red-500 text-red-300 text-shadow-[0_0_0_#ffa2a2]"
-                  : value?.trim()
-                  ? "border-zinc-800 text-zinc-800"
-                  : isFocus
-                  ? "border-zinc-800"
-                  : "border-zinc-300 hover:border-zinc-800"
-              }  hover:border-zinc-800 transition-all duration-500 ease-in-out`}
-          />
-          <motion.span
-            initial={{ y: 100 }}
-            whileInView={{ y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{
-              duration: 0.5,
-              delay: indexKey * 0.055,
-              ease: [0.33, 1, 0.68, 1],
-            }}
-            className="absolute right-0.5 bottom-2 pointer-events-none"
-          >
-            <svg
-              width="8"
-              height="14"
-              viewBox="0 0 27 50"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fillRule="evenodd"
-                clipRule="evenodd"
-                d="M10.76 3.5C11.915 1.5 14.803 1.5 15.957 3.5L23.312 16.248C24.466 18.248 23.022 20.748 20.713 20.748H6.00401C3.69501 20.748 2.25201 18.248 3.40601 16.248L10.759 3.5H10.76Z"
-                fill="#9f9fa9"
-              />
-              <path
-                fillRule="evenodd"
-                clipRule="evenodd"
-                d="M10.76 45.9961C11.915 47.9961 14.803 47.9961 15.957 45.9961L23.312 33.2481C24.466 31.2481 23.022 28.7481 20.713 28.7481H6.00401C3.69501 28.7481 2.25201 31.2481 3.40601 33.2481L10.759 45.9961H10.76Z"
-                fill="#9f9fa9"
-              />
-            </svg>
-          </motion.span>
-          <input
-            type="text"
-            name=""
-            id=""
-            className="absolute inset-0 opacity-0 pointer-events-none"
-            tabIndex={-1}
-            required={required}
-            value={value || ""}
-            onChange={() => {}}
-            aria-hidden={true}
-          />
-        </motion.div>
-
-        <AnimatePresence mode="wait">
-          {isToggleDropDown && (
-            <motion.ul
-              initial={{ opacity: 0, x: -10 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 10 }}
-              transition={{ duration: 0.25, ease: "easeInOut" }}
-              className="absolute right-0 z-100 mt-2 w-full lg:min-w-xs h-auto bg-neutral-100 flex flex-col items-center rounded-lg overflow-hidden shadow-xl"
-            >
-              {options.map((option, idx) => (
-                <motion.li
-                  key={option + idx}
-                  initial={{ x: -100, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
-                  exit={{ x: 100, opacity: 0 }}
-                  transition={{
-                    duration: 0.2,
-                    delay: idx * 0.025,
-                    ease: [0.33, 1, 0.68, 1],
-                  }}
-                  onClick={() => {
-                    onChange(option);
-                    setToggleDropDown(false);
-                  }}
-                  className="hover:bg-neutral-200 w-full p-2 lg:p-3 transition-all duration-200 ease-linear cursor-pointer"
-                >
-                  <span className="text-center text-sm lg:text-base text-zinc-800 font-semibold font-porinoi-sans cursor-pointer w-full pointer-events-none">
-                    {option}
-                  </span>
-                </motion.li>
-              ))}
-            </motion.ul>
-          )}
-        </AnimatePresence>
-      </div>
-    </fieldset>
-  );
-};
-
-const TextAreaField = ({
-  indexKey,
-  label,
-  name,
-  placeholder,
-  value,
-  required,
-  onChange,
-  isSubmitted,
-}) => {
-  const [isTouched, setTouched] = useState(false);
-  const [isFocus, setIsFocus] = useState(false);
-
-  useEffect(() => {
-    if (isSubmitted) {
-      setTouched(false);
-      setIsFocus(false);
-    }
-  }, [isSubmitted]);
-
-  return (
-    <fieldset className="grid grid-cols-1 lg:grid-cols-[auto_1fr] gap-4 items-start">
-      <label htmlFor={name} className="inline-block pt-2">
-        <WordStaggerFlowTitle className="text-xl lg:text-4xl text-zinc-800 font-porinoi-sans font-medium">
-          {label}
-        </WordStaggerFlowTitle>
-      </label>
-
-      <motion.div
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.5 }}
-        variants={{
-          hidden: {},
-          visible: {
-            transition: {
-              staggerChildren: 0.05,
-            },
-          },
-        }}
-        className="lg:ml-2 overflow-hidden"
-      >
-        <motion.textarea
-          variants={{
-            hidden: { y: 100 },
-            visible: { y: 0 },
-          }}
-          transition={{
-            duration: 0.09,
-            delay: indexKey * 0.04,
-            ease: [0.33, 1, 0.68, 1],
-          }}
-          id={name}
-          name={name}
-          placeholder={placeholder || ""}
-          value={value}
-          required={required}
-          rows={1}
-          onChange={onChange}
-          onBlur={() => {
-            if (required) {
-              setTouched(true);
-            } else {
-              setTouched(false);
-            }
-          }}
-          className={`w-full h-20 lg:h-auto pt-4 pb-1.5 resize-none lg:text-center text-base font-medium font-porinoi-sans outline-none border-b-2  ${
-            isTouched & !value?.trim()
-              ? "border-red-500 text-red-500"
-              : value?.trim()
-              ? "border-zinc-800 text-zinc-800"
-              : isFocus
-              ? "border-zinc-800"
-              : "border-zinc-300 hover:border-zinc-800"
-          }  hover:border-zinc-800 transition-all duration-500 ease-in-out`}
-        />
-      </motion.div>
-    </fieldset>
-  );
-};

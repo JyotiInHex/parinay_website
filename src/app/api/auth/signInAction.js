@@ -29,11 +29,11 @@ export default async function signinAction(formData) {
         const token = await createJWT({ id: user._id.toString() }, keepLogin);
 
         (await cookies()).set('auth_token', token, {
-            // httpOnly: true,
-            // secure: true,
-            // sameSite: 'strict',
+            httpOnly: true,
+            secure: true,
+            sameSite: 'strict',
             maxAge: keepLogin ? 60 * 60 * 24 * 30 : 60 * 60 * 24,
-            // path: "/"
+            path: "/"
         })
 
         return {

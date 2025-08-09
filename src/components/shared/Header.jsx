@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { useState, useLayoutEffect, useEffect, useRef } from "react";
 import { navigationSection } from "@/data/siteStaticData";
 import { motion, AnimatePresence } from "framer-motion";
@@ -8,7 +9,6 @@ import {
   WordStaggerFlowTitle,
 } from "../ui/sectionTitle";
 import { CustomBtn2 } from "../ui/customBtn";
-import Link from "next/link";
 import Arrow45deg from "../../../public/assets/svg/arrow45deg";
 
 export default function Header() {
@@ -73,9 +73,11 @@ export default function Header() {
   return (
     <header ref={menuRef} className={headerClass}>
       <nav className="relative w-full h-auto flex items-start justify-between px-10 lg:px-24 py-8 lg:py-12">
-        <LetterByLetterRevealTitle className="text-zinc-800 text-lg lg:text-2xl font-porinoi-sans font-semibold">
-          {logoText.default}
-        </LetterByLetterRevealTitle>
+        <Link href={"/"}>
+          <LetterByLetterRevealTitle className="text-zinc-800 text-lg lg:text-2xl font-porinoi-sans font-semibold">
+            {logoText.default}
+          </LetterByLetterRevealTitle>
+        </Link>
 
         <CustomLink
           type={"button"}

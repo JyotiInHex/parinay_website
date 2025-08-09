@@ -33,7 +33,6 @@ export default async function signupAction(formData) {
             }
         }
     } catch (error) {
-        console.log(error)
         return {
             success: false,
             message: 'Something went wrong during signup. Please try again.',

@@ -10,6 +10,7 @@ import signupAction from "@/app/api/auth/signUpAction";
 import forgotPasswordAction from "@/app/api/auth/forgotPassAction";
 import { Facebook, Instagram } from "../../public/assets/svg/socialMedia";
 import Edit from "../../public/assets/svg/edit";
+import { contactAction } from "@/app/api/contact/contact";
 
 const year = new Date().getFullYear();
 
@@ -57,7 +58,7 @@ export const FAQData = {
     {
       question: "Is there an app available for Porinoi?",
       answer:
-        "We’ve introduced our first web-based app — a sleek, mobile-optimized experience installable right from your browser. It officially rolls out after 15th August. Native iOS and Android apps are also in the works — stay tuned for the full journey ahead!",
+        "We’ve introduced our first web-based app — a sleek, mobile-optimized experience installable right from your browser. It officially rolls out after 12th September. Native iOS and Android apps are also in the works — stay tuned for the full journey ahead!",
     },
     {
       question: "How do I install the Porinoi web app on my phone?",
@@ -106,7 +107,7 @@ export const navigationSection = {
       { label: "Sign In", path: "/signIn" },
     ],
     cta: {
-      label: "Begin a Meaningful Bond",
+      label: "Begin the Journey",
       path: "/signUp",
     },
     footer: {
@@ -129,7 +130,7 @@ export const footerSection = {
   introText: "Built with love in Assam.",
   note: "Find your story. Write your future. A new chapter of connection begins here.",
   callToAction: {
-    label: "Join the Journey",
+    label: "Begin the Journey",
     path: "/signUp",
   },
 
@@ -521,6 +522,8 @@ export const landingPage = {
     ],
 
     formDetails: {
+      serverAction: contactAction,
+
       formFields: [
         {
           label: "How can we help you?",
@@ -668,6 +671,8 @@ export const contactPage = {
   tag: "Contact Porinoi —",
 
   formDetails: {
+    serverAction: contactAction,
+    
     formFields: [
       {
         label: "Hi! My name is",
@@ -770,7 +775,7 @@ export const contactPage = {
       {
         question: "Is there an app available for Porinoi?",
         answer:
-          "We’ve introduced our first web-based app — a sleek, mobile-optimized experience installable right from your browser. It officially rolls out after 15th August. Native iOS and Android apps are also in the works — stay tuned for the full journey ahead!",
+          "We’ve introduced our first web-based app — a sleek, mobile-optimized experience installable right from your browser. It officially rolls out after 12th September. Native iOS and Android apps are also in the works — stay tuned for the full journey ahead!",
       },
       {
         question: "How do I install the Porinoi web app on my phone?",
@@ -896,5 +901,400 @@ export const profilePage = {
         ],
       },
     },
+  },
+};
+
+export const helpPage = {
+  title: "Do you have a question on your mind?",
+  subTitle: "We bring you the answers you care about",
+  description:
+    "Porinoi Help Center — your starting point for smooth, simple support. Whether you're setting up, exploring, or waiting for a match — we're here to help.",
+  image: "/assets/img/helpHero.webp",
+  questions: {
+    categories: [
+      {
+        title: "Getting Started – SignUp & SignIn",
+        subTitle:
+          "The beginning of your journey toward a culturally rooted and meaningful connection. Signing up is simple, secure, and just takes a minute.",
+        questions: [
+          {
+            question: "How do I sign up on Porinoi?",
+            answer: "Follow these steps to create your Porinoi account:",
+            answerList: [
+              "Open the Porinoi app or visit the official website.",
+              "Enter your full name, mobile number, and create a secure password.",
+              'Tap "Sign Up" to complete your registration.',
+            ],
+            note: "Once registered, you’ll be guided to complete your profile and preferences for better matchmaking.",
+          },
+          {
+            question: "What should my password include?",
+            answer: "Your password should meet these requirements:",
+            answerList: [
+              "At least 6 characters long",
+              "A mix of letters and numbers",
+              "Unique — avoid using your name, birthdate, or phone number",
+            ],
+            note: "Strong passwords help keep your account secure.",
+          },
+          {
+            question: "How do I log in to my Porinoi account?",
+            answer: "Follow these steps to log in:",
+            answerList: [
+              "Go to the login screen.",
+              "Enter your registered mobile number and password.",
+              'Tap "Sign In."',
+            ],
+            note: "Make sure you use the same number you signed up with.",
+          },
+          {
+            question: "I forgot my password. How do I reset it?",
+            answer: "To reset your password:",
+            answerList: [
+              'Tap "Forgot Password?" on the login screen.',
+              "Enter your registered mobile number.",
+              "You’ll receive an OTP via SMS.",
+              "Enter the OTP and create a new password.",
+            ],
+            note: "",
+          },
+          {
+            question: "I didn’t receive the OTP for password reset.",
+            answer: "If the OTP doesn’t arrive, try these steps:",
+            answerList: [
+              "Wait for a moment and check your mobile network.",
+              'Tap "Resend OTP."',
+              "Make sure your number is entered correctly.",
+            ],
+            note: "Still having issues? Reach out to us via the Contact Us page or email support@porinoi.in.",
+          },
+          {
+            question: "Can I change my password later?",
+            answer: "Yes, you can change your password anytime.",
+            answerList: [
+              "Log in to your account.",
+              "Go to Settings > Change Password.",
+              "Enter your new password.",
+              "Enter the OTP sent to your registered mobile number to confirm and save changes.",
+            ],
+            note: "",
+          },
+          {
+            question: "Can I use the same account on multiple devices?",
+            answer:
+              "Yes, you can log in using the same mobile number and password.",
+            answerList: [],
+            note: "Only one active session is allowed at a time for your security.",
+          },
+          {
+            question: "Is signing up on Porinoi free?",
+            answer:
+              "Yes, signing up and creating your profile is completely free.",
+            answerList: [],
+            note: "Premium features will be introduced in the future — but joining Porinoi will always be free.",
+          },
+          {
+            question: "What happens after I sign up?",
+            answer: "After signing up, you’ll be guided through:",
+            answerList: [
+              "Filling in personal and community-related details",
+              "Uploading your photo (optional)",
+              "Setting partner preferences",
+            ],
+            note: "A complete profile means better matches and a richer experience on Porinoi.",
+          },
+        ],
+      },
+      {
+        title: "Profile Completion & Setup",
+        subTitle:
+          "A complete profile is your passport to meaningful matches. The more we know, the better we connect you with the right people — culturally, personally, and emotionally.",
+        questions: [
+          {
+            question: "Why is it important to complete my profile now?",
+            answer: "Completing your profile early helps us:",
+            answerList: [
+              "Prepare better match suggestions once matchmaking is live",
+              "Understand user preferences and improve the platform",
+              "Place you on priority for early access features",
+            ],
+            note: "",
+          },
+          {
+            question: "What information is required in the profile?",
+            answer: "Key profile fields include:",
+            answerList: [
+              "Personal details like name, age, gender, location",
+              "Cultural and community background",
+              "Education and occupation details",
+              "Lifestyle and preferences",
+              "Profile photo (optional, but highly recommended)",
+            ],
+            note: "",
+          },
+          {
+            question: "Can I skip profile setup and come back later?",
+            answer:
+              "Yes, you can skip for now. However, a completed profile gives you better visibility and access to features when matchmaking begins.",
+            answerList: [],
+            note: "",
+          },
+          {
+            question: "What happens after I complete my profile?",
+            answer:
+              "You’ll be eligible for early access to matchmaking features, get noticed faster, and receive personalized suggestions when we go live.",
+            answerList: [],
+            note: "",
+          },
+          {
+            question: "Are my profile details visible to others now?",
+            answer:
+              "Currently, your profile is only visible to you. Once public matchmaking launches, visibility will be managed according to your privacy preferences.",
+            answerList: [],
+            note: "",
+          },
+          {
+            question: "Can I edit my profile after completing it?",
+            answer:
+              "Yes, your profile is always editable from the ‘Profile Settings’ section — update anytime, as needed.",
+            answerList: [],
+            note: "",
+          },
+          {
+            question: "What if I don’t want to upload a photo right now?",
+            answer:
+              "Uploading a photo is optional for now. But profiles with photos tend to receive more attention once matchmaking is enabled.",
+            answerList: [],
+            note: "",
+          },
+          {
+            question: "Is there any profile verification process right now?",
+            answer:
+              "At this early stage, we do not require full verification. However, verification features will be introduced soon to enhance trust and authenticity.",
+            answerList: [],
+            note: "",
+          },
+          {
+            question: "I made a mistake during setup. How do I fix it?",
+            answer:
+              "Simply go to the Profile Settings section and update the incorrect fields. If you're stuck, reach out via the Contact Us form.",
+            answerList: [],
+            note: "",
+          },
+          {
+            question: "Will I lose my profile data before launch?",
+            answer:
+              "No. All your profile data is securely stored and will be preserved even as we upgrade the platform before launch.",
+            answerList: [],
+            note: "",
+          },
+        ],
+      },
+      {
+        title: "Photos & Privacy (Preview Stage)",
+        subTitle:
+          "Your photos help express your identity, but we understand privacy matters too. During this preview stage, you're in full control of what to share and when.",
+        questions: [
+          {
+            question: "Will I lose my profile data before launch?",
+            answer:
+              "No. All your profile data, including photos, is securely saved and will remain intact even as the platform evolves toward full launch.",
+            answerList: [],
+            note: "",
+          },
+          {
+            question: "Can I upload my photo right now?",
+            answer:
+              "Yes, you can upload one or more profile photos while completing or editing your profile. It's optional for now — but highly encouraged. A photo adds warmth and authenticity to your presence.",
+            answerList: [],
+            note: "",
+          },
+          {
+            question: "Will my photo be visible to others?",
+            answer:
+              "Currently, your photo is only visible to you. Once public matchmaking is launched, photo visibility settings will be available for you to control.",
+            answerList: [],
+            note: "",
+          },
+          {
+            question: "Can I blur or hide my photo from public view?",
+            answer:
+              "Yes. Once photo privacy controls are live, you’ll be able to choose who can see your photo, blur it, or keep it hidden completely.",
+            answerList: [],
+            note: "",
+          },
+          {
+            question: "How can I update or remove my photo?",
+            answer:
+              "Go to your Profile Settings → Photos section. You can add, replace, or delete your photo anytime with just a few taps.",
+            answerList: [],
+            note: "",
+          },
+          {
+            question: "Will photo verification be required?",
+            answer:
+              "Photo verification is not mandatory right now, but we plan to introduce it later to enhance trust, safety, and authenticity on the platform.",
+            answerList: [],
+            note: "",
+          },
+          {
+            question: "Is my photo stored securely?",
+            answer:
+              "Absolutely. All profile photos are encrypted and stored securely. Your data privacy is a top priority for Porinoi.",
+            answerList: [],
+            note: "",
+          },
+        ],
+      },
+      {
+        title: "Early Access & Feature Info",
+        subTitle:
+          "You're among the first to experience Porinoi. While some features are still on the way, your early engagement helps shape the future of the platform.",
+        questions: [
+          {
+            question: "What can I do in this Early Access version?",
+            answer: "Right now, you can:",
+            answerList: [
+              "Create an account",
+              "Complete your profile",
+              "Upload photos",
+              "Edit and save your details",
+            ],
+            note: "These early steps help prepare your profile for full functionality when matchmaking goes live.",
+          },
+          {
+            question: "Which features are coming soon?",
+            answer: "We're actively building:",
+            answerList: [
+              "Match suggestions based on culture and preferences",
+              "Messaging and chat tools",
+              "Profile verification",
+              "Privacy settings and visibility control",
+              "Subscription and premium plans",
+            ],
+            note: "Stay tuned — the full experience is arriving soon!",
+          },
+          {
+            question: "Will I need to sign up again after full launch?",
+            answer:
+              "No. Your current Porinoi account will stay active. All your profile details, photos, and preferences will carry over seamlessly into the full version.",
+            answerList: [],
+            note: "",
+          },
+          {
+            question: "How will I know when new features go live?",
+            answer:
+              "We’ll notify you through in-app alerts, emails, or SMS (based on your preferences). You can also follow our official channels to stay updated.",
+            answerList: [],
+            note: "",
+          },
+          {
+            question: "Can I invite others to join Porinoi?",
+            answer:
+              "Yes! We welcome early supporters. Share the app or website link with your friends and family — the more the merrier in this community of meaningful connections.",
+            answerList: [],
+            note: "",
+          },
+          {
+            question: "What if I find a bug or have a suggestion?",
+            answer:
+              "We’re all ears! Email us at support@porinoi.in or use the in-app feedback form (coming soon). Your feedback helps build a better Porinoi.",
+            answerList: [],
+            note: "",
+          },
+        ],
+      },
+      {
+        title: "Support & Feedback",
+        subTitle:
+          "We’re here for you. Whether it’s a question, a bug, or a brilliant idea, your voice shapes the Porinoi experience.",
+        questions: [
+          {
+            question: "How can I contact the Porinoi team?",
+            answer: "You can reach us in the following ways:",
+            answerList: [
+              "Fill out the form on our Contact Us page",
+              "Email us directly at support@porinoi.in",
+              "In-app feedback option is coming soon!",
+            ],
+            note: "Your messages go directly to our core team — nothing gets lost in the void.",
+          },
+          {
+            question: "How quickly will I get a response?",
+            answer:
+              "We aim to respond within 24–48 hours. During high-volume periods, it might take a bit longer — but we never ignore genuine feedback.",
+            answerList: [],
+            note: "",
+          },
+          {
+            question: "I found a bug! What should I do?",
+            answer:
+              "Please report it immediately by email or the Contact Us form.",
+            answerList: [
+              "Mention the steps to reproduce it",
+              "Describe what you expected and what happened",
+              "Attach screenshots if possible",
+            ],
+            note: "",
+          },
+          {
+            question: "Can I suggest a new feature?",
+            answer:
+              "Absolutely! We love hearing your ideas. Every feature you suggest is considered by our team and could shape future updates.",
+            answerList: [],
+            note: "",
+          },
+          {
+            question: "Will I be notified when you release updates?",
+            answer:
+              "Yes. We’ll send in-app alerts, emails, or SMS based on your notification preferences. Major changes will also be shared through our official pages.",
+            answerList: [],
+            note: "",
+          },
+          {
+            question: "What kind of feedback is most helpful right now?",
+            answer: "We’re especially looking for:",
+            answerList: [
+              "Suggestions for user experience improvement",
+              "Bug reports",
+              "Feature ideas",
+              "Design/usability feedback",
+              "Anything you feel is confusing or incomplete",
+            ],
+            note: "",
+          },
+          {
+            question: "Is my feedback really being read?",
+            answer:
+              "Yes — every message is read by a real team member. Some feedback even inspires entire features. So don’t hold back — your voice truly matters!",
+            answerList: [],
+            note: "",
+          },
+        ],
+      },
+    ],
+  },
+
+  contact: {
+    title: ["Need a hand", "or have something to share?"],
+    subTitle:
+      "Porinoi is just getting started — and your experience matters deeply to us. If you couldn’t find what you’re looking for or want to share your thoughts, don’t hesitate. ",
+    image: "/assets/img/helpFooter.webp",
+    body: [
+      "We’re in the early chapters of our journey, and every voice helps shape the story. Whether it’s a bug you bumped into, a bright idea that crossed your mind, or simply a kind word — it all matters here. You’re not just using Porinoi… you’re helping build it.",
+      "Our team reads and responds personally with patience, curiosity, and a genuine desire to help.",
+    ],
+    contactOptions: [
+      {
+        label: "Email",
+        value: "support@porinoi.in",
+        note: "We read every message and try our best to reply quickly.",
+      },
+      {
+        label: "Contact Us",
+        value: "/contactUs",
+        note: "Go to the Contact Us page on our website to send us a message easily.",
+      },
+    ],
   },
 };

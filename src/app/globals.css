@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 * {
-  list-style: none !important;
-  outline: none !important;
+  list-style: none!important;
+  outline: none!important;
 }
 
 :root {

@@ -1,11 +1,12 @@
 "use client";
-
+import React from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { WordStaggerFlowTitle } from "@/components/ui/sectionTitle";
 import { contactPage } from "@/data/siteStaticData";
 import { useEffect, useRef, useState } from "react";
 import { CustomBtn2 } from "@/components/ui/customBtn";
 import ArrowRightward from "../../../../public/assets/svg/arrowRightward";
+import clsx from "clsx";
 
 export default function ContactFAQ() {
   const { faq_section } = contactPage;
@@ -39,14 +40,14 @@ export default function ContactFAQ() {
           <CustomBtn2
             type="link"
             path={faq_section.cta.href}
-            className={"mt-10 bg-[#f8f3e9] rounded-md w-full lg:w-fit"}
+            className={"mt-10 bg-[#f8f3e9] w-full lg:w-fit"}
           >
             {faq_section.cta.label}
           </CustomBtn2>
         </div>
       </div>
 
-      <div className="mt-12 lg:mt-32 flex flex-col gap-2">
+      <div className="mt-12 lg:mt-32 flex flex-col">
         {faq_section.items.map((item, idx) => {
           const isOpen = openIdx === idx;
           return (
@@ -64,7 +65,7 @@ export default function ContactFAQ() {
   );
 }
 
-export const FAQItem = ({ itemNum, item, isOpen, onClick }) => {
+export const FAQItem = ({ itemNum, item, isOpen, onClick, className }) => {
   const ref = useRef(null);
   const [height, setHeight] = useState(0);
 
@@ -78,36 +79,57 @@ export const FAQItem = ({ itemNum, item, isOpen, onClick }) => {
     <motion.div
       initial={{ y: 30, opacity: 0 }}
       whileInView={{ y: 0, opacity: 1 }}
-      viewport={{ once: false, amount: 0.5 }}
-      whileHover={{
-        borderColor: "#9f9fa9",
-      }}
+      viewport={{ once: true, amount: 0.5 }}
       transition={{
-        duration: 0.6,
+        duration: 1,
         delay: itemNum * 0.04,
         ease: [0.33, 1, 0.68, 1],
       }}
       onClick={onClick}
-      className={`lg:w-[600px] cursor-pointer rounded-xl border border-zinc-200 ${
-        isOpen ? "bg-zinc-100" : "bg-white"
-      }`}
+      className={clsx(
+        "lg:w-auto lg:min-w-[610px] lg:max-w-[620px] cursor-pointer",
+        isOpen && "bg-neutral-100",
+        className
+      )}
     >
+      <AnimatePresence mode="wait">
+        <motion.hr
+          initial={{ scaleX: 0 }}
+          animate={{ scaleX: isOpen ? 1 : 0 }}
+          exit={{ scaleX: 0 }}
+          transition={{
+            duration: 1,
+            delay: itemNum * 0.04,
+            ease: [0.33, 1, 0.68, 1],
+          }}
+          className={`border-[1.5px] rounded-full w-full ${
+            isOpen
+              ? "origin-left border-zinc-800"
+              : "origin-right border-blue-500"
+          }`}
+        />
+      </AnimatePresence>
       <motion.div
         initial={{ y: 30, opacity: 0 }}
         whileInView={{ y: 0, opacity: 1 }}
-        viewport={{ once: false, amount: 0.3 }}
+        viewport={{ once: true, amount: 0.3 }}
         transition={{
           duration: 0.6,
           delay: itemNum * 0.055,
           ease: [0.33, 1, 0.68, 1],
         }}
-        className={`px-6 py-5 `}
+        className={`px-3 lg:px-6 py-5 `}
       >
         <div className="flex items-end gap-3">
           <ArrowRightward width={25} height={25} />
-          <WordStaggerFlowTitle className="text-base font-medium font-porinoi-sans leading-snug">
-            {item.question}
-          </WordStaggerFlowTitle>
+          <div>
+            <WordStaggerFlowTitle
+              delayStep={0.025}
+              className="text-sm lg:text-[16.5px] font-medium font-porinoi-sans leading-snug uppercase"
+            >
+              {item.question}
+            </WordStaggerFlowTitle>
+          </div>
         </div>
 
         <AnimatePresence initial={false}>
@@ -120,13 +142,40 @@ export const FAQItem = ({ itemNum, item, isOpen, onClick }) => {
               transition={{ duration: 0.4, ease: [0.33, 1, 0.68, 1] }}
               className="overflow-hidden"
             >
-              <div ref={ref} className="pt-4 pr-2 pb-1">
+              <div ref={ref} className="pt-4 pr-2 pb-1 flex flex-col gap-1.5">
                 <WordStaggerFlowTitle
                   delayStep={0.015}
-                  className="text-zinc-700 text-xl leading-relaxed font-porinoi-sans"
+                  className="text-zinc-700 text-base lg:text-lg leading-relaxed font-porinoi-sans"
                 >
                   {item.answer}
                 </WordStaggerFlowTitle>
+
+                {item.answerList && (
+                  <ul className="space-y-1.5">
+                    {item.answerList.map((list, idx) => {
+                      return (
+                        <li key={idx} className="flex flex-row gap-2">
+                          <WordStaggerFlowTitle
+                            delayStep={0.015}
+                            className="text-zinc-700 text-sm lg:text-base leading-relaxed font-porinoi-sans"
+                          >
+                            {(idx + 1).toLocaleString().padStart(2, "0") +
+                              ". " +
+                              list}
+                          </WordStaggerFlowTitle>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                )}
+
+                {item.note && (
+                  <i>
+                    <WordStaggerFlowTitle className="mt-1.5 pr-0.5 text-zinc-500 text-sm font-porinoi-sans font-normal">
+                      {item.note}
+                    </WordStaggerFlowTitle>
+                  </i>
+                )}
               </div>
             </motion.div>
           )}

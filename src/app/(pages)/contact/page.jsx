@@ -1,5 +1,4 @@
 "use client";
-
 import { motion } from "framer-motion";
 import ContactFAQ from "@/components/layouts/(contactPage)/faqSection";
 import ContactForm from "@/components/layouts/(contactPage)/fromSection";

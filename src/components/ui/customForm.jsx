@@ -7,6 +7,7 @@ import { WordStaggerFlowTitle } from "./sectionTitle";
 import { formValidationCheck } from "@/utils/validators";
 import { useToast } from "@/context/ToastContext";
 import { useRouter } from "next/navigation";
+import clsx from "clsx";
 
 export default function CustomForm({
   formTitle,
@@ -18,6 +19,7 @@ export default function CustomForm({
   additionalInfo,
   serverAction,
 }) {
+  const formRef = useRef(null);
   const { ThrowToast } = useToast();
   const router = useRouter();
   const [formData, setFormData] = useState({});
@@ -70,7 +72,7 @@ export default function CustomForm({
 
     const result = await serverAction(formattedData);
     const { success, message, redirection } = result;
-    
+
     ThrowToast({
       message,
       state: success ? "success" : "error",
@@ -80,6 +82,7 @@ export default function CustomForm({
     });
 
     if (success) {
+      formRef.current.reset();
       setFormData({});
       setErrors({});
       setSubmitted(true);
@@ -122,7 +125,11 @@ export default function CustomForm({
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-y-6 w-full">
+      <form
+        ref={formRef}
+        onSubmit={handleSubmit}
+        className="flex flex-col gap-y-6 w-full"
+      >
         {formFields.map((field, idx) => {
           const commonProps = {
             ...field,
@@ -247,7 +254,7 @@ export default function CustomForm({
               <CustomLink
                 path={helpLinks.link.path}
                 label={helpLinks.link.name}
-                className="text-base text-zinc-700 font-medium font-porinoi-sans"
+                className="text-base text-zinc-700 font-medium font-porinoi-sans cursor-pointer"
               />
             </motion.div>
           )}
@@ -265,7 +272,7 @@ export default function CustomForm({
   );
 }
 
-const CheckboxField = ({ label, name, checked, onChange }) => {
+export const CheckboxField = ({ label, name, checked, onChange }) => {
   const inputId = `${label.replace(/\s+/g, "-").toLowerCase()}-checkbox`;
 
   return (
@@ -288,7 +295,7 @@ const CheckboxField = ({ label, name, checked, onChange }) => {
   );
 };
 
-const CheckboxGroupField = ({
+export const CheckboxGroupField = ({
   label,
   name,
   options,
@@ -343,7 +350,7 @@ const CheckboxGroupField = ({
   </fieldset>
 );
 
-const InputField = ({
+export const InputField = ({
   indexKey,
   name,
   label,
@@ -355,6 +362,7 @@ const InputField = ({
   onChange,
   isSubmitted,
   error,
+  className,
 }) => {
   const [isTouched, setTouched] = useState(false);
 
@@ -366,7 +374,7 @@ const InputField = ({
   const showError = isTouched && isEmpty;
 
   return (
-    <fieldset className="space-y-3 lg:space-y-2.5">
+    <fieldset className={clsx("space-y-1", className)}>
       <label htmlFor={name} className="inline-block">
         <WordStaggerFlowTitle className="text-lg lg:text-2xl text-zinc-800 font-porinoi-sans font-medium">
           {`[${label}]`}
@@ -435,7 +443,7 @@ const InputField = ({
   );
 };
 
-const SelectField = ({
+export const SelectField = ({
   indexKey,
   label,
   name,
@@ -446,6 +454,7 @@ const SelectField = ({
   onChange,
   isSubmitted,
   error,
+  className
 }) => {
   const fieldRef = useRef(null);
   const [isOpen, setOpen] = useState(false);
@@ -470,10 +479,10 @@ const SelectField = ({
   const showError = isTouched && isEmpty;
 
   return (
-    <fieldset ref={fieldRef} className="relative">
+    <fieldset ref={fieldRef} className={clsx("relative", className)}>
       <label onClick={() => setOpen((prev) => !prev)}>
         <WordStaggerFlowTitle className="text-lg lg:text-2xl text-zinc-800 font-porinoi-sans font-medium">
-          {`[${label}]`}
+          {`${label}`}
         </WordStaggerFlowTitle>
       </label>
 
@@ -517,7 +526,26 @@ const SelectField = ({
           }}
           className="absolute right-0.5 bottom-2 pointer-events-none"
         >
-          {/* Custom arrow icon here */}
+          <svg
+            width="8"
+            height="14"
+            viewBox="0 0 27 50"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M10.76 3.5C11.915 1.5 14.803 1.5 15.957 3.5L23.312 16.248C24.466 18.248 23.022 20.748 20.713 20.748H6.00401C3.69501 20.748 2.25201 18.248 3.40601 16.248L10.759 3.5H10.76Z"
+              fill="#9f9fa9"
+            />
+            <path
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M10.76 45.9961C11.915 47.9961 14.803 47.9961 15.957 45.9961L23.312 33.2481C24.466 31.2481 23.022 28.7481 20.713 28.7481H6.00401C3.69501 28.7481 2.25201 31.2481 3.40601 33.2481L10.759 45.9961H10.76Z"
+              fill="#9f9fa9"
+            />
+          </svg>
         </motion.span>
       </motion.div>
 
@@ -575,7 +603,7 @@ const SelectField = ({
   );
 };
 
-const TextAreaField = ({
+export const TextAreaField = ({
   indexKey,
   label,
   name,
@@ -586,6 +614,7 @@ const TextAreaField = ({
   isSubmitted,
   error,
   onChange,
+  className,
 }) => {
   const [isTouched, setTouched] = useState(false);
 
@@ -597,7 +626,7 @@ const TextAreaField = ({
   const showError = isTouched && isEmpty;
 
   return (
-    <fieldset>
+    <fieldset className={clsx(className)}>
       <label htmlFor={name} className="inline-block pt-2">
         <WordStaggerFlowTitle className="text-lg lg:text-2xl text-zinc-800 font-porinoi-sans font-medium">
           {`[${label}]`}
@@ -620,7 +649,7 @@ const TextAreaField = ({
           id={name}
           name={name}
           placeholder={placeholder || "Write something..."}
-          value={value}
+          // value={value}
           rows={rows}
           onChange={onChange}
           onBlur={() => setTouched(required)}

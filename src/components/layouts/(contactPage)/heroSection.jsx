@@ -19,7 +19,7 @@ export default function ContactHero() {
             transition={{ duration: 1, ease: [0.33, 1, 0.68, 1], delay: 0.75 }}
             className="h-[85px] overflow-hidden rounded-lg"
           >
-            <Image
+            <img
               src={gif}
               width={500}
               height={500}
