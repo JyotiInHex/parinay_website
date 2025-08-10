@@ -43,10 +43,10 @@ const AboutHighlight = () => {
             delay: 0.6,
             ease: [0.33, 1, 0.68, 1],
           }}
-          className="w-full max-w-md h-auto overflow-hidden rounded-2xl shadow-2xl shadow-black/55"
+          className="w-full max-w-md h-auto overflow-hidden rounded-2xl shadow-2xl shadow-black/55 pointer-events-none"
           style={{ y: imgTwoSmoothY }}
         >
-          <motion.div style={{ scale: imgTwoScale }} className="w-full h-auto">
+          <motion.div style={{ scale: imgTwoScale }} className="w-full h-auto pointer-events-none">
             <Image
               src={highlights.image}
               quality={100}

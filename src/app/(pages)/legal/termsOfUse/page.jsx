@@ -1,9 +1,13 @@
-"use client";
-import { motion, useAnimation } from "framer-motion";
-import { useEffect, useRef } from "react";
+import TermOfUseContent from "@/components/layouts/(termOfUse)/contentSection";
+import TermOfUseHero from "@/components/layouts/(termOfUse)/heroSection";
 
-const Help = () => {
-  return <div>help</div>;
+const TermOfUse = () => {
+  return (
+    <div className="w-full">
+      <TermOfUseHero />
+      <TermOfUseContent/>
+    </div>
+  );
 };
 
-export default Help;
+export default TermOfUse;

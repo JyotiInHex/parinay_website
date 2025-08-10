@@ -5,7 +5,7 @@ export const metadata = {
 
 export default function LegalLayout({ children }) {
   return (
-    <div className="w-full h-auto overflow-hidden">
+    <div className="w-full h-auto select-none px-10 lg:px-24 pt-16 lg:pt-20">
       {children}
     </div>
   );

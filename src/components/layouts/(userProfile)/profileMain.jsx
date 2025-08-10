@@ -6,17 +6,14 @@ import Arrow from "../../../../public/assets/svg/arrow";
 import Arrow45deg from "../../../../public/assets/svg/arrow45deg";
 import Link from "next/link";
 import { useLayoutEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 
-export default function ProfileMain({
-  userName,
-  name,
-  phone,
-  profileStatus,
-  token,
-}) {
+export default function ProfileMain({ userName, name, profileStatus }) {
   const { pendingProfile, completedProfile } = profilePage;
   const [profileState, setProfileState] = useState(pendingProfile);
   const nameShort = name.split(" ")[0];
+  const pathname = usePathname();
+  const id = pathname.split("/").pop();
 
   useLayoutEffect(() => {
     if (profileStatus !== "pending") {
@@ -79,7 +76,7 @@ export default function ProfileMain({
           {profileStatus === "pending" ? (
             <>
               <Link
-                href={profileState.context.callToAction.button.path}
+                href={profileState.context.callToAction.button.path + "/" + id}
                 className="flex flex-col justify-between gap-y-8 lg:w-[25vw] h-auto p-5 bg-red-500"
               >
                 <span className="grid grid-cols-[auto_auto] items-center">
@@ -114,7 +111,7 @@ export default function ProfileMain({
                   className="relative lg:w-[25vw] h-auto p-5 border-t first:border-t-0 border-zinc-300 before:w-full before:h-full before:absolute before:inset-0 after:absolute after:inset-0 after:-z-[1] after:scale-y-0 after:origin-top after:bg-red-500 after:transition-transform after:duration-300 hover:after:scale-y-100 hover:after:origin-bottom cursor-pointer group"
                 >
                   <Link
-                    href={btn.path}
+                    href={btn.path + "/" + id}
                     className="z-0 relative flex flex-row items-center justify-between gap-y-8"
                   >
                     <span className="lg:w-[80%] space-x-3">

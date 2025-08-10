@@ -3,6 +3,8 @@ import { connectDB } from '@/lib/db'
 import User from '@/models/usersSchema';
 import bcrypt from 'bcrypt';
 import { getRandomMessage, signupMessages } from '@/utils/validators';
+import { createJWT } from '@/lib/auth/JWT';
+import { cookies } from 'next/headers';
 
 const BCRYPT_SALT = parseInt(process.env.BCRYPT_SALT, 10);
 
@@ -26,11 +28,20 @@ export default async function signupAction(formData) {
             userName, name, phone, password: hashPassword, referralSource, profileStatus,
         })
 
+        const token = await createJWT({ id: newUser._id.toString() }, false);
+
+        (await cookies()).set("auth_token", token, {
+            httpOnly: true,
+            secure: true,
+            sameSite: 'strict',
+            maxAge: 60 * 60 * 24,
+            path: "/"
+        })
+
         return {
-            success: true, message: getRandomMessage(signupMessages.success), data: {
-                id: newUser._id.toString(),
-                phone: newUser.phone
-            }
+            success: true,
+            message: getRandomMessage(signupMessages.success),
+            redirection: `/profile/${newUser._id.toString()}`
         }
     } catch (error) {
         return {

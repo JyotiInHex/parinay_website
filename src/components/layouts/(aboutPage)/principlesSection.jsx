@@ -53,14 +53,14 @@ const AboutPrinciple = () => {
                 delay: 0.6,
                 ease: [0.33, 1, 0.68, 1],
               }}
-              className="w-10/12 max-w-xs h-auto overflow-hidden rounded-2xl shadow-2xl shadow-black/55"
+              className="w-10/12 max-w-xs h-auto overflow-hidden rounded-2xl shadow-2xl shadow-black/55 pointer-events-none"
               style={{ y: imgOneSmoothY }}
             >
               <motion.div
                 style={{
                   scale: imgOneSmoothScale,
                 }}
-                className="w-full h-auto"
+                className="w-full h-auto pointer-events-none"
               >
                 <Image
                   src={principles.image}

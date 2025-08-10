@@ -412,7 +412,7 @@ export const InputField = ({
           id={name}
           placeholder={placeholder || ""}
           autoComplete="off"
-          // value={value}
+          value={value}
           onChange={onChange}
           onBlur={() => setTouched(required)}
           className={`w-full text-sm lg:text-base font-medium font-porinoi-sans outline-none border-b-2 transition-all duration-300 ease-in-out ${

@@ -1,9 +1,13 @@
-"use client";
-import { motion, useAnimation } from "framer-motion";
-import { useEffect, useRef } from "react";
+import PrivacyPolicyContent from "@/components/layouts/(privacyPolicyPage)/contentSection";
+import PrivacyPolicyHero from "@/components/layouts/(privacyPolicyPage)/heroSection";
 
-const Help = () => {
-  return <div>help</div>;
+const PrivacyPolicy = () => {
+  return (
+    <div className="w-full">
+      <PrivacyPolicyHero />
+      <PrivacyPolicyContent />
+    </div>
+  );
 };
 
-export default Help;
+export default PrivacyPolicy;

@@ -16,10 +16,8 @@ export default function Header() {
   const menuRef = useRef();
   const [isOpen, setIsOpen] = useState(false);
   const [device, setDevice] = useState("desktop");
-
   const [showHeader, setShowHeader] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
-
   const toggleMenu = () => setIsOpen((prev) => !prev);
 
   useLayoutEffect(() => {
@@ -91,12 +89,12 @@ export default function Header() {
             <motion.div
               key="menu-panel"
               initial={{ height: 0 }}
-              animate={{ height: device === "mobile" ? "100vh" : "460px" }}
+              animate={{ height: device === "mobile" ? "100vh" : "430px" }}
               exit={{ height: 0 }}
               transition={{ duration: 0.4, ease: [0.33, 1, 0.68, 1] }}
               className="w-full max-h-screen bg-[#f8f3e9] absolute inset-0 z-50 overflow-hidden"
             >
-              <div className="px-10 lg:px-24 py-8 lg:py-12 w-full h-auto">
+              <div className="px-10 lg:px-24 py-8 lg:py-12 w-full h-dvh flex lg:block flex-col">
                 <h2 className="text-zinc-800 text-lg lg:text-2xl font-porinoi-sans font-semibold uppercase overflow-hidden">
                   {logoText.menu.split(" ").map((chr, idx) => {
                     return (
@@ -132,7 +130,7 @@ export default function Header() {
                     playsInline
                     controls={false}
                     preload="none"
-                    className="absolute bottom-20 lg:static mt-5 w-full h-auto min-w-[200px] lg:min-w-[240px] max-w-[100px] lg:max-w-[250px] rounded-md shadow-xl overflow-hidden pointer-events-none"
+                    className="hidden lg:block absolute bottom-20 lg:static mt-5 w-full h-auto min-w-[200px] lg:min-w-[240px] max-w-[100px] lg:max-w-[250px] rounded-md shadow-xl overflow-hidden pointer-events-none"
                   >
                     <source
                       src={menu.video.source}
@@ -140,7 +138,7 @@ export default function Header() {
                     />
                   </motion.video>
 
-                  <ul className="mt-5 w-full lg:w-fit flex flex-col items-end gap-5 overflow-hidden">
+                  <ul className="mt-5 w-full lg:w-fit flex flex-col items-end gap-10 lg:gap-5 overflow-hidden">
                     {menu.links.map((link, idx) => (
                       <motion.li
                         key={idx}
@@ -158,7 +156,7 @@ export default function Header() {
                         <CustomLink
                           path={link.path}
                           label={link.label}
-                          className="text-3xl text-zinc-400 lg:text-zinc-800 font-porinoi-sans font-semibold cursor-pointer uppercase"
+                          className="text-5xl lg:text-3xl text-zinc-400 lg:text-zinc-800 font-porinoi-sans font-semibold cursor-pointer uppercase"
                         />
                       </motion.li>
                     ))}
@@ -168,7 +166,7 @@ export default function Header() {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: 30 }}
                       transition={{ duration: 0.4, delay: 0.2 }}
-                      className="w-fit ml-auto my-3"
+                      className="w-fit ml-auto my-0"
                     >
                       <CustomBtn2
                         type="link"
