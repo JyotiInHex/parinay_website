@@ -1287,7 +1287,7 @@ export const helpPage = {
     contactOptions: [
       {
         label: "Email",
-        value: "support@porinoi.in",
+        value: "support@porinoi.com",
         note: "We read every message and try our best to reply quickly.",
       },
       {
