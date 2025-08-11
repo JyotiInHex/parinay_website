@@ -89,7 +89,7 @@ export default function Header() {
             <motion.div
               key="menu-panel"
               initial={{ height: 0 }}
-              animate={{ height: device === "mobile" ? "100vh" : "430px" }}
+              animate={{ height: device === "mobile" ? "100dvh" : "fit-content" }}
               exit={{ height: 0 }}
               transition={{ duration: 0.4, ease: [0.33, 1, 0.68, 1] }}
               className="w-full max-h-screen bg-[#f8f3e9] absolute inset-0 z-50 overflow-hidden"
