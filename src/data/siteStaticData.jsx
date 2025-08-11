@@ -119,7 +119,7 @@ export const navigationSection = {
         },
         {
           label: "Facebook",
-          url: "https://facebook.com/porinoi_assam/",
+          url: "https://www.facebook.com/share/17BdXQ5s7U/",
         },
       ],
     },
@@ -163,11 +163,11 @@ export const footerSection = {
   social: [
     {
       label: "Instagram",
-      url: "https://www.instagram.com/porinoi_assam",
+      url: "https://www.instagram.com/porinoi_assam?igsh=N3I3d2libDZpcXpj",
     },
     {
       label: "Facebook",
-      url: "https://facebook.com/porinoi_assam/",
+      url: "https://www.facebook.com/share/17bdxq5s7u/",
     },
   ],
 
@@ -889,7 +889,7 @@ export const profilePage = {
           },
           {
             label: "LIVE IN COMMUNITY – JOIN US ON FACEBOOK",
-            path: "https://www.facebook.com/porinoi_assam",
+            path: "https://www.facebook.com/share/17bdxq5s7u/",
             icon: (
               <Facebook
                 width={30}
