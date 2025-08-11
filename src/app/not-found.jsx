@@ -65,7 +65,7 @@ export default function NotFound() {
             variants={fadeUp}
             className="w-fit lg:w-1/3 text-xl lg:text-3xl font-semibold font-porinoi-sans text-zinc-700"
           >
-            You’ve entered a black hole in the Parinay universe!
+            You’ve entered a black hole in the Porinoi universe!
           </motion.h5>
 
           <motion.p
@@ -92,12 +92,6 @@ export default function NotFound() {
               type="button"
               className="underline text-pink-600 font-semibold font-porinoi-sans"
               onClick={() => router.back()}
-            />
-            <span className="w-0.5 h-5 bg-zinc-400 rounded-full"></span>
-            <CustomLink
-              label={"Help_Signal"}
-              path="/help"
-              className="underline text-orange-600 font-semibold font-porinoi-sans"
             />
           </motion.div>
         </motion.div>

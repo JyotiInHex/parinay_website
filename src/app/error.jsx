@@ -1,5 +1,5 @@
 "use client";
-
+import React from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import Image from "next/image";
@@ -36,7 +36,12 @@ export default function NotFound() {
           variants={fadeUp}
           className="flex flex-col items-center justify-center"
         >
-          <Image src={"/assets/svg/logo_main.svg"} width={150} height={50} alt="Logo" />
+          <Image
+            src={"/assets/svg/logo_main.svg"}
+            width={150}
+            height={50}
+            alt="Logo"
+          />
         </motion.figure>
 
         <motion.div
@@ -84,38 +89,39 @@ export default function NotFound() {
             variants={fadeUp}
             className="mt-1 lg:mt-5 md:mt-2 flex flex-row items-center justify-center gap-2"
           >
-            <CustomLink
-              label={"Try_Again"}
-              customStyle={{
-                textDecorationLine: "underline",
-                color: "#F7901E",
-                fontSize: "16px",
-              }}
-              type="button"
-              onClick={() => {
-                router.refresh();
-              }}
-            />
-            <span className="w-0.5 h-5 bg-zinc-400 rounded-full"></span>
-            <CustomLink
-              label={"Help_Signal"}
-              path="/contact"
-              customStyle={{
-                textDecorationLine: "underline",
-                color: "#EC008C",
-                fontSize: "16px",
-              }}
-            />
-            <span className="w-0.5 h-5 bg-zinc-400 rounded-full"></span>
-            <CustomLink
-              label={"Inquire_Within"}
-              path="/faqPage"
-              customStyle={{
-                textDecorationLine: "underline",
-                color: "#EC008C",
-                fontSize: "16px",
-              }}
-            />
+            {[
+              {
+                label: "Refresh Page",
+                path: "",
+                onClick: () => router.refresh(),
+              },
+              {
+                label: "Contact Support",
+                path: "/contact",
+                onClick: undefined,
+              },
+              {
+                label: "Help Center",
+                path: "/help/helpCenter",
+                onClick: undefined,
+              },
+            ].map((link, idx) => {
+              return (
+                <React.Fragment key={idx}>
+                  {idx > 0 && (
+                    <span className="w-0.5 h-5 bg-zinc-400 rounded-full"></span>
+                  )}
+                  <CustomLink
+                    label={link.label}
+                    path={link.path}
+                    onClick={link.onClick}
+                    className={
+                      "text-base text-zinc-800 font-porinoi-sans font-semibold underline cursor-pointer"
+                    }
+                  />
+                </React.Fragment>
+              );
+            })}
           </motion.div>
         </motion.div>
 
