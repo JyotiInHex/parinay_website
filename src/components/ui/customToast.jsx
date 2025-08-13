@@ -136,11 +136,11 @@ const getTime = () => {
 
   let hours = now.getHours();
   const minutes = String(now.getMinutes()).padStart(2, "0");
-  const ampm = hours >= 12 ? "PM" : "AM";
+  const AmPm = hours >= 12 ? "PM" : "AM";
 
   hours = hours % 12 || 12;
 
-  return `${day}, ${month} ${date}, ${year} at ${hours}:${minutes} ${ampm}`;
+  return `${day}, ${month} ${date}, ${year} at ${hours}:${minutes} ${AmPm}`;
 };
 
 const getIcon = (state) => {

@@ -205,7 +205,7 @@ export const authenticationPages = {
         {
           label: "Hi! My full name is",
           type: "text",
-          placeholder: "e.g. Rupam Das",
+          placeholder: "Write your lovely full name here*",
           name: "name",
           required: true,
         },
@@ -221,12 +221,12 @@ export const authenticationPages = {
             "Referred by a Friend",
           ],
           required: true,
-          description: "Select",
+          description: "Select how you discovered us*",
         },
         {
           label: "You can call me at",
           type: "tel",
-          placeholder: "Enter your 10-digit mobile number",
+          placeholder: "Your 10-digit mobile number goes here*",
           prefix: "+91",
           name: "phone",
           required: true,
@@ -234,7 +234,7 @@ export const authenticationPages = {
         {
           label: "And I’d like to set a password",
           type: "password",
-          placeholder: "e.g. Love@123 or something strong and secure",
+          placeholder: "Make it strong, make it yours*",
           name: "password",
           minLength: 8,
           pattern:
@@ -244,7 +244,7 @@ export const authenticationPages = {
         {
           label: "Let’s confirm my secret key",
           type: "password",
-          placeholder: "Type it again, just to be sure",
+          placeholder: "Retype your password to confirm*",
           name: "confirmPassword",
           required: true,
         },
@@ -294,7 +294,7 @@ export const authenticationPages = {
         {
           label: "I’m signing in with my",
           type: "tel",
-          placeholder: "[ Enter your mobile number* ]",
+          placeholder: "Your 10-digit mobile number goes here*",
           prefix: "+91",
           name: "phone",
           pattern: "^[6-9]\\d{9}$",
@@ -351,7 +351,7 @@ export const authenticationPages = {
         {
           label: "I registered with my",
           type: "tel",
-          placeholder: "[ Enter your mobile number* ]",
+          placeholder: "Your 10-digit mobile number goes here*",
           prefix: "+91",
           name: "phone",
           pattern: "^[6-9]\\d{9}$",
@@ -541,29 +541,28 @@ export const landingPage = {
             "I’m dreaming of something real and rooted.",
           ],
           required: true,
+          description: "Your reason for contacting us*",
         },
         {
-          label: "Your name",
+          label: "Hi! My full name is",
           type: "text",
-          placeholder: "Eg: Rupam Das",
-          pattern: "^[A-Za-z]{2,}(?: [A-Za-z]{2,}){1,2}$",
+          placeholder: "Write your lovely full name here*",
           name: "name",
           required: true,
         },
         {
-          label: "Your email",
+          label: "You can reach me at",
           type: "email",
-          placeholder: "Eg: rupam@email.com",
+          placeholder: "name@example.com*",
           name: "email",
           required: true,
         },
         {
-          label: "Share your thoughts with Porinoi",
+          label: "Here’s a bit more about my request",
           type: "textarea",
-          placeholder:
-            "Share your thoughts, questions, or anything you'd like us to know…",
+          placeholder: "Write your concern, query, or idea in a few words.",
           name: "message",
-          required: false,
+          required: true,
         },
       ],
       submitButton: {
@@ -675,17 +674,17 @@ export const contactPage = {
 
     formFields: [
       {
-        label: "Hi! My name is",
+        label: "Hi! My full name is",
         type: "text",
+        placeholder: "Write your lovely full name here*",
         name: "name",
-        placeholder: "Enter your name*",
         required: true,
       },
       {
         label: "And I work in",
         type: "text",
         name: "profession",
-        placeholder: "Mention your profession*",
+        placeholder: "Your profession or field of work*",
         required: true,
       },
       {
@@ -701,7 +700,7 @@ export const contactPage = {
           "Other (Please Specify)",
         ],
         required: true,
-        description: "Select*",
+        description: "Select how you discovered us*",
       },
       {
         label: "I’m reaching out about",
@@ -715,19 +714,19 @@ export const contactPage = {
           "Other support",
         ],
         required: true,
-        description: "Select*",
+        description: "Your reason for contacting us*",
       },
       {
         label: "You can reach me at",
         type: "email",
-        placeholder: "example@email.com*",
+        placeholder: "name@example.com*",
         name: "email",
         required: true,
       },
       {
         label: "or call me at",
         type: "tel",
-        placeholder: "Enter your phone number",
+        placeholder: "Your 10-digit mobile number goes here",
         name: "phone",
         prefix: "+91",
         pattern: "^[6-9]\\d{9}$",
@@ -736,7 +735,7 @@ export const contactPage = {
       {
         label: "Here’s a bit more about my request",
         type: "textarea",
-        placeholder: "Describe your concern, query, or idea in brief.",
+        placeholder: "Write your concern, query, or idea in a few words.",
         name: "message",
         required: false,
       },

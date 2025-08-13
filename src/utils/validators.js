@@ -201,6 +201,59 @@ export const contactUsMessages = [
     "We’re keeping your note safe while we craft our reply.",
 ];
 
+export const otpMessages = {
+    sent: [
+        "Your OTP has been sent to +91-{userPhone} — someone’s heart is waiting for you!",
+        "OTP delivered to +91-{userPhone}! Enter it to continue your journey on Porinoi.",
+        "Check your phone +91-{userPhone} — your magic code is waiting.",
+        "Your OTP is on the way to +91-{userPhone}! Love could be one step ahead.",
+        "Code sent to +91-{userPhone}! Time to verify and unlock your Porinoi adventure.",
+    ],
+    verified: [
+        "OTP verified! You’re officially in — let the connections begin.",
+        "Code accepted! Time to meet your potential match.",
+        "Verified successfully! Cupid’s arrow is ready for launch.",
+        "All set! Your phone is confirmed, now explore Porinoi.",
+        "Success! Let’s spark some connections today.",
+    ],
+    invalidOTP: [
+        "Hmm… that code didn’t match — try again?",
+        "Oops! Wrong OTP — maybe love is testing you.",
+        "Not quite right — double-check your digits.",
+        "The magic code didn’t work — try re-entering it.",
+        "No match! Your OTP seems off, give it another shot.",
+    ],
+    expiredOTP: [
+        "Time’s up! Your OTP expired — request a new one.",
+        "Oops! This code has gone cold — generate a fresh OTP.",
+        "The OTP has vanished like a fleeting spark — try again.",
+        "Your OTP expired — don’t worry, love waits for no one!",
+        "Expired! Request a new OTP and let’s continue.",
+    ],
+    limitReach: [
+        "Whoa! You’ve requested too many OTPs — take a short break before trying again.",
+        "Hold on! Your OTP limit for this hour has been reached. Cupid needs a pause too.",
+        "Too many requests! Give it a moment and try again in a little while.",
+        "Easy there! You’ve hit your OTP limit — wait a bit before sending another.",
+        "Looks like love is waiting… You’ve reached the OTP limit. Try again after some time.",
+    ],
+    error: [
+        "Oops! Something went wrong — even Cupid has off days.",
+        "We hit a snag — try sending the OTP again.",
+        "Looks like tech Cupid needs a moment — retry soon.",
+        "A tiny glitch — don’t worry, your OTP is on the way soon.",
+        "Trouble sending OTP — refresh and let the magic continue.",
+    ],
+};
+
+export const otpMessagesForPhone = [
+    "Hey! Your Porinoi OTP is {otp}. Enter it within 5 minutes to confirm your number.",
+    "Hey! Use OTP {otp} in Porinoi to confirm your phone. Valid for 5 minutes.",
+    "Your Porinoi verification code is {otp}. It expires in 5 minutes, so hurry!",
+    "Use {otp} as your OTP in Porinoi to verify your account. Valid for 5 minutes.",
+    "Porinoi OTP: {otp}. Enter it in the app now — it’s valid for 5 minutes.",
+]
+
 export const getRandomMessage = (messages) => {
     return messages[Math.floor(Math.random() * messages.length)];
 };

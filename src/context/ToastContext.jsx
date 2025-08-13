@@ -8,7 +8,6 @@ export const useToast = () => useContext(ToastContext);
 
 export default function ToastProvider({ children }) {
   const [toasts, setToasts] = useState([]);
-
   const ThrowToast = (data) => {
     const id = Date.now();
     const newToast = { ...data, id };

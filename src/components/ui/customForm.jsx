@@ -76,7 +76,7 @@ export default function CustomForm({
     ThrowToast({
       message,
       state: success ? "success" : "error",
-      timeOut: 5500,
+      timeOut: 7500,
       direction: "center",
       timeStampView: true,
     });
@@ -454,7 +454,7 @@ export const SelectField = ({
   onChange,
   isSubmitted,
   error,
-  className
+  className,
 }) => {
   const fieldRef = useRef(null);
   const [isOpen, setOpen] = useState(false);
@@ -482,7 +482,7 @@ export const SelectField = ({
     <fieldset ref={fieldRef} className={clsx("relative", className)}>
       <label onClick={() => setOpen((prev) => !prev)}>
         <WordStaggerFlowTitle className="text-lg lg:text-2xl text-zinc-800 font-porinoi-sans font-medium">
-          {`${label}`}
+          {`[${label}]`}
         </WordStaggerFlowTitle>
       </label>
 

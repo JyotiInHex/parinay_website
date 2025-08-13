@@ -40,7 +40,7 @@ const CustomCursor = () => {
 
   return (
     <motion.div
-      className="hidden lg:block pointer-events-none fixed z-50  bg-zinc-500 mix-blend-difference rounded-full -translate-x-1/2 -translate-y-1/2"
+      className="hidden lg:block pointer-events-none fixed z-[500] bg-zinc-500 mix-blend-difference rounded-full -translate-x-1/2 -translate-y-1/2"
       style={{
         translateX: cursorX,
         translateY: cursorY,
