@@ -1,13 +1,15 @@
 "use client";
 
 import React, { useEffect, useState, useRef } from "react";
+import clsx from "clsx";
 import { AnimatePresence, motion } from "framer-motion";
 import { CustomLink } from "./customLink";
 import { WordStaggerFlowTitle } from "./sectionTitle";
 import { formValidationCheck } from "@/utils/validators";
 import { useToast } from "@/context/ToastContext";
 import { useRouter } from "next/navigation";
-import clsx from "clsx";
+import { usePopup } from "@/context/PopUpContext";
+import OTPForm from "./OTPForm";
 
 export default function CustomForm({
   formTitle,
@@ -20,10 +22,10 @@ export default function CustomForm({
   serverAction,
 }) {
   const formRef = useRef(null);
-  const { ThrowToast } = useToast();
   const router = useRouter();
+  const { ThrowToast } = useToast();
+  const { openPopup } = usePopup();
   const [formData, setFormData] = useState({});
-  const [showPhone, setShowPhone] = useState(false);
   const [errors, setErrors] = useState({});
   const [isSubmitted, setSubmitted] = useState(false);
 
@@ -51,17 +53,15 @@ export default function CustomForm({
     }));
   };
 
-  const handleSelectChange = (name, value) =>
+  const handleSelectChange = (name, value) =>{
     setFormData((prev) => ({ ...prev, [name]: value }));
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { isValid, errors } = formValidationCheck({ formFields, formData });
 
-    if (!isValid) {
-      setErrors(errors);
-      return;
-    }
+    if (!isValid) return setErrors(errors);
 
     const formattedData = new FormData();
     Object.entries(formData).forEach(([key, value]) => {
@@ -69,9 +69,8 @@ export default function CustomForm({
         ? value.forEach((v) => formattedData.append(key, v))
         : formattedData.append(key, value);
     });
-
     const result = await serverAction(formattedData);
-    const { success, message, redirection } = result;
+    const { success, message, redirection, popupType } = result;
 
     ThrowToast({
       message,
@@ -81,12 +80,13 @@ export default function CustomForm({
       timeStampView: true,
     });
 
+    if (popupType === "otpForm") openPopup(<OTPForm formData={formData} />);
+
     if (success) {
       formRef.current.reset();
       setFormData({});
       setErrors({});
       setSubmitted(true);
-      setShowPhone(false);
       if (redirection) router.push(redirection);
     }
   };
@@ -138,8 +138,6 @@ export default function CustomForm({
             isSubmitted,
             error: errors[field.name],
           };
-
-          if (field.requiredIf && !showPhone) return null;
 
           switch (field.type) {
             case "text":
@@ -376,7 +374,7 @@ export const InputField = ({
   return (
     <fieldset className={clsx("space-y-1", className)}>
       <label htmlFor={name} className="inline-block">
-        <WordStaggerFlowTitle className="text-lg lg:text-2xl text-zinc-800 font-porinoi-sans font-medium">
+        <WordStaggerFlowTitle className="text-lg lg:text-xl text-zinc-800 font-porinoi-sans font-medium">
           {`[${label}]`}
         </WordStaggerFlowTitle>
       </label>

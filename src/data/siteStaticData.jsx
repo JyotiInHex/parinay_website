@@ -4,12 +4,13 @@ import Star from "../../public/assets/svg/star";
 import Heart2 from "../../public/assets/svg/heart-2";
 import Arrow from "../../public/assets/svg/arrow";
 import Arrow45deg from "../../public/assets/svg/arrow45deg";
+import { Facebook, Instagram } from "../../public/assets/svg/socialMedia";
+import Edit from "../../public/assets/svg/edit";
 
 import signinAction from "@/app/api/auth/signInAction";
 import signupAction from "@/app/api/auth/signUpAction";
 import forgotPasswordAction from "@/app/api/auth/forgotPassAction";
-import { Facebook, Instagram } from "../../public/assets/svg/socialMedia";
-import Edit from "../../public/assets/svg/edit";
+import resetPassWordAction from "@/app/api/auth/resetPassword";
 import { contactAction } from "@/app/api/contact/contact";
 
 const year = new Date().getFullYear();
@@ -86,6 +87,52 @@ export const FAQData = {
         "Porinoi blends tradition with tech — combining cultural sensitivity, human support, and smart matchmaking.",
     },
   ],
+};
+
+export const popUpForms = {
+  otpForm: {
+    verify: {
+      title: "Phone Verification",
+      description:
+        "A 6-digit code has been sent to +91-{userPhone}. Enter the code below to confirm it’s you.",
+    },
+    resetPassWord: {
+      title: "Reset Your Password",
+      description:
+        "Enter your new password below. Make sure it’s strong and unique to keep your account secure.",
+      formDetails: {
+        serverAction: resetPassWordAction,
+        formFields: [
+          {
+            label: "I want to change my password to",
+            type: "password",
+            placeholder: "Type your new password here*",
+            name: "password",
+            required: true,
+          },
+          {
+            label: "Let me confirm my new password",
+            type: "password",
+            placeholder: "Re-enter the same password*",
+            name: "confirmPassword",
+            required: true,
+          },
+        ],
+        submitButton: {
+          text: "[ Send Otp ]",
+          icon: <Arrow width={24} height={24} />,
+        },
+
+        helpLinks: {
+          link: {
+            label: "Need more help?",
+            path: "/contact",
+            name: "[Contact Support]",
+          },
+        },
+      },
+    },
+  },
 };
 
 export const navigationSection = {

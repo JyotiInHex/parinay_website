@@ -1,10 +1,10 @@
-import { getRandomMessage, otpMessagesForPhone } from "@/utils/validators";
+import { getRandomMessage, otpMessages } from "@/utils/validators";
 import TwilioSDK from "twilio";
 
 const client = TwilioSDK(process.env.TWILIO_SID, process.env.TWILIO_AUTH_TOKEN);
 
 export const SendOTP = async (phone, otp) => {
-    let bodyMsg = getRandomMessage(otpMessagesForPhone);
+    let bodyMsg = getRandomMessage(otpMessages.phoneMsgBody);
     const msg = bodyMsg.replace("{otp}", otp);
     try {
         const message = await client.messages.create({
@@ -22,6 +22,3 @@ export const SendOTP = async (phone, otp) => {
     }
 };
 
-export const VerifyOTP = async (otp) => {
-    return otp;
-}

@@ -202,12 +202,26 @@ export const contactUsMessages = [
 ];
 
 export const otpMessages = {
+    phoneMsgBody: [
+        "Hey! Your Porinoi OTP is {otp}. Enter it within 5 minutes to confirm your number.",
+        "Hey! Use OTP {otp} in Porinoi to confirm your phone. Valid for 5 minutes.",
+        "Your Porinoi verification code is {otp}. It expires in 5 minutes, so hurry!",
+        "Use {otp} as your OTP in Porinoi to verify your account. Valid for 5 minutes.",
+        "Porinoi OTP: {otp}. Enter it in the app now — it’s valid for 5 minutes.",
+    ],
     sent: [
         "Your OTP has been sent to +91-{userPhone} — someone’s heart is waiting for you!",
         "OTP delivered to +91-{userPhone}! Enter it to continue your journey on Porinoi.",
         "Check your phone +91-{userPhone} — your magic code is waiting.",
         "Your OTP is on the way to +91-{userPhone}! Love could be one step ahead.",
         "Code sent to +91-{userPhone}! Time to verify and unlock your Porinoi adventure.",
+    ],
+    resent: [
+        "A fresh OTP has been sent to +91-{userPhone} — let’s keep the magic alive!",
+        "We’ve sent you a new OTP at +91-{userPhone} — try again and make it count.",
+        "Your updated OTP is on its way to +91-{userPhone} — the journey continues.",
+        "Another code is headed to +91-{userPhone} — time to give it another shot.",
+        "New OTP sent to +91-{userPhone} — your Porinoi story isn’t over yet."
     ],
     verified: [
         "OTP verified! You’re officially in — let the connections begin.",
@@ -222,6 +236,11 @@ export const otpMessages = {
         "Not quite right — double-check your digits.",
         "The magic code didn’t work — try re-entering it.",
         "No match! Your OTP seems off, give it another shot.",
+        "That OTP doesn’t match — give it another try.",
+        "Hmm… that code’s not quite right. Check and try again.",
+        "Looks like the OTP is off — re-enter it carefully.",
+        "That code isn’t a match — maybe try copying it again.",
+        "Oops! Wrong OTP — double-check and try once more."
     ],
     expiredOTP: [
         "Time’s up! Your OTP expired — request a new one.",
@@ -245,14 +264,6 @@ export const otpMessages = {
         "Trouble sending OTP — refresh and let the magic continue.",
     ],
 };
-
-export const otpMessagesForPhone = [
-    "Hey! Your Porinoi OTP is {otp}. Enter it within 5 minutes to confirm your number.",
-    "Hey! Use OTP {otp} in Porinoi to confirm your phone. Valid for 5 minutes.",
-    "Your Porinoi verification code is {otp}. It expires in 5 minutes, so hurry!",
-    "Use {otp} as your OTP in Porinoi to verify your account. Valid for 5 minutes.",
-    "Porinoi OTP: {otp}. Enter it in the app now — it’s valid for 5 minutes.",
-]
 
 export const getRandomMessage = (messages) => {
     return messages[Math.floor(Math.random() * messages.length)];

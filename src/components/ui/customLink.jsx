@@ -1,4 +1,5 @@
 "use client";
+import clsx from "clsx";
 import { motion } from "framer-motion";
 import { useRouter, usePathname } from "next/navigation";
 
@@ -42,8 +43,10 @@ export const CustomLink = ({
       damping: 15,
       ease: "anticipate",
     },
-    className:
+    className: clsx(
       "relative z-[51] block md:h-5 overflow-hidden list-none whitespace-nowrap select-none",
+      className
+    ),
     style: { height: "auto" },
   };
 
