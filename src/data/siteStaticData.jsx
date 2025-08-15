@@ -183,8 +183,8 @@ export const footerSection = {
 
   contact: {
     email: {
-      label: "hello@porinoi.com ↗",
-      path: "mailto:hello@porinoi.com",
+      label: "support@porinoi.com ↗",
+      path: "mailto:support@porinoi.com",
     },
     location: "Based in Assam, rooted in culture.",
   },
@@ -558,7 +558,7 @@ export const landingPage = {
         icon: <Mail />,
         label: "Chat to us",
         subLabel: "Our friendly team is here to help.",
-        address: "Hello@porinoi.com",
+        address: "Support@porinoi.com",
       },
       {
         icon: <MapPin />,

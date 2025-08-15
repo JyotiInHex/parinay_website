@@ -20,6 +20,7 @@ export default function CustomForm({
   helpLinks,
   additionalInfo,
   serverAction,
+  className,
 }) {
   const formRef = useRef(null);
   const router = useRouter();
@@ -53,14 +54,13 @@ export default function CustomForm({
     }));
   };
 
-  const handleSelectChange = (name, value) =>{
+  const handleSelectChange = (name, value) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
-  }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { isValid, errors } = formValidationCheck({ formFields, formData });
-
     if (!isValid) return setErrors(errors);
 
     const formattedData = new FormData();
@@ -70,7 +70,7 @@ export default function CustomForm({
         : formattedData.append(key, value);
     });
     const result = await serverAction(formattedData);
-    const { success, message, redirection, popupType } = result;
+    const { success, message, redirection, popupType, switchTo } = result;
 
     ThrowToast({
       message,
@@ -80,7 +80,8 @@ export default function CustomForm({
       timeStampView: true,
     });
 
-    if (popupType === "otpForm") openPopup(<OTPForm formData={formData} />);
+    if (popupType === "otpForm")
+      openPopup(<OTPForm formData={formData} switchForm={switchTo} />);
 
     if (success) {
       formRef.current.reset();
@@ -104,7 +105,10 @@ export default function CustomForm({
       whileInView={{ opacity: 1 }}
       transition={{ duration: 0.4, delay: 0.05 }}
       viewport={{ once: true, amount: 0.2 }}
-      className="lg:max-w-xl mx-auto rounded-xl lg:shadow-2xl lg:px-12 py-5 lg:py-10 space-y-1"
+      className={clsx(
+        "lg:max-w-xl mx-auto rounded-xl lg:shadow-2xl lg:px-12 py-5 lg:py-10 space-y-1",
+        className
+      )}
     >
       {formTitle && (
         <WordStaggerFlowTitle className="text-zinc-800 text-4xl font-semibold font-porinoi-sans leading-snug">

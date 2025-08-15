@@ -131,6 +131,24 @@ export const signinMessages = {
     ],
 };
 
+export const resetPasswordMessages = {
+    success: [
+        "Password reset successful — welcome back to a secure account.",
+        "Your new password is set — now you’re ready to sign in.",
+        "All locked in — your fresh password is ready to go.",
+        "Reset complete — your account is safe again.",
+        "You’re good to go — a secure fresh start awaits.",
+    ],
+    error: [
+        "Something went wrong while resetting — please try again.",
+        "We hit a small snag — give it another go.",
+        "Reset failed — even secure systems have off days.",
+        "A glitch interrupted your reset — try again in a moment.",
+        "Reset attempt unsuccessful — let’s try that again.",
+    ],
+};
+
+
 export const guardMessages = {
     302: [
         "You're already home — no need to knock twice.",
@@ -209,6 +227,13 @@ export const otpMessages = {
         "Use {otp} as your OTP in Porinoi to verify your account. Valid for 5 minutes.",
         "Porinoi OTP: {otp}. Enter it in the app now — it’s valid for 5 minutes.",
     ],
+    userNotFound: [
+        "We couldn’t find an account for that phone — maybe sign up first?",
+        "No match found — check your details or start your love story fresh.",
+        "That phone isn’t in our records — perhaps it’s destiny nudging you to join.",
+        "No account found — are you sure you’ve been here before?",
+        "We searched our love ledger — no results for that phone.",
+    ],
     sent: [
         "Your OTP has been sent to +91-{userPhone} — someone’s heart is waiting for you!",
         "OTP delivered to +91-{userPhone}! Enter it to continue your journey on Porinoi.",
@@ -275,7 +300,6 @@ export const formValidationCheck = ({ formFields, formData }) => {
     formFields.forEach((field) => {
         const initialValue = formData[field.name];
         const value = initialValue?.toString().trim() || "";
-
         if (field.required && value === "") {
             errors[field.name] = {
                 status: true,
@@ -283,7 +307,6 @@ export const formValidationCheck = ({ formFields, formData }) => {
             };
             return;
         }
-
         if (value !== "") {
             const pattern =
                 field.pattern || fieldNameToPattern[field.name.toLowerCase()];
@@ -296,7 +319,6 @@ export const formValidationCheck = ({ formFields, formData }) => {
             }
             return;
         }
-
         if (!errors[field.name]) {
             errors[field.name] = {
                 status: false,
@@ -315,7 +337,6 @@ export const formValidationCheck = ({ formFields, formData }) => {
             message: getRandomMessage(mismatchMessages),
         };
     }
-
 
     const isValid = Object.values(errors).every((msg) => !msg);
     return { isValid, errors };

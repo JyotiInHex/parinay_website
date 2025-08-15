@@ -7,14 +7,13 @@ import UserOTP from "@/models/otpSchema";
 import { SendOTP } from "@/lib/auth/twilio";
 import {
     getRandomMessage,
-    signinMessages,
     otpMessages,
 } from "@/utils/validators";
 
-const otpLimit = parseInt(process.env.OTP_LIMIT, 10);
+const otpLimit = process.env.OTP_LIMIT;
 const oneHourAgo = new Date(new Date().getTime() - 60 * 60 * 1000);
 
-export async function GenerateOTP(length = 4) {
+async function GenerateOTP(length = 4) {
     const min = 10 ** (length - 1);
     const max = 10 ** length;
     return crypto.randomInt(min, max).toString();
@@ -31,7 +30,7 @@ export default async function forgotPasswordAction(formData) {
         const user = await User.findOne({ phone });
         if (!user) return {
             success: false,
-            message: getRandomMessage(signinMessages.userNotFound),
+            message: getRandomMessage(otpMessages.userNotFound),
         };
 
         const recentOTPsCount = await UserOTP.countDocuments({
@@ -54,8 +53,8 @@ export default async function forgotPasswordAction(formData) {
         SendVerifyCode(phone, OTP);
 
         let message = getRandomMessage(otpMessages.sent);
-        message = message.replace("{userPhone}", phone) + "  " + OTP;
-        return { success: true, message, popupType: "otpForm" };
+        message = message.replace("{userPhone}", phone);
+        return { success: true, message, popupType: "otpForm", switchTo: "resetPassWord" };
     } catch (error) {
         return {
             success: false,
@@ -76,11 +75,11 @@ export async function SendVerifyCode(phone, OTP) {
         { upsert: true, new: true }
     );
 
-    // const result = await SendOTP(phone, OTP);
-    // if (!result || !result.sid) return {
-    //     success: false,
-    //     message: getRandomMessage(otpMessages.error),
-    // };
+    const result = await SendOTP(phone, OTP);
+    if (!result || !result.sid) return {
+        success: false,
+        message: getRandomMessage(otpMessages.error),
+    };
 
     let message = getRandomMessage(otpMessages.resent);
     message = message.replace("{userPhone}", phone);
@@ -116,7 +115,6 @@ export async function VerifyOTPCode(phone, otp) {
         return {
             success: true,
             message: getRandomMessage(otpMessages.verified),
-            switchTo: "resetPassWord",
         };
     } catch (error) {
         return {
