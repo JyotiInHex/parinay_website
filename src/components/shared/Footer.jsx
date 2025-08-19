@@ -40,7 +40,11 @@ const Footer = () => {
               {note}
             </WordStaggerFlowTitle>
           </div>
-          <CustomBtn2 path={callToAction.path} className={"bg-[#f8f3e9] w-full lg:w-fit"}>
+          <CustomBtn2
+            path={callToAction.path}
+            className={"bg-[#f8f3e9] w-full lg:w-fit"}
+            childClassesName={"lg:text-xl"}
+          >
             {callToAction.label}
           </CustomBtn2>
         </div>

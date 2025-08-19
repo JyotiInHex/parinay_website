@@ -5,6 +5,8 @@ import bcrypt from 'bcrypt';
 import { getRandomMessage, signupMessages } from '@/utils/validators';
 import { createJWT } from '@/lib/auth/JWT';
 import { cookies } from 'next/headers';
+import { usePopup } from '@/context/PopUpContext';
+import { SendWelcomeMsg } from '@/lib/auth/twilio';
 
 const BCRYPT_SALT = parseInt(process.env.BCRYPT_SALT, 10);
 
@@ -24,9 +26,12 @@ export default async function signupAction(formData) {
         }
 
         const hashPassword = await bcrypt.hash(password, BCRYPT_SALT)
+
         const newUser = await User.create({
             userName, name, phone, password: hashPassword, referralSource, profileStatus,
         })
+
+        await SendWelcomeMsg(phone, name.split(' ')[0])
 
         const token = await createJWT({ id: newUser._id.toString() }, false);
 

@@ -1,3 +1,4 @@
+
 export const metadata = {
   title: "User Profile",
   description: "View your profile details and information.",
@@ -10,5 +11,9 @@ export const metadata = {
 };
 
 export default function UserProfileLayout({ children }) {
-  return <>{children}</>;
+  return (
+    <>
+      {children}
+    </>
+  );
 }

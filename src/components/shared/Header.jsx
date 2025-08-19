@@ -81,7 +81,7 @@ export default function Header() {
           type={"button"}
           label={!isOpen ? menu.label : menu.closeLabel}
           onClick={toggleMenu}
-          className={"text-lg text-zinc-800 font-porinoi-sans font-semibold"}
+          className={"z-[101] text-lg text-zinc-800 font-porinoi-sans font-semibold"}
         />
 
         <AnimatePresence mode="wait">
@@ -92,7 +92,7 @@ export default function Header() {
               animate={{ height: device === "mobile" ? "100dvh" : "fit-content" }}
               exit={{ height: 0 }}
               transition={{ duration: 0.4, ease: [0.33, 1, 0.68, 1] }}
-              className="w-full max-h-screen bg-[#f8f3e9] absolute inset-0 z-50 overflow-hidden"
+              className="w-full max-h-screen bg-[#f8f3e9] absolute inset-0 z-[100] overflow-hidden"
             >
               <div className="px-10 lg:px-24 py-8 lg:py-12 w-full h-dvh flex lg:block flex-col">
                 <h2 className="text-zinc-800 text-lg lg:text-2xl font-porinoi-sans font-semibold uppercase overflow-hidden">
@@ -138,7 +138,7 @@ export default function Header() {
                     />
                   </motion.video>
 
-                  <ul className="mt-5 w-full lg:w-fit flex flex-col items-end gap-10 lg:gap-5 overflow-hidden">
+                  <ul className="mt-5 w-full lg:w-fit flex flex-col items-end gap-10 lg:gap-5">
                     {menu.links.map((link, idx) => (
                       <motion.li
                         key={idx}
@@ -172,6 +172,7 @@ export default function Header() {
                         type="link"
                         path={menu.cta.path}
                         className={"bg-white"}
+                        childClassesName={"lg:text-xl"}
                       >
                         {menu.cta.label}
                       </CustomBtn2>

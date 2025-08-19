@@ -148,7 +148,6 @@ export const resetPasswordMessages = {
     ],
 };
 
-
 export const guardMessages = {
     302: [
         "You're already home — no need to knock twice.",
@@ -220,20 +219,6 @@ export const contactUsMessages = [
 ];
 
 export const otpMessages = {
-    phoneMsgBody: [
-        "Hey! Your Porinoi OTP is {otp}. Enter it within 5 minutes to confirm your number.",
-        "Hey! Use OTP {otp} in Porinoi to confirm your phone. Valid for 5 minutes.",
-        "Your Porinoi verification code is {otp}. It expires in 5 minutes, so hurry!",
-        "Use {otp} as your OTP in Porinoi to verify your account. Valid for 5 minutes.",
-        "Porinoi OTP: {otp}. Enter it in the app now — it’s valid for 5 minutes.",
-    ],
-    userNotFound: [
-        "We couldn’t find an account for that phone — maybe sign up first?",
-        "No match found — check your details or start your love story fresh.",
-        "That phone isn’t in our records — perhaps it’s destiny nudging you to join.",
-        "No account found — are you sure you’ve been here before?",
-        "We searched our love ledger — no results for that phone.",
-    ],
     sent: [
         "Your OTP has been sent to +91-{userPhone} — someone’s heart is waiting for you!",
         "OTP delivered to +91-{userPhone}! Enter it to continue your journey on Porinoi.",
@@ -247,6 +232,13 @@ export const otpMessages = {
         "Your updated OTP is on its way to +91-{userPhone} — the journey continues.",
         "Another code is headed to +91-{userPhone} — time to give it another shot.",
         "New OTP sent to +91-{userPhone} — your Porinoi story isn’t over yet."
+    ],
+    error: [
+        "Oops! Something went wrong — even Cupid has off days.",
+        "We hit a snag — try sending the OTP again.",
+        "Looks like tech Cupid needs a moment — retry soon.",
+        "A tiny glitch — don’t worry, your OTP is on the way soon.",
+        "Trouble sending OTP — refresh and let the magic continue.",
     ],
     verified: [
         "OTP verified! You’re officially in — let the connections begin.",
@@ -281,32 +273,119 @@ export const otpMessages = {
         "Easy there! You’ve hit your OTP limit — wait a bit before sending another.",
         "Looks like love is waiting… You’ve reached the OTP limit. Try again after some time.",
     ],
-    error: [
-        "Oops! Something went wrong — even Cupid has off days.",
-        "We hit a snag — try sending the OTP again.",
-        "Looks like tech Cupid needs a moment — retry soon.",
-        "A tiny glitch — don’t worry, your OTP is on the way soon.",
-        "Trouble sending OTP — refresh and let the magic continue.",
+    phoneMsgBody: [
+        "Hey! Your Porinoi OTP is {otp}. Enter it within 5 minutes to confirm your number.",
+        "Hey! Use OTP {otp} in Porinoi to confirm your phone. Valid for 5 minutes.",
+        "Your Porinoi verification code is {otp}. It expires in 5 minutes, so hurry!",
+        "Use {otp} as your OTP in Porinoi to verify your account. Valid for 5 minutes.",
+        "Porinoi OTP: {otp}. Enter it in the app now — it’s valid for 5 minutes.",
     ],
+    userNotFound: [
+        "We couldn’t find an account for that phone — maybe sign up first?",
+        "No match found — check your details or start your love story fresh.",
+        "That phone isn’t in our records — perhaps it’s destiny nudging you to join.",
+        "No account found — are you sure you’ve been here before?",
+        "We searched our love ledger — no results for that phone.",
+    ],
+};
+
+export const textMessagesSet = {
+    welcome: [
+        "Welcome to Porinoi, {username}! 💐 Your journey to finding a meaningful connection begins here. 🌸 With warmth, Team Porinoi",
+        "Hi {username}, we’re so glad you joined Porinoi! 💛 Let’s take the first step towards your perfect match. ✨ Yours in togetherness, Porinoi Family",
+        "Namaskar {username}, Porinoi family welcomes you! 🌸 Love, trust, and tradition await you. 💐 Forever bonds, Porinoi Family",
+        "Welcome aboard, {username}! 🚀 Your profile is now part of Assam’s trusted matrimony community. 🌟 Always with you, Porinoi Team",
+        "Hi {username}, thank you for choosing Porinoi! ✨ A new chapter of possibilities starts today. 💖 Heartfelt wishes, Porinoi Family",
+        "We’re excited to have you, {username}! 💍 Start exploring and connect with genuine Assamese singles. 🌼 In trust and tradition, Porinoi",
+        "A warm welcome, {username}! 🌼 Your meaningful match could be just around the corner. 🌺 With love and care, Porinoi",
+        "{username}, your Porinoi journey begins now. 💖 Tradition and togetherness in one place. 🚀 Towards forever, Porinoi",
+        "Hello {username}, you’re officially part of Porinoi! 🎉 Begin your search with confidence. 🌸 With warmth, Team Porinoi",
+        "Welcome to Porinoi, {username}! 🌺 Love, culture, and companionship — all in one place. 💍 Together we grow, Porinoi",
+    ],
+
+    referral: [
+        "I found Porinoi and thought of you, {username}. 💌 A safe and cultural space for Assamese matrimony. Join here: {link}",
+        "Namaskar! 🌸 I’m on Porinoi, a modern Assamese matrimony platform. Come and explore with me: {link}",
+        "{username}, I invite you to Porinoi 💛 where love meets tradition. Begin your story today: {link}",
+        "Your perfect match could be waiting on Porinoi! ✨ I’m already here, {username}. Don’t miss out: {link}",
+        "Discover meaningful connections on Porinoi 🌺. Join me today: {link}",
+        "Let’s celebrate Assamese culture together, {username}. 🌼 Find your life partner on Porinoi: {link}",
+        "Porinoi is more than an app, it’s a community of trust. 💛 Join us today, {username}: {link}",
+    ],
+
+    subscription: [
+        "Hi {username}, your premium plan is the key to meaningful connections! 💍 Renew today to continue your journey. 🌸 With warmth, Team Porinoi",
+        "{username}, love shouldn’t wait. ✨ Upgrade or renew your plan and unlock exclusive features! 💖 Heartfelt wishes, Porinoi Family",
+        "A gentle reminder, {username} 🌼 — your subscription is expiring soon. Stay connected to discover your true match. 🚀 Towards forever, Porinoi",
+        "Namaskar {username}, don’t miss out! 💛 Keep your profile active with premium benefits today. 🌺 With love and care, Porinoi",
+        "Your journey matters, {username}. 💐 Renew now and enjoy uninterrupted access to trusted Assamese matches. 🌟 Always with you, Porinoi Team",
+    ],
+
+    engagement: [
+        "Hey {username}, have you checked your matches today? 💞 Someone special might be waiting! 🌼 In trust and tradition, Porinoi",
+        "Good morning {username}! 🌸 Start your day by exploring new connections on Porinoi. 💍 Together we grow, Porinoi",
+        "Hi {username}, don’t let your perfect match slip away! ✨ Open Porinoi and connect now. 💐 Forever bonds, Porinoi Family",
+        "{username}, meaningful conversations start with a hello. 🌺 Log in today and take the first step! 💖 Heartfelt wishes, Porinoi Family",
+        "Namaskar {username}! 🚀 New profiles are waiting for you. Discover love, trust, and culture at Porinoi. 🌟 Always with you, Porinoi Team",
+    ],
+
 };
 
 export const getRandomMessage = (messages) => {
     return messages[Math.floor(Math.random() * messages.length)];
 };
 
-export const formValidationCheck = ({ formFields, formData }) => {
+export const formValidationCheck = ({ formFields = [], formData }) => {
     const errors = {};
 
     formFields.forEach((field) => {
         const initialValue = formData[field.name];
         const value = initialValue?.toString().trim() || "";
-        if (field.required && value === "") {
+        let isRequired = field.required;
+
+        if (field.conditional) {
+            const targetValue = formData[field.conditional.field];
+            if (targetValue === field.conditional.value) isRequired = true;
+            else isRequired = false;
+        }
+
+        if (isRequired && value === "") {
             errors[field.name] = {
                 status: true,
                 message: getRandomMessage(requiredFallbackMessages),
             };
             return;
         }
+
+        if (field.name.toLowerCase() === "dob" && value !== "") {
+            const dob = new Date(value);
+            const today = new Date();
+            const cutoffDate = new Date("2025-01-01");
+
+            if (dob >= cutoffDate) {
+                errors[field.name] = {
+                    status: true,
+                    message: "Enter DOB before 01/01/2025.",
+                };
+                return;
+            }
+
+            const age = today.getFullYear() - dob.getFullYear();
+            const m = today.getMonth() - dob.getMonth();
+            const isUnder18 =
+                age < 18 ||
+                (age === 18 && m < 0) ||
+                (age === 18 && m === 0 && today.getDate() < dob.getDate());
+
+            if (isUnder18) {
+                errors[field.name] = {
+                    status: true,
+                    message: "You must be 18 or older.",
+                };
+                return;
+            }
+        }
+
         if (value !== "") {
             const pattern =
                 field.pattern || fieldNameToPattern[field.name.toLowerCase()];
@@ -319,6 +398,7 @@ export const formValidationCheck = ({ formFields, formData }) => {
             }
             return;
         }
+
         if (!errors[field.name]) {
             errors[field.name] = {
                 status: false,
@@ -338,6 +418,6 @@ export const formValidationCheck = ({ formFields, formData }) => {
         };
     }
 
-    const isValid = Object.values(errors).every((msg) => !msg);
+    const isValid = Object.values(errors).every((err) => !err.status);
     return { isValid, errors };
 };

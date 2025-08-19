@@ -37,7 +37,7 @@ export default function ClientWrapper({ children }) {
           transition={{ delay: 0.1, duration: 0.4 }}
         >
           <Header />
-          <section className="mt-18 md:m-0">{children}</section>
+          <section className="mt-18 md:m-0 w-full h-fit lg:min-h-max">{children}</section>
         </motion.main>
       )}
 

@@ -44,7 +44,7 @@ export const CustomLink = ({
       ease: "anticipate",
     },
     className: clsx(
-      "relative z-[51] block md:h-5 overflow-hidden list-none whitespace-nowrap select-none",
+      "relative block md:h-5 overflow-hidden list-none whitespace-nowrap select-none",
       className
     ),
     style: { height: "auto" },

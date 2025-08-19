@@ -521,6 +521,7 @@ export const SelectField = ({
         <motion.span
           initial={{ y: 100 }}
           whileInView={{ y: 0 }}
+          viewport={{ once: true }}
           transition={{
             duration: 0.5,
             delay: indexKey * 0.055,
@@ -651,7 +652,7 @@ export const TextAreaField = ({
           id={name}
           name={name}
           placeholder={placeholder || "Write something..."}
-          // value={value}
+          value={value}
           rows={rows}
           onChange={onChange}
           onBlur={() => setTouched(required)}

@@ -8,7 +8,7 @@ import Link from "next/link";
 import { useLayoutEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 
-export default function ProfileMain({ userName, name, profileStatus }) {
+export default function Main({ userName, name, profileStatus }) {
   const { pendingProfile, completedProfile } = profilePage;
   const [profileState, setProfileState] = useState(pendingProfile);
   const nameShort = name.split(" ")[0];
