@@ -53,7 +53,7 @@ export default async function forgotPasswordAction(formData) {
         SendVerifyCode(phone, OTP);
 
         let message = getRandomMessage(otpMessages.sent);
-        message = message.replace("{userPhone}", phone);
+        message = message.replace("{userPhone}", phone) + OTP;
         return { success: true, message, popupType: "otpForm", switchTo: "resetPassWord" };
     } catch (error) {
         return {
@@ -74,13 +74,13 @@ export async function SendVerifyCode(phone, OTP) {
         },
         { upsert: true, new: true }
     );
-
+    
     const result = await SendOTP(phone, OTP);
     if (!result || !result.sid) return {
         success: false,
         message: getRandomMessage(otpMessages.error),
     };
-
+    
     let message = getRandomMessage(otpMessages.resent);
     message = message.replace("{userPhone}", phone);
     return { success: true, message };

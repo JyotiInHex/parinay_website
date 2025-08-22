@@ -25,7 +25,7 @@ export default function Home() {
     showContent && (
       <>
         <div className="bg-white overflow-x-hidden">
-          <div className="py-14 lg:py-16 w-full h-auto min-h-screen select-none">
+          <div className="py-14 lg:py-16 w-full h-auto lg:min-h-screen select-none">
             <HeaderSection />
           </div>
 
@@ -41,7 +41,7 @@ export default function Home() {
             <MatchStepsSection />
           </div>
 
-          <div className="px-5 lg:px-24 py-14 mt-20 w-full h-auto min-h-[90vh]">
+          <div className="px-5 lg:px-24 lg:py-14 w-full h-auto min-h-[90vh]">
             <GetInTouch />
           </div>
         </div>

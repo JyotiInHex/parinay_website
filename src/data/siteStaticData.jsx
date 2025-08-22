@@ -12,6 +12,7 @@ import signupAction from "@/app/api/auth/signUpAction";
 import forgotPasswordAction from "@/app/api/auth/forgotPassAction";
 import resetPassWordAction from "@/app/api/auth/resetPassword";
 import { contactAction } from "@/app/api/contact/contact";
+import completeProfileAction from "@/app/api/profile/completeProfileAction";
 
 const year = new Date().getFullYear();
 
@@ -92,14 +93,18 @@ export const FAQData = {
 export const popUpForms = {
   otpForm: {
     verify: {
-      title: "Phone Verification",
-      description:
-        "A 6-digit code has been sent to +91-{userPhone}. Enter the code below to confirm it’s you.",
+      title: "Verify your Phone",
+      description: [
+        "We've sent a 6-digit verification code to",
+        "+91-{userPhone}",
+      ],
     },
     resetPassWord: {
       title: "Reset Your Password",
-      description:
-        "Enter your new password below. Make sure it’s strong and unique to keep your account secure.",
+      description: [
+        "Enter your new password below.",
+        "Make sure it’s strong and unique to keep your account secure.",
+      ],
       formDetails: {
         serverAction: resetPassWordAction,
         formFields: [
@@ -183,7 +188,7 @@ export const footerSection = {
 
   contact: {
     email: {
-      label: "support@porinoi.com ↗",
+      label: "support@porinoi.com",
       path: "mailto:support@porinoi.com",
     },
     location: "Based in Assam, rooted in culture.",
@@ -954,6 +959,8 @@ export const profilePage = {
     title: "Now, let’s personalize your journey.",
     description:
       "Help us get to know you better so we can suggest matches who truly align with your values, lifestyle, and preferences. Just a few thoughtful steps to begin your beautiful story.",
+
+    serverAction: completeProfileAction,
     sections: [
       {
         sectionTitle: "About Me",
@@ -978,6 +985,7 @@ export const profilePage = {
             name: "dob",
             type: "date",
             required: true,
+            placeholder: "Select your Date of birth",
           },
           {
             label: "My current marital status is",
@@ -1017,7 +1025,7 @@ export const profilePage = {
             label: "I stand tall at",
             name: "height",
             type: "text",
-            placeholder: "e.g., 5'6\" (ft/in) or 167.64 (cm)",
+            placeholder: "e.g., 5'6\" (ft/in) or 167 (cm)",
             suffix: "cm",
             required: true,
           },
@@ -1514,36 +1522,19 @@ export const profilePage = {
             placeholder: "e.g., Kalita, Ahom, Bodo, Bengali, Any",
             required: false,
           },
-          {
-            label: "Gotra preference",
-            name: "preferredGotra",
-            type: "select",
-            options: [
-              "No preference",
-              "Kashyap",
-              "Bharadwaj",
-              "Vashishtha",
-              "Other",
-            ],
-            required: false,
-            placeholder: "Select gotra preference (if any)",
-          },
-          {
-            label: "Please specify gotra",
-            name: "otherPreferredGotra",
-            type: "text",
-            placeholder: "Enter gotra",
-            required: true,
-            conditional: {
-              field: "preferredGotra",
-              value: "Other",
-            },
-          },
         ],
       },
       {
         sectionTitle: "Background & Career",
         fields: [
+          {
+            label: "Gotra preference",
+            name: "preferredGotra",
+            type: "text",
+            placeholder:
+              "e.g., Kashyap, Bharadwaj, Vashishtha, etc. (if applicable)",
+            required: false,
+          },
           {
             label: "Preferred education level",
             name: "preferredEducation",
@@ -1558,7 +1549,7 @@ export const profilePage = {
               "Professional Qualification (CA, CS, etc.)",
               "Other",
             ],
-            required: false,
+            required: true,
             placeholder: "Select education preference",
           },
           {
@@ -1632,7 +1623,7 @@ export const profilePage = {
               "Occasionally Non-Veg",
               "Other",
             ],
-            required: false,
+            required: true,
             placeholder: "Select diet preference",
           },
           {
@@ -1658,7 +1649,7 @@ export const profilePage = {
               "Single Parent Family",
               "Living with Relatives",
             ],
-            required: false,
+            required: true,
             placeholder: "Select preferred family type",
           },
           {
@@ -1688,7 +1679,7 @@ export const profilePage = {
               "Dependability",
             ],
             required: true,
-            className: "lg:col-span-2"
+            className: "lg:col-span-2",
           },
         ],
       },
@@ -1722,13 +1713,13 @@ export const profilePage = {
               "Food Tasting / Exploring",
             ],
             required: true,
-            className: "lg:col-span-2"
+            className: "lg:col-span-2",
           },
           {
             label: "Anything else you’d love in your partner?",
             name: "partnerExpectations",
             type: "textarea",
-            rows: 7,
+            rows: 5,
             placeholder: "Write a few lines here...",
             required: false,
           },
@@ -1738,18 +1729,44 @@ export const profilePage = {
         sectionTitle: "Final Note",
         fields: [
           {
-            label: "Please confirm the following before submitting:",
-            name: "finalNoteAgreements",
-            type: "multiselect",
-            options: [
+            label:
               "I confirm that all the information I have provided is accurate and truthful.",
-              "I understand that my data will be used only for the intended purpose of this platform.",
-              "I agree to respect the privacy and confidentiality of other users.",
-              "I acknowledge that I am responsible for the content I share.",
-              "I accept the platform’s Terms of Service and Privacy Policy.",
-            ],
+            name: "agreement_1",
+            type: "checkbox",
             required: true,
-            className: "lg:col-span-2"
+            className: "lg:col-span-2",
+          },
+          {
+            label:
+              "I understand that my data will be used only for the intended purpose of this platform.",
+            name: "agreement_2",
+            type: "checkbox",
+            required: true,
+            className: "lg:col-span-2",
+          },
+          {
+            label:
+              "I agree to respect the privacy and confidentiality of other users.",
+            name: "agreement_3",
+            type: "checkbox",
+            required: true,
+            className: "lg:col-span-2",
+          },
+          {
+            label:
+              "I acknowledge that I am responsible for the content I share.",
+            name: "agreement_4",
+            type: "checkbox",
+            required: true,
+            className: "lg:col-span-2",
+          },
+          {
+            label:
+              "I accept the platform’s Terms of Service and Privacy Policy.",
+            name: "agreement_5",
+            type: "checkbox",
+            required: true,
+            className: "lg:col-span-2",
           },
         ],
       },
@@ -2380,6 +2397,7 @@ export const legalPage = {
       },
     ],
   },
+
   termOfUse: {
     title: "Terms of Use / Service Agreement",
     lastUpdate: "July 15, 2025",

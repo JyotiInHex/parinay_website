@@ -10,6 +10,8 @@ import { SendVerifyCode, VerifyOTPCode } from "@/app/api/auth/forgotPassAction";
 import { popUpForms } from "@/data/siteStaticData";
 import Arrow from "../../../public/assets/svg/arrow";
 import { formValidationCheck } from "@/utils/validators";
+import Clear from "../../../public/assets/svg/clear";
+import Loading from "../../../public/assets/svg/loading";
 
 const { otpForm } = popUpForms;
 const { serverAction, formFields } = otpForm.resetPassWord.formDetails;
@@ -27,8 +29,32 @@ const OTPForm = ({ formData, switchForm = "" }) => {
   const [formStep, setFormStep] = useState("verify");
   const [errors, setErrors] = useState({});
   const [reqFormData, setReqFormData] = useState({});
+  const [isTouched, setTouched] = useState(null);
+  const [pending, setPending] = useState(false);
 
   const isOtpComplete = otp.every((digit) => digit.trim() !== "");
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.07,
+        delayChildren: 0.1,
+      },
+    },
+  };
+  const inputVariants = {
+    hidden: { y: 30, opacity: 0 },
+    show: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        duration: 0.25,
+        ease: [0.33, 1, 0.68, 1],
+      },
+    },
+  };
 
   useEffect(() => {
     setReqFormData((prev) => ({
@@ -122,7 +148,7 @@ const OTPForm = ({ formData, switchForm = "" }) => {
       animate={{ y: 0 }}
       exit={{ y: 50 }}
       transition={{ duration: 0.5, ease: [0.33, 1, 0.68, 1] }}
-      className="w-[550px] h-fit bg-white my-auto rounded-xl p-8 py-10 flex flex-col space-y-5 select-none"
+      className="w-[470px] h-fit bg-white my-auto rounded-xl p-8 py-10 flex flex-col space-y-5 select-none"
     >
       {formStep !== "verify" && (
         <button
@@ -140,99 +166,141 @@ const OTPForm = ({ formData, switchForm = "" }) => {
         </h2>
 
         <p className="px-0.5 justify-center text-center text-zinc-400 text-sm lg:text-base font-normal font-porinoi-sans">
-          {otpForm[formStep].description.replace("{userPhone}", formData.phone)}
+          {otpForm[formStep].description[0]} <br />
+          <span className="font-semibold tracking-wider">
+            {otpForm[formStep].description[1].replace(
+              "{userPhone}",
+              formData.phone
+            )}
+          </span>
         </p>
       </div>
 
       {formStep === "verify" && (
         <form className="w-full mx-auto pt-3 flex flex-col items-center gap-y-5">
-          <WordStaggerFlowTitle className="px-0.5 justify-center text-center text-xs text-zinc-800 font-porinoi-sans font-medium">
-            The code will expire in 5 minutes.
-          </WordStaggerFlowTitle>
-          <fieldset>
-            {otp.map((digit, idx) => (
-              <motion.input
-                initial={{ y: 30, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{
-                  duration: 0.55,
-                  delay: idx * 0.055,
-                  ease: [0.33, 1, 0.68, 1],
-                }}
-                key={idx}
-                ref={(el) => (inputRefs.current[idx] = el)}
-                type="text"
-                inputMode="numeric"
-                maxLength={1}
-                value={digit}
-                onChange={(e) => handleOTPInputs(e, idx)}
-                onKeyDown={(e) => handleKeyDown(e, idx)}
-                className={`w-12 h-12 text-center border-[2px] rounded mx-1 text-lg  font-semibold font-porinoi-sans ${
-                  isOtpComplete
-                    ? "border-green-400 bg-green-50 text-green-800"
-                    : "border-zinc-400 text-zinc-900"
-                }`}
-              />
-            ))}
-          </fieldset>
-          <button
-            type="button"
-            disabled={timer > 0}
-            onClick={async (e) => {
-              e.preventDefault();
-              setTimer(60);
-              const res = await SendVerifyCode(
-                formData.phone,
-                Math.floor(100000 + Math.random() * 900000).toString()
-              );
-              ThrowToast({
-                message: res.message,
-                state: res.success ? "success" : "warning",
-                timeOut: 7500,
-                direction: "center",
-                timeStampView: true,
-              });
-            }}
-            className={`text-sm text-zinc-800 font-semibold font-porinoi-sans ${
-              timer > 0 ? "cursor-not-allowed" : "cursor-pointer"
-            }`}
+          <motion.fieldset
+            variants={containerVariants}
+            initial="hidden"
+            animate="show"
           >
-            <span className="text-zinc-500">Didn’t receive it?</span>
-            {timer > 0 ? `Resend OTP in ${timer}s` : "Resend OTP"}
-          </button>
-          <div className="w-full flex flex-row justify-between gap-3">
+            {otp.map((digit, idx) => {
+              const isEmpty = !digit.trim();
+              return (
+                <motion.input
+                  key={idx}
+                  variants={inputVariants}
+                  type="text"
+                  inputMode="numeric"
+                  maxLength={1}
+                  value={digit}
+                  ref={(el) => (inputRefs.current[idx] = el)}
+                  onChange={(e) => handleOTPInputs(e, idx)}
+                  onKeyDown={(e) => handleKeyDown(e, idx)}
+                  onBlur={() => {
+                    setTouched(true);
+                  }}
+                  className={`w-12 h-12 mx-1 text-center text-lg font-semibold font-mono border-[2px]  rounded-lg focus:ring-3 focus:outline-none transition-all duration-300 ease-linear ${
+                    isTouched && isEmpty
+                      ? "border-red-300 ring-red-200 focus:border-red-600 "
+                      : "border-zinc-300 ring-green-200 focus:border-green-600 "
+                  }`}
+                />
+              );
+            })}
+          </motion.fieldset>
+
+          <div className="mt-5 w-full flex flex-col-reverse justify-between gap-3">
             {[
               {
-                label: "Cancel",
+                label: "Clear",
+                icon: <Clear width={16} height={16}/>,
                 type: "reset",
-                onClick: closePopup,
+                onClick: () => setOtp(new Array(6).fill("")),
                 disabled: null,
+                variant: "clear",
               },
               {
-                label: "Verify",
+                label: pending ? "Verifying..." : "Verify",
+                icon: pending && (
+                  <Loading width={16} height={16} className="animate-none" />
+                ),
                 type: "submit",
-                onClick: () => {
-                  handleOtpVerification(formData.phone, otp);
+                onClick: async (e) => {
+                  e.preventDefault();
+                  setPending(true);
+                  await handleOtpVerification(formData.phone, otp);
+                  setPending(false);
                 },
                 disabled: !isOtpComplete,
+                variant: "verify",
               },
             ].map((btn, idx) => {
+              const basicClass =
+                "w-full px-5 py-[3.5px] flex flex-row items-center justify-center gap-2 text-base font-mono font-semibold rounded-md cursor-pointer transition-colors";
+
+              const variant = {
+                clear:
+                  "border-2 border-gray-400 text-gray-700 bg-white hover:bg-gray-100",
+                verify: btn.disabled
+                  ? "border-2 border-gray-300 bg-gray-200 text-gray-400 cursor-not-allowed"
+                  : "border-2 border-green-600 bg-green-600 text-white hover:bg-green-700",
+              };
+
               return (
                 <button
                   key={idx}
                   disabled={btn.disabled}
-                  type="button"
+                  type={btn.type}
                   onClick={btn.onClick}
-                  className={`border-[2px] first:border-zinc-400  rounded-md px-5 py-2 w-full text-base text-zinc-800 font-porinoi-sans font-semibold cursor-pointer ${
-                    !isOtpComplete
-                      ? "nth-[2]:border-gray-400 nth-[2]:bg-gray-200 nth-[2]:text-gray-400"
-                      : "nth-[2]:border-blue-400 nth-[2]:bg-blue-600  nth-[2]:text-white"
-                  }`}
+                  className={`${basicClass} ${variant[btn.variant]}`}
                 >
-                  {btn.label}
+                  {btn.icon && btn.icon} {btn.label}
                 </button>
               );
             })}
+          </div>
+
+          <div className="flex flex-col gap-y-2 place-content-center">
+            <p className="text-sm font-semibold font-porinoi-sans text-zinc-500 pointer-events-none">
+              Didn’t receive it?
+            </p>
+            <button
+              type="button"
+              disabled={timer > 0}
+              onClick={async (e) => {
+                e.preventDefault();
+                setTimer(60);
+                const res = await SendVerifyCode(
+                  formData.phone,
+                  Math.floor(100000 + Math.random() * 900000).toString()
+                );
+                ThrowToast({
+                  message: res.message,
+                  state: res.success ? "success" : "warning",
+                  timeOut: 7500,
+                  direction: "center",
+                  timeStampView: true,
+                });
+              }}
+              className={`space-y-1.5 text-sm text-zinc-800 font-semibold font-porinoi-sans ${
+                timer > 0 ? "cursor-not-allowed" : "cursor-pointer"
+              }`}
+            >
+              {timer > 0 ? `Resend OTP in ${timer}s` : "Resend OTP"}
+            </button>
+          </div>
+
+          <div className="flex items-center gap-1.5 mt-7">
+            <p className="text-sm text-gray-600 font-porinoi-sans font-normal select-none">
+              Wrong number?
+            </p>
+            <button
+              type="button"
+              onClick={closePopup}
+              className="text-sm text-blue-600 font-porinoi-sans font-semibold cursor-pointer hover:text-blue-700 transition-colors"
+            >
+              Change
+            </button>
           </div>
         </form>
       )}

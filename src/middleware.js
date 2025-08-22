@@ -34,7 +34,7 @@ export async function middleware(request) {
         }
     }
 
-    if (pathname.startsWith("/profile") || pathname.startsWith("/completeProfile") || pathname.startsWith("/editProfile")) {
+    if (pathname.startsWith("/profile") || pathname.startsWith("/buildProfile") || pathname.startsWith("/editProfile")) {
         if (!token) { return redirectWithToast("/signIn", "403", request); }
 
         try {
@@ -57,5 +57,5 @@ export async function middleware(request) {
 }
 
 export const config = {
-    matcher: ["/profile/:path*", "/completeProfile/:path*", "/editProfile/:path*", "/signIn"],
+    matcher: ["/profile/:path*", "/buildProfile/:path*", "/editProfile/:path*", "/signIn"],
 };

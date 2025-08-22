@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 * {
-  list-style: none!important;
-  outline: none!important;
+  list-style: none !important;
+  outline: none !important;
 }
 
 :root {
@@ -287,5 +287,14 @@ input[type="radio"].radio-custom:checked::before {
   }
 }
 
+.date-custom {
+  background-image: url("/assets/svg/calendar.svg");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 1.25rem 1.25rem;
+}
 
-
+.date-custom::-webkit-calendar-picker-indicator {
+  opacity: 0;
+  cursor: pointer;
+}

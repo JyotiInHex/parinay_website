@@ -44,7 +44,7 @@ export default function ClientWrapper({ children }) {
       <AnimatePresence mode="wait">
         <motion.div
           key={pathname}
-          className="absolute inset-0 w-full h-screen bg-gradient-to-bl from-orange-500 to-pink-600  z-50 grid place-content-center select-none pointer-events-auto overflow-hidden"
+          className="fixed inset-0 w-full h-screen bg-gradient-to-bl from-orange-500 to-pink-600  z-50 grid place-content-center select-none pointer-events-auto overflow-hidden"
           initial={{ scaleY: 1, transformOrigin: "top" }}
           animate={{ scaleY: 0 }}
           exit={{ scaleY: 1, transformOrigin: "bottom" }}

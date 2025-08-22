@@ -11,7 +11,7 @@ import Link from "next/link";
 const ShortAboutSection = () => {
   const { about } = landingPage;
   return (
-    <div className="mt-10 select-none">
+    <div className="lg:mt-10 select-none">
       <LetterByLetterRevealTitle
         isWhileInView={true}
         className="font-semibold text-center text-4xl lg:text-8xl text-zinc-800 font-porinoi-sans"
