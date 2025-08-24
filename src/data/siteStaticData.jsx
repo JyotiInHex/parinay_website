@@ -4,15 +4,16 @@ import Star from "../../public/assets/svg/star";
 import Heart2 from "../../public/assets/svg/heart-2";
 import Arrow from "../../public/assets/svg/arrow";
 import Arrow45deg from "../../public/assets/svg/arrow45deg";
-import { Facebook, Instagram } from "../../public/assets/svg/socialMedia";
 import Edit from "../../public/assets/svg/edit";
+import Share from "../../public/assets/svg/share";
+import { Facebook, Instagram } from "../../public/assets/svg/socialMedia";
 
 import signinAction from "@/app/api/auth/signInAction";
 import signupAction from "@/app/api/auth/signUpAction";
 import forgotPasswordAction from "@/app/api/auth/forgotPassAction";
 import resetPassWordAction from "@/app/api/auth/resetPassword";
-import { contactAction } from "@/app/api/contact/contact";
 import completeProfileAction from "@/app/api/profile/completeProfileAction";
+import contactAction from "@/app/api/contact/contact";
 
 const year = new Date().getFullYear();
 
@@ -167,11 +168,11 @@ export const navigationSection = {
       social: [
         {
           label: "Instagram",
-          url: "https://www.instagram.com/porinoi_assam?igsh=N3I3d2libDZpcXpj",
+          url: "https://www.instagram.com/porinoi_com?igsh=N3I3d2libDZpcXpj",
         },
         {
           label: "Facebook",
-          url: "https://www.facebook.com/share/17BdXQ5s7U/",
+          url: "https://www.facebook.com/share/1Cj57S7PSJ/",
         },
       ],
     },
@@ -215,11 +216,11 @@ export const footerSection = {
   social: [
     {
       label: "Instagram",
-      url: "https://www.instagram.com/porinoi_assam?igsh=N3I3d2libDZpcXpj",
+      url: "https://www.instagram.com/porinoi_com?igsh=N3I3d2libDZpcXpj",
     },
     {
       label: "Facebook",
-      url: "https://www.facebook.com/share/17bdxq5s7u/",
+      url: "https://www.facebook.com/share/1Cj57S7PSJ/",
     },
   ],
 
@@ -741,7 +742,7 @@ export const contactPage = {
       },
       {
         label: "I found Porinoi via",
-        type: "checkbox",
+        type: "select",
         name: "referralSource",
         options: [
           "Word of Mouth",
@@ -756,7 +757,7 @@ export const contactPage = {
       },
       {
         label: "I’m reaching out about",
-        type: "checkbox",
+        type: "select",
         name: "helpOptions",
         options: [
           "Registering my profile",
@@ -919,6 +920,7 @@ export const profilePage = {
           {
             label: "RE-SHAPE MY STORY – EDIT PROFILE",
             path: "/editProfile",
+            target: "_self",
             icon: (
               <Edit
                 width={30}
@@ -929,7 +931,8 @@ export const profilePage = {
           },
           {
             label: "LIVE IN COLOR – FOLLOW ON INSTAGRAM",
-            path: "https://www.instagram.com/porinoi_assam",
+            path: "https://www.instagram.com/porinoi_com?igsh=n3i3d2libdzpcxpj",
+            target: "_blank",
             icon: (
               <Instagram
                 width={30}
@@ -940,9 +943,27 @@ export const profilePage = {
           },
           {
             label: "LIVE IN COMMUNITY – JOIN US ON FACEBOOK",
-            path: "https://www.facebook.com/share/17bdxq5s7u/",
+            path: "https://www.facebook.com/share/1Cj57S7PSJ/",
+            target: "_blank",
             icon: (
               <Facebook
+                width={30}
+                height={30}
+                className="text-zinc-800 transition-colors duration-300 ease-linear group-hover:text-white scale-65 lg:scale-100"
+              />
+            ),
+          },
+          {
+            label: "SPREAD THE LOVE – INVITE FRIENDS",
+            path: `https://wa.me/?text=${encodeURIComponent(
+              "🌸 Hey! I’ve joined *Porinoi* – a community built for meaningful connections and real stories. ✨\n\n" +
+                "💡 It’s simple to sign up and start your journey!\n\n" +
+                "👉 Register here: https://porinoi.com/signUp\n\n" +
+                "💜 Come join me – let’s grow this community together!"
+            )}`,
+            target: "_self",
+            icon: (
+              <Share
                 width={30}
                 height={30}
                 className="text-zinc-800 transition-colors duration-300 ease-linear group-hover:text-white scale-65 lg:scale-100"
@@ -954,7 +975,7 @@ export const profilePage = {
     },
   },
 
-  completedProfileForm: {
+  profileBuilder: {
     tag: "About Yourself —",
     title: "Now, let’s personalize your journey.",
     description:
@@ -991,30 +1012,17 @@ export const profilePage = {
             label: "My current marital status is",
             name: "maritalStatus",
             type: "select",
-            options: ["Never Married", "Divorced", "Widowed", "Separated"],
+            options: [
+              "Never Married",
+              "Currently Engaged",
+              "Divorced",
+              "Widowed",
+              "Separated",
+              "Annulled",
+            ],
+            defaultOpt: "Never Married",
             required: true,
             placeholder: "Your marital status",
-          },
-          {
-            label: "My Zodiac sign is",
-            name: "zodiac",
-            type: "select",
-            options: [
-              "Aries",
-              "Taurus",
-              "Gemini",
-              "Cancer",
-              "Leo",
-              "Virgo",
-              "Libra",
-              "Scorpio",
-              "Sagittarius",
-              "Capricorn",
-              "Aquarius",
-              "Pisces",
-            ],
-            required: false,
-            placeholder: "Your Zodiac sign",
           },
         ],
       },
@@ -1041,7 +1049,8 @@ export const profilePage = {
             label: "My body type is",
             name: "bodyType",
             type: "select",
-            options: ["Slim", "Average", "Athletic", "Heavy"],
+            options: ["Slim", "Average", "Athletic / Fit", "Curvy", "Heavy"],
+            defaultOpt: "Average",
             required: true,
             placeholder: "Select your body type",
           },
@@ -1049,17 +1058,10 @@ export const profilePage = {
             label: "My complexion / Skin Tone is",
             name: "complexion",
             type: "select",
-            options: ["Fair", "Whitish", "Dusky", "Dark"],
+            options: ["Very Fair", "Fair", "Wheatish", "Dusky", "Dark"],
+            defaultOpt: "Fair",
             required: false,
             placeholder: "Select your complexion",
-          },
-          {
-            label: "My blood group is",
-            name: "bloodGroup",
-            type: "select",
-            options: ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"],
-            required: false,
-            placeholder: "Select your blood group",
           },
         ],
       },
@@ -1083,6 +1085,7 @@ export const profilePage = {
               "Spiritual",
               "Other",
             ],
+            defaultOpt: "Hindu",
             required: true,
             placeholder: "Select your religion",
           },
@@ -1106,13 +1109,6 @@ export const profilePage = {
             required: true,
           },
           {
-            label: "My gotra is",
-            name: "gotra",
-            type: "text",
-            placeholder: "e.g., Kashyap, Bharadwaj (if applicable)",
-            required: false,
-          },
-          {
             label: "My mother tongue is",
             name: "motherTongue",
             type: "select",
@@ -1127,6 +1123,7 @@ export const profilePage = {
               "English",
               "Other",
             ],
+            defaultOpt: "Assamese",
             required: true,
             placeholder: "Select your mother tongue*",
           },
@@ -1140,6 +1137,34 @@ export const profilePage = {
               field: "motherTongue",
               value: "Other",
             },
+          },
+          {
+            label: "My gotra is",
+            name: "gotra",
+            type: "text",
+            placeholder: "e.g., Kashyap, Bharadwaj (if applicable)",
+            required: false,
+          },
+          {
+            label: "My Zodiac sign is",
+            name: "zodiac",
+            type: "select",
+            options: [
+              "Aries",
+              "Taurus",
+              "Gemini",
+              "Cancer",
+              "Leo",
+              "Virgo",
+              "Libra",
+              "Scorpio",
+              "Sagittarius",
+              "Capricorn",
+              "Aquarius",
+              "Pisces",
+            ],
+            required: false,
+            placeholder: "Your Zodiac sign",
           },
         ],
       },
@@ -1176,6 +1201,7 @@ export const profilePage = {
               "West Bengal",
               "Other State/Region",
             ],
+            defaultOpt: "Assam",
             required: true,
             placeholder: "Select your state/region",
           },
@@ -1195,6 +1221,7 @@ export const profilePage = {
             name: "country",
             type: "select",
             options: ["India", "Bhutan", "Nepal", "Other"],
+            defaultOpt: "India",
             required: true,
             placeholder: "Select your country",
           },
@@ -1221,14 +1248,15 @@ export const profilePage = {
             options: [
               "High School (10th)",
               "Higher Secondary (12th)",
-              "Diploma",
+              "Diploma / Vocational Training",
               "Bachelor’s Degree",
               "Master’s Degree",
               "M.Phil",
-              "Ph.D",
-              "Professional Certification",
+              "Ph.D / Doctorate",
+              "Professional Certification (e.g., CA, CFA, PMP)",
               "Other",
             ],
+            defaultOpt: "Bachelor’s Degree",
             required: true,
             placeholder: "Select your qualification",
           },
@@ -1261,9 +1289,12 @@ export const profilePage = {
               "Self-employed / Entrepreneur",
               "Freelancer",
               "Student",
-              "Not Working",
+              "Homemaker",
+              "Not Working / Looking for Opportunities",
+              "Retired",
               "Other",
             ],
+            defaultOpt: "Private Sector",
             required: true,
             placeholder: "Select your work type",
           },
@@ -1291,6 +1322,7 @@ export const profilePage = {
               "Above ₹50 LPA",
               "Prefer not to say",
             ],
+            defaultOpt: "Less than ₹2 LPA",
             required: false,
             placeholder: "Select your income range",
           },
@@ -1308,10 +1340,23 @@ export const profilePage = {
               "Non-Vegetarian",
               "Eggetarian",
               "Vegan",
-              "Occasionally Non-Veg",
+              "Occasionally Non-Vegetarian",
+              "Other",
             ],
+            defaultOpt: "Vegetarian",
             required: true,
             placeholder: "Select your dietary preference",
+          },
+          {
+            label: "Please specify your dietary preference",
+            name: "otherDiet",
+            type: "text",
+            placeholder: "e.g., Pescatarian, Keto, Jain food",
+            required: true,
+            conditional: {
+              field: "myDiet",
+              value: "Other",
+            },
           },
           {
             label: "Do I smoke?",
@@ -1323,6 +1368,7 @@ export const profilePage = {
               "Regular smoker",
               "Trying to quit",
             ],
+            defaultOpt: "Non-smoker",
             required: true,
             placeholder: "Select your smoking habit",
           },
@@ -1337,6 +1383,7 @@ export const profilePage = {
               "Social drinker",
               "Trying to quit",
             ],
+            defaultOpt: "Non-drinker",
             required: true,
             placeholder: "Select your drinking habit",
           },
@@ -1360,21 +1407,9 @@ export const profilePage = {
               "Art & Craft",
               "Volunteering",
               "Technology / Coding",
-              "Other",
             ],
             required: true,
             placeholder: "Select your hobbies & interests",
-          },
-          {
-            label: "Please specify your hobby",
-            name: "otherHobby",
-            type: "text",
-            placeholder: "Enter hobby",
-            required: true,
-            conditional: {
-              field: "hobbies",
-              value: "Other",
-            },
           },
         ],
       },
@@ -1428,26 +1463,38 @@ export const profilePage = {
             name: "familyType",
             type: "select",
             options: [
-              "Joint Family",
-              "Nuclear Family",
-              "Extended Family",
-              "Single Parent Family",
+              "Joint",
+              "Nuclear",
+              "Extended",
+              "Single Parent",
               "Living with Relatives",
-              "Other",
             ],
+            defaultOpt: "Nuclear",
             required: true,
             placeholder: "Select your family type",
           },
           {
-            label: "Please specify your family type",
-            name: "otherFamilyType",
-            type: "text",
-            placeholder: "Enter your family type",
+            label: "My family background is",
+            name: "familyBackground",
+            type: "select",
+            options: [
+              "Modest",
+              "Middle Class",
+              "Upper Middle Class",
+              "Affluent / Wealthy",
+            ],
+            defaultOpt: "Middle Class",
             required: true,
-            conditional: {
-              field: "familyType",
-              value: "Other",
-            },
+            placeholder: "Select your family background",
+          },
+          {
+            label: "Our family values are",
+            name: "familyValues",
+            type: "select",
+            options: ["Liberal", "Traditional", "Moderate", "Progressive"],
+            defaultOpt: "Moderate",
+            required: true,
+            placeholder: "Select your family values",
           },
         ],
       },
@@ -1459,14 +1506,16 @@ export const profilePage = {
             name: "preferredAge",
             type: "select",
             options: [
-              "18-22",
-              "23-26",
-              "27-30",
-              "31-35",
-              "36-40",
-              "41 and above",
+              "No preference",
+              "18-24",
+              "25-30",
+              "31-36",
+              "37-42",
+              "43-50",
+              "51 and above",
               "Any",
             ],
+            defaultOpt: "25-30",
             required: true,
             placeholder: "Select preferred age range",
           },
@@ -1475,13 +1524,14 @@ export const profilePage = {
             name: "preferredHeight",
             type: "select",
             options: [
-              "Below 5'0\" (Below 60 in / 152 cm)",
-              "5'0\" - 5'4\" (60-64 in / 152-163 cm)",
-              "5'5\" - 5'8\" (65-68 in / 165-173 cm)",
-              "5'9\" - 6'0\" (69-72 in / 175-183 cm)",
-              "Above 6'0\" (Above 72 in / 183 cm)",
+              "Below 5'2\" (Below 157 cm)",
+              "5'2\" - 5'6\" (157-168 cm)",
+              "5'7\" - 5'10\" (169-178 cm)",
+              "5'11\" - 6'2\" (179-188 cm)",
+              "Above 6'2\" (Above 188 cm)",
               "Any",
             ],
+            defaultOpt: "5'7\" - 5'10\" (169-178 cm)",
             required: true,
             placeholder: "Select preferred height range",
           },
@@ -1501,7 +1551,8 @@ export const profilePage = {
               "Spiritual / No Religion",
               "Other",
             ],
-            required: false,
+            defaultOpt: "Any",
+            required: true,
             placeholder: "Select preferred religion",
           },
           {
@@ -1549,6 +1600,7 @@ export const profilePage = {
               "Professional Qualification (CA, CS, etc.)",
               "Other",
             ],
+            defaultOpt: "No preference",
             required: true,
             placeholder: "Select education preference",
           },
@@ -1602,6 +1654,7 @@ export const profilePage = {
               "Regular smoker & Occasional drinker",
               "Regular smoker & Regular drinker",
             ],
+            defaultOpt: "Non-smoker & Non-drinker",
             required: true,
             placeholder: "Select lifestyle preference",
           },
@@ -1623,6 +1676,7 @@ export const profilePage = {
               "Occasionally Non-Veg",
               "Other",
             ],
+            defaultOpt: "No preference",
             required: true,
             placeholder: "Select diet preference",
           },
@@ -1643,12 +1697,13 @@ export const profilePage = {
             type: "select",
             options: [
               "No preference",
-              "Joint Family",
-              "Nuclear Family",
-              "Extended Family",
-              "Single Parent Family",
+              "Joint",
+              "Nuclear",
+              "Extended",
+              "Single Parent",
               "Living with Relatives",
             ],
+            defaultOpt: "Nuclear",
             required: true,
             placeholder: "Select preferred family type",
           },

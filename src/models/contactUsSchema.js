@@ -9,14 +9,17 @@ const contactUsSchema = new mongoose.Schema(
         },
         profession: {
             type: String,
+            required: true,
             trim: true,
         },
         referralSource: {
             type: String,
+            required: true,
             trim: true,
         },
         helpOptions: {
             type: String,
+            required: true,
             trim: true,
         },
         email: {
@@ -30,12 +33,13 @@ const contactUsSchema = new mongoose.Schema(
         },
         message: {
             type: String,
-            required: true,
             trim: true,
         },
     },
     { timestamps: true }
 );
+
+delete mongoose.connection.models['ContactUs'];
 
 const ContactUs = mongoose.models.ContactUs || mongoose.model("ContactUs", contactUsSchema);
 export default ContactUs;

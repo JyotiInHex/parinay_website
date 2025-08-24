@@ -111,7 +111,8 @@ export default function Main({ userName, name, profileStatus }) {
                   className="relative lg:w-[25vw] h-auto p-5 border-t first:border-t-0 border-zinc-300 before:w-full before:h-full before:absolute before:inset-0 after:absolute after:inset-0 after:-z-[1] after:scale-y-0 after:origin-top after:bg-red-500 after:transition-transform after:duration-300 hover:after:scale-y-100 hover:after:origin-bottom cursor-pointer group"
                 >
                   <Link
-                    href={btn.path + "/" + id}
+                    href={btn.path.replace("{slug}")}
+                    target={btn.target}
                     className="z-0 relative flex flex-row items-center justify-between gap-y-8"
                   >
                     <span className="lg:w-[80%] space-x-3">

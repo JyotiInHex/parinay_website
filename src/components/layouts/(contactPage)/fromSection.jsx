@@ -56,8 +56,6 @@ export default function ContactForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { isValid, errors } = formValidationCheck({ formFields, formData });
-    console.log(isValid);
-
     if (!isValid) {
       setErrors(errors);
       return;
@@ -71,12 +69,10 @@ export default function ContactForm() {
     });
 
     const result = await formDetails.serverAction(formattedData);
-    const { success, message, redirection } = result;
-
-    console.log(success + message);
+    const { success, message, redirection, error } = result;
 
     ThrowToast({
-      message,
+      message: success ? message : error,
       state: success ? "success" : "error",
       timeOut: 5500,
       direction: "center",
@@ -88,6 +84,7 @@ export default function ContactForm() {
       setFormData({});
       setErrors({});
       setSubmitted(true);
+      setIsPrivacyChecked(false);
       if (redirection) router.push(redirection);
     }
   };
@@ -132,23 +129,13 @@ export default function ContactForm() {
               case "tel":
               case "number":
               case "password":
-                return (
-                  <InputField
-                    key={idx}
-                    {...commonProps}
-                  />
-                );
+                return <InputField key={idx} {...commonProps} />;
               case "textarea":
                 return (
                   <div className="md:col-span-2 w-full" key={idx}>
-                    <TextAreaField
-                      key={idx}
-                      {...commonProps}
-                      rows={3}
-                    />
+                    <TextAreaField key={idx} {...commonProps} rows={3} />
                   </div>
                 );
-              case "checkbox":
               case "select":
                 return (
                   <SelectField

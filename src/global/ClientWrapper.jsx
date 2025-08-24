@@ -1,7 +1,7 @@
 "use client";
 import { useLenis } from "@/hooks/useLenis";
 import { usePathname } from "next/navigation";
-import { useLayoutEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Header from "@/components/shared/Header";
 import CustomCursor from "@/components/ui/customCursor";
@@ -11,9 +11,14 @@ import { useToastFromCookie } from "@/hooks/useCookieToast";
 export default function ClientWrapper({ children }) {
   useLenis();
   useToastFromCookie();
+
   const pathname = usePathname();
+  const pathSegment = pathname.split("/")[1];
+  const hideHeaderPaths = ["profile", "buildProfile", "editProfile"];
+  const showHeader = !hideHeaderPaths.includes(pathSegment);
   const [showContent, setShowContent] = useState(false);
-  useLayoutEffect(() => {
+
+  useEffect(() => {
     const timeout = setTimeout(() => {
       setShowContent(true);
     }, 550);
@@ -36,8 +41,10 @@ export default function ClientWrapper({ children }) {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.1, duration: 0.4 }}
         >
-          <Header />
-          <section className="mt-18 md:m-0 w-full h-fit lg:min-h-max">{children}</section>
+          {showHeader && <Header />}
+          <section className="mt-18 md:m-0 w-full h-fit lg:min-h-max">
+            {children}
+          </section>
         </motion.main>
       )}
 

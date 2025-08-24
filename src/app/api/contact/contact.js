@@ -4,7 +4,7 @@ import { connectDB } from "@/lib/db";
 import ContactUs from "@/models/contactUsSchema";
 import { contactUsMessages, getRandomMessage } from "@/utils/validators";
 
-export async function contactAction(formData) {
+export default async function contactAction(formData) {
     try {
         await connectDB();
         const name = formData.get("name")?.toString();
@@ -13,7 +13,7 @@ export async function contactAction(formData) {
         const helpOptions = formData.get("helpOptions")?.toString();
         const email = formData.get("email")?.toString();
         const phone = formData.get("phone")?.toString() || "";
-        const message = formData.get("message")?.toString();
+        const message = formData.get("message")?.toString() || "";
 
         await ContactUs.create({ name, profession, referralSource, helpOptions, email, phone, message })
         return {
@@ -23,7 +23,7 @@ export async function contactAction(formData) {
     } catch (error) {
         return {
             success: false,
-            message: 'Something went wrong during Submitting. Please try again.',
+            message: 'Something went wrong! ',
             error: error instanceof Error ? error.message : 'Unknown error',
         };
     }

@@ -331,6 +331,71 @@ export const textMessagesSet = {
 
 };
 
+export const profileMessages = {
+    success: {
+        update: [
+            "Your profile has been updated successfully.",
+            "Changes saved — your profile looks even better now.",
+            "Profile updated — everything is up to date.",
+            "Edits applied — your profile just got a refresh.",
+            "Update complete — your story keeps getting better.",
+        ],
+        complete: [
+            "Profile completed — you’re all set to shine.",
+            "Great! Your profile is now complete.",
+            "Profile setup finished — you’re ready to connect.",
+            "All details saved — your profile is complete.",
+            "Done! Your profile is now ready for discovery.",
+        ],
+    },
+
+    notFound: {
+        update: [
+            "We couldn’t update anything because your profile isn’t set up yet.",
+            "No profile found to edit — create one first.",
+            "Hmm... your details aren’t in our records, so there’s nothing to update.",
+            "Profile missing — to edit, you’ll need to create it first.",
+            "Still no profile detected — updates can’t be applied.",
+        ],
+        complete: [
+            "We couldn’t find your profile — maybe it hasn’t been created yet?",
+            "Your profile doesn’t exist yet — complete it to continue.",
+            "No profile found — looks like you’ll need to start fresh.",
+            "Hmm... we searched, but your profile isn’t in our records.",
+            "Ready to begin? Create your profile to get started.",
+        ],
+        generic: [
+            "We couldn’t locate your profile at the moment.",
+            "Profile not found — double-check and try again.",
+            "Something’s missing... your profile doesn’t seem to exist.",
+        ],
+    },
+
+    error: {
+        update: [
+            "Something went wrong while updating your profile.",
+            "We hit a snag — couldn’t save your changes.",
+            "Update failed — please try again shortly.",
+            "Oops! Profile update didn’t go through.",
+            "An error occurred — your edits weren’t saved.",
+        ],
+        complete: [
+            "Something went wrong while completing your profile.",
+            "We couldn’t finish saving your profile — try again.",
+            "Completion failed — please retry.",
+            "Oops! Your profile couldn’t be completed just now.",
+            "Error saving profile — give it another go.",
+        ],
+        generic: [
+            "Looks like something went wrong — please try again.",
+            "We ran into an issue — hold tight and retry.",
+            "Oops! A technical error occurred.",
+            "An unexpected error stopped the process.",
+            "Something’s off — let’s give it another shot.",
+        ],
+    },
+};
+
 export const getRandomMessage = (messages) => {
     return messages[Math.floor(Math.random() * messages.length)];
 };
@@ -341,15 +406,25 @@ export const formValidationCheck = ({ formFields = [], formData }) => {
     formFields.forEach((field) => {
         const initialValue = formData[field.name];
         const value = initialValue?.toString().trim() || "";
-        let isRequired = field.required;
 
+        let isRequired = field.required;
         if (field.conditional) {
             const targetValue = formData[field.conditional.field];
             if (targetValue === field.conditional.value) isRequired = true;
             else isRequired = false;
         }
 
-        if (isRequired && value === "") {
+        if (field.type === "checkbox" && isRequired) {
+            if (formData[field.name] !== true) {
+                errors[field.name] = {
+                    status: true,
+                    message: "This checkbox is required.",
+                };
+                return;
+            }
+        }
+
+        if (isRequired && value === "" && !field.defaultOpt) {
             errors[field.name] = {
                 status: true,
                 message: getRandomMessage(requiredFallbackMessages),

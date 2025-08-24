@@ -1,23 +1,27 @@
 "use client";
 
+import clsx from "clsx";
+import Check from "../../../../public/assets/svg/check";
+import Arrow from "../../../../public/assets/svg/arrow";
 import React, { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { profilePage } from "@/data/siteStaticData";
 import { WordStaggerFlowTitle } from "@/components/ui/sectionTitle";
-import Arrow from "../../../../public/assets/svg/arrow";
-import Check from "../../../../public/assets/svg/check";
-import clsx from "clsx";
+import { useToast } from "@/context/ToastContext";
 import { getZodiacFromName } from "@/utils/helpers";
 import { formValidationCheck } from "@/utils/validators";
+import { useRouter } from "next/navigation";
 
 export default function Build(preFieldData) {
-  const { completedProfileForm } = profilePage;
-  const { serverAction } = completedProfileForm;
-  const fields = [...completedProfileForm.sections];
+  const { profileBuilder } = profilePage;
+  const { serverAction } = profileBuilder;
+  const fields = [...profileBuilder.sections];
+  const { ThrowToast } = useToast();
   const [currentStep, setCurrent] = useState(0);
   const [revealedCount, setRevealedCount] = useState(1);
   const [formData, setFormData] = useState({});
   const [errors, setErrors] = useState({});
+  const router = useRouter();
 
   const checkValidations = () => {
     const { isValid, errors } = formValidationCheck({
@@ -80,12 +84,9 @@ export default function Build(preFieldData) {
     setFormData((prev) => {
       const currentValues = prev[name] || [];
 
-      let updatedValues;
-      if (checked) {
-        updatedValues = [...currentValues, value];
-      } else {
-        updatedValues = currentValues.filter((v) => v !== value);
-      }
+      const updatedValues = checked
+        ? [...currentValues, value]
+        : currentValues.filter((v) => v !== value);
 
       return {
         ...prev,
@@ -100,7 +101,6 @@ export default function Build(preFieldData) {
 
   const handleCheckBox = (e) => {
     const { name, checked } = e.target;
-
     setFormData((prev) => ({
       ...prev,
       [name]: checked,
@@ -120,11 +120,23 @@ export default function Build(preFieldData) {
     });
 
     const result = await serverAction(formattedData);
-    // const { success, message, redirection, popupType, switchTo } = result;
-    console.log(result);
-    // setFormData({});
-    // setCurrent(0);
-    // setRevealedCount(1);
+    const { success, message, redirection, popupType, switchTo, error } =
+      result;
+
+    ThrowToast({
+      message: success ? message : error,
+      state: success ? "success" : "error",
+      timeOut: 7500,
+      direction: "center",
+      timeStampView: true,
+    });
+
+    if (success) {
+      // setFormData({});
+      // setCurrent(0);
+      // setRevealedCount(1);
+      if (redirection) router.push(redirection);
+    }
   };
 
   const containerRef = useRef(null);
@@ -146,11 +158,11 @@ export default function Build(preFieldData) {
       <div className="flex flex-col lg:flex-row items-center gap-y-3 lg:gap-y-5">
         <div className="grid lg:grid-cols-[30%_1fr] items-center gap-0.5 lg:gap-y-2">
           <WordStaggerFlowTitle className="text-base lg:text-lg text-zinc-800 font-porinoi-sans font-normal uppercase">
-            {completedProfileForm.tag}
+            {profileBuilder.tag}
           </WordStaggerFlowTitle>
           <div className="lg:w-fit">
             <WordStaggerFlowTitle className="text-2xl text-zinc-800 font-porinoi-sans font-semibold uppercase">
-              {completedProfileForm.title}
+              {profileBuilder.title}
             </WordStaggerFlowTitle>
           </div>
         </div>
@@ -159,7 +171,7 @@ export default function Build(preFieldData) {
             delayStep={0.025}
             className="text-xs lg:text-base text-zinc-800 font-porinoi-sans font-medium uppercase"
           >
-            {completedProfileForm.description}
+            {profileBuilder.description}
           </WordStaggerFlowTitle>
         </div>
       </div>
@@ -456,6 +468,7 @@ const Select = ({
   error,
   className,
   onChange,
+  defaultOpt,
 }) => {
   const fieldRef = useRef(null);
   const [dropToggle, setDropToggle] = useState(false);
@@ -490,19 +503,20 @@ const Select = ({
           name={name}
           id={label.split(" ").join("_")}
           placeholder={placeholder}
-          value={value}
+          value={value || defaultOpt || ""}
           readOnly
           onClick={() => {
             setDropToggle(!dropToggle);
           }}
           onBlur={() => setTouched(required)}
+          onChange={() => {}}
           className={`
             w-full h-auto border-b text-base lg:text-lg font-porinoi-sans font-medium 
              ${
                (required && touched && isEmpty) ||
-               (required && isError && isEmpty)
+               (!defaultOpt && required && isError && isEmpty)
                  ? "border-red-500 text-red-500"
-                 : "border-zinc-900 text-zinc-500"
+                 : "border-zinc-900 text-zinc-800"
              }
           transition-all duration-300 ease-linear`}
         />
@@ -764,12 +778,12 @@ const CheckBox = ({
   index,
   label,
   name,
-  value = [],
-  required,
+  value,
   error,
   className,
   onChange,
 }) => {
+  const isChecked = value === true;
   return (
     <fieldset
       key={index}
@@ -780,6 +794,7 @@ const CheckBox = ({
           type="checkbox"
           name={name}
           id={name}
+          checked={isChecked}
           onChange={onChange}
           className="checkbox-custom"
         />
@@ -791,7 +806,7 @@ const CheckBox = ({
         </label>
 
         <AnimatePresence mode="wait">
-          {error?.[name]?.message && (
+          {error?.[name]?.status && (
             <motion.p
               key={"errors"}
               initial={{ opacity: 0 }}
@@ -804,7 +819,7 @@ const CheckBox = ({
               }}
               className="absolute -bottom-3 left-0 text-xs text-red-500 font-mono font-medium pointer-events-none select-none"
             >
-              {error[name]?.message}
+              {error?.[name]?.message}
             </motion.p>
           )}
         </AnimatePresence>

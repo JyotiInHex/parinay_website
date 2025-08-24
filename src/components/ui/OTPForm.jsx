@@ -191,6 +191,7 @@ const OTPForm = ({ formData, switchForm = "" }) => {
                   variants={inputVariants}
                   type="text"
                   inputMode="numeric"
+                  placeholder="*"
                   maxLength={1}
                   value={digit}
                   ref={(el) => (inputRefs.current[idx] = el)}
